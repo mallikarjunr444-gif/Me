@@ -42,8 +42,8 @@ export default function App() {
       {/* 2. Right Vertical Stamp Ribbon */}
       <StampRibbon side="right" />
 
-      {/* Main Content Container */}
-      <div className="px-10 sm:px-14 pt-10 sm:pt-14 space-y-16">
+      {/* Main Content Container with comfortable clearance from side ribbons */}
+      <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
         
         {/* 3. Top Hand-Drawn Avatar & Links */}
         <HandDrawnAvatar onNavigate={handleNavigate} />
@@ -75,9 +75,9 @@ export default function App() {
         {/* Bottom Ending Signoff */}
         <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2">
           <div className="font-hand text-xl text-[#faecd8]/70">
-            "Mallikarjun R • Bengaluru, India • Still building :)"
+            "Mallikarjun.R • Bengaluru, India • Still building :)"
           </div>
-          <div>© {new Date().getFullYear()} Mallikarjun R. All projects & systems verified.</div>
+          <div>© {new Date().getFullYear()} Mallikarjun.R. All projects & systems verified.</div>
         </div>
 
       </div>

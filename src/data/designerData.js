@@ -9,7 +9,7 @@ export const initialDesignerData = {
     availability: "Available for Q3/Q4 2026 Select Projects",
     location: "Bengaluru, India",
     timezone: "IST (UTC+5:30)",
-    email: "mallikarjunr.dev@gmail.com",
+    email: "mallikarjunr444@gmail.com",
     responseTime: "Responds within 24 business hours",
     portrait: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
     deckUrl: "#",
@@ -17,7 +17,7 @@ export const initialDesignerData = {
     socials: {
       linkedin: "https://www.linkedin.com/in/mallikarjunr-com/",
       github: "https://github.com/mallikarjunr444-gif",
-      medium: "https://medium.com/@mallikarjunr",
+      medium: "https://medium.com/@mallikarjunr444",
       website: "https://medicuslabs.app"
     }
   },

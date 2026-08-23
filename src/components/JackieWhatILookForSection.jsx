@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChalkFlowers, ChalkRetroComputer, ChalkPerchedBird } from './HandDrawnAssets';
+import { ChalkFlowers, ChalkRetroComputer, ChalkPerchedBird, ChalkBotanicalBranch } from './HandDrawnAssets';
 
 export function JackieWhatILookForSection({ onOpenConnect, personal }) {
   const [checkedItems, setCheckedItems] = useState({
@@ -15,19 +15,16 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
   return (
     <section className="py-24 px-4 sm:px-8 relative select-none max-w-6xl mx-auto">
       
-      {/* Background Chalk Doodles on Canvas (Exact from Screenshot 1!) */}
-      
-      {/* Left: Chalk Flowers / Botanicals */}
-      <div className="absolute left-2 sm:left-4 top-16 hidden md:block opacity-75">
-        <ChalkFlowers className="w-24 h-40 sm:w-28 sm:h-48 text-[#faecd8]" />
+      {/* Background Chalk Botanicals on Canvas */}
+      <div className="absolute left-2 sm:left-4 top-16 hidden md:block opacity-85 pointer-events-none w-36">
+        <ChalkFlowers className="w-full h-auto" />
       </div>
 
-      {/* Right: Chalk Perched Bird */}
-      <div className="absolute right-2 sm:right-6 top-20 hidden md:block opacity-80">
-        <ChalkPerchedBird className="w-28 h-28 sm:w-36 sm:h-36 text-[#faecd8]" />
+      <div className="absolute right-2 sm:right-6 top-20 hidden md:block opacity-85 pointer-events-none w-36">
+        <ChalkBotanicalBranch className="w-full h-auto" />
       </div>
 
-      {/* Main "What I look for" Card (Exact from Screenshot 1!) */}
+      {/* Main "What I look for" Card (Exact from jackiezhang.co.za) */}
       <div className="relative z-10 max-w-4xl mx-auto">
         <div className="rounded-[2.5rem] p-3 sm:p-4 bg-[#c93f2c] border-2 border-[#a12f1f] shadow-2xl">
           
@@ -51,10 +48,10 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
                   onClick={() => toggleCheck('item1')}
                   className="flex items-center gap-3 cursor-pointer group hover:text-[#c93f2c] transition-colors"
                 >
-                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono">
+                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono shrink-0">
                     {checkedItems.item1 ? '✓' : ''}
                   </div>
-                  <span>Impactful work (Clinical AI & Systems)</span>
+                  <span>Impactful work (Clinical AI & Healthcare)</span>
                 </div>
 
                 {/* Item 2 */}
@@ -62,10 +59,10 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
                   onClick={() => toggleCheck('item2')}
                   className="flex items-center gap-3 cursor-pointer group hover:text-[#c93f2c] transition-colors"
                 >
-                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono">
+                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono shrink-0">
                     {checkedItems.item2 ? '✓' : ''}
                   </div>
-                  <span>Meaningful work (Cloud & 3D Engines)</span>
+                  <span>Meaningful work (Gemini AI & Cloud)</span>
                 </div>
 
                 {/* Item 3 */}
@@ -73,7 +70,7 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
                   onClick={() => toggleCheck('item3')}
                   className="flex items-center gap-3 cursor-pointer group hover:text-[#c93f2c] transition-colors"
                 >
-                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono">
+                  <div className="w-6 h-6 rounded-md border-2 border-[#c93f2c] flex items-center justify-center text-[#c93f2c] text-sm bg-white font-mono shrink-0">
                     {checkedItems.item3 ? '✓' : ''}
                   </div>
                   <span>Diversed team of talented folks</span>
@@ -81,11 +78,11 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
 
               </div>
 
-              {/* Hand-Drawn Boxed "let's chat!" Button (Exact from Screenshot 1!) */}
+              {/* Hand-Drawn Boxed "let's chat!" Button */}
               <div className="pt-2">
                 <button
                   onClick={onOpenConnect}
-                  className="relative px-8 py-2.5 font-hand text-2xl text-[#c93f2c] font-bold hover:scale-105 transition-all group select-none"
+                  className="relative px-8 py-2.5 font-hand text-2xl text-[#c93f2c] font-bold hover:scale-105 transition-all group select-none cursor-pointer"
                 >
                   <span>let's chat!</span>
                   {/* Hand drawn red rectangle border box */}
@@ -101,7 +98,7 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
             <div className="md:col-span-5 flex justify-center relative">
               <div className="relative w-full max-w-[260px] aspect-[4/5] p-2 flex items-center justify-center">
                 
-                {/* Thick Hand-Drawn Red Frame (Exact from Screenshot 1!) */}
+                {/* Thick Hand-Drawn Red Frame */}
                 <svg className="absolute inset-0 w-full h-full text-[#c93f2c] pointer-events-none" viewBox="0 0 200 240" fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 20 Q100 12 185 18 Q192 100 188 220 Q100 226 15 220 Q8 120 15 20 Z" />
                 </svg>
@@ -123,15 +120,32 @@ export function JackieWhatILookForSection({ onOpenConnect, personal }) {
         </div>
       </div>
 
-      {/* Center Below Card: Retro Smiling CRT Monitor Doodle */}
-      <div className="flex flex-col items-center justify-center pt-14 space-y-4">
-        <ChalkRetroComputer className="w-32 h-24 sm:w-40 sm:h-28 text-[#faecd8]" />
+      {/* Bottom Trio: Smiling CRT Monitor, Bird, and Botanical Branch (Exact from jackiezhang.co.za) */}
+      <div className="pt-16 max-w-2xl mx-auto flex items-center justify-between px-6 sm:px-12 text-[#faecd8]/85">
+        <div className="w-24 sm:w-28">
+          <ChalkRetroComputer className="w-full h-auto" />
+        </div>
+        <div className="w-20 sm:w-24">
+          <ChalkPerchedBird className="w-full h-auto" />
+        </div>
+        <div className="w-20 sm:w-24">
+          <ChalkBotanicalBranch className="w-full h-auto" />
+        </div>
+      </div>
+
+      {/* Running Hand-drawn Country Roads Lyrics Ticker (Exact from jackiezhang.co.za) */}
+      <div className="text-center font-hand text-lg sm:text-xl text-[#faecd8]/75 pt-6 space-y-3">
+        <p className="leading-relaxed">
+          🎶 Almost heaven, West Virginia. Blue Ridge Mountains Shenandoah River . Life is old there. Older than the trees. Younger than the mountains. Growin like a breeze Country Roads, take me home. To the place I belong West Virginia, mountain momma. Take me home, country roads. 🎶
+        </p>
         
-        {/* Running Hand-drawn Lyrics / Location Marquee (Exact from Screenshot 1!) */}
-        <div className="text-center font-hand text-lg sm:text-xl text-[#faecd8]/75 flex items-center justify-center gap-2">
-          <span>🎵</span>
-          <span>West Virginia • Bengaluru • Blue Ridge Mountains Shenandoah River • Still building</span>
-          <span>🎵</span>
+        {/* Signature icon at bottom center */}
+        <div className="flex justify-center pt-2">
+          <div className="w-8 h-8 text-[#e0523d]">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
         </div>
       </div>
 
