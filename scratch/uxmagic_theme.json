@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"--background\": \"#212121\",\n  \"--foreground\": \"#E85746\",\n  \"--primary\": \"#0000ee\",\n  \"--primary-foreground\": \"#ffffff\",\n  \"--secondary\": \"#2d2423\",\n  \"--secondary-foreground\": \"#ED5D4B\",\n  \"--tertiary\": \"#0000ee\",\n  \"--muted\": \"#2d2423\",\n  \"--muted-foreground\": \"#CA7568\",\n  \"--accent\": \"#0d0d9c\",\n  \"--destructive\": \"#ef4444\",\n  \"--card\": \"#1c1c1c\",\n  \"--card-foreground\": \"#e35342\",\n  \"--border\": \"#382725\",\n  \"--input\": \"#382725\",\n  \"--ring\": \"#0000ee\",\n  \"--radius\": \"20px\",\n  \"--font-sans\": \"Inter, sans-serif\",\n  \"--font-heading\": \"Lora, sans-serif\",\n  \"--font-mono\": \"JetBrains Mono, monospace\",\n  \"--shadow-offset-x\": \"0\",\n  \"--shadow-offset-y\": \"10\",\n  \"--shadow-blur\": \"30\",\n  \"--shadow-spread\": \"-8\",\n  \"--shadow-color\": \"rgba(15, 23, 42, 0.12)\",\n  \"--accent-foreground\": \"#F86653\",\n  \"--tertiary-foreground\": \"#FF9882\",\n  \"--destructive-foreground\": \"#430000\",\n  \"--primary-text\": \"#3684FF\",\n  \"--secondary-text\": \"#908584\",\n  \"--tertiary-text\": \"#3684FF\",\n  \"--accent-text\": \"#5280FF\",\n  \"--destructive-text\": \"#F44948\"\n}"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { portfolioData } from './data/portfolioData';
 import { StampRibbon, HandDrawnAvatar } from './components/HandDrawnAssets';
 import { JackieHeroBoard, LayeredPaperNotes } from './components/JackieHeroBoard';
 import { JackieProjectPeelSection } from './components/JackieProjectPeelSection';
+import { JackieCuttingBoardSection } from './components/JackieCuttingBoardSection';
 import { JackieWhatILookForSection } from './components/JackieWhatILookForSection';
 import { JackieCaseStudyModal } from './components/JackieCaseStudyModal';
 import { JackieAboutDrawer } from './components/JackieAboutDrawer';
@@ -50,7 +51,7 @@ export default function App() {
         {/* 4. Main Hero Cutting Board / Grid Notebook */}
         <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
 
-        {/* 5. Layered Scrapbook Paper Notes */}
+        {/* 5. Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
         <LayeredPaperNotes />
 
         {/* 6. Peeling Project Cards & Background Chalk Doodles */}
@@ -59,7 +60,13 @@ export default function App() {
           onSelectProject={(p) => setActiveProject(p)}
         />
 
-        {/* 7. "What I Look For" Card + Retro Smiling Computer + Botanicals (Screenshot 1 exact!) */}
+        {/* 7. The Cutting Board / Interactive Workspace ("Everything you do, do it with care.") */}
+        <JackieCuttingBoardSection
+          projects={data.projects}
+          onSelectProject={(p) => setActiveProject(p)}
+        />
+
+        {/* 8. "What I Look For" Card + Retro Smiling Computer + Botanicals */}
         <JackieWhatILookForSection
           onOpenConnect={() => setConnectOpen(true)}
           personal={data.personal}

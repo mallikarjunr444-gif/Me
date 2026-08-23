@@ -1,0 +1,779 @@
+[
+  {
+    "name": "list_projects",
+    "title": "List projects",
+    "description": "List the current user’s active design projects (id, name, description).",
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "get_project",
+    "title": "Get project",
+    "description": "Get full metadata for one project by id.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "The project id (Mongo ObjectId)."
+        }
+      },
+      "required": [
+        "projectId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "list_frames",
+    "title": "List frames",
+    "description": "List all frames (screens) in a project with their metadata.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "The project id to list frames for."
+        }
+      },
+      "required": [
+        "projectId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "get_frame",
+    "title": "Get frame",
+    "description": "Get a frame’s metadata, optionally including the active artifact HTML.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "The frame id."
+        },
+        "includeHtml": {
+          "type": "boolean",
+          "description": "When true, include the active artifact HTML content."
+        }
+      },
+      "required": [
+        "frameId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "read_screen",
+    "title": "Read screen HTML",
+    "description": "Return the active artifact HTML of a frame (the rendered screen markup).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "The frame id to read."
+        }
+      },
+      "required": [
+        "frameId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "read_theme",
+    "title": "Read theme",
+    "description": "Return the CSS theme variables applied to a frame’s active version.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "The frame id whose theme to read."
+        }
+      },
+      "required": [
+        "frameId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "list_project_documents",
+    "title": "List project documents",
+    "description": "List documents (PRDs, briefs, specs) attached to a project, with summaries.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "Project id whose documents to list."
+        }
+      },
+      "required": [
+        "projectId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "read_document",
+    "title": "Read document",
+    "description": "Return the extracted text and summary of a project document by id.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "description": "Document id (from list_project_documents)."
+        },
+        "projectId": {
+          "type": "string",
+          "description": "Project the document belongs to (scopes the access check)."
+        }
+      },
+      "required": [
+        "documentId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "create_project",
+    "title": "Create project",
+    "description": "Create a new, empty design project.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description."
+        },
+        "project_type": {
+          "type": "string",
+          "description": "Optional project type."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "projectUrl": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "name",
+        "projectUrl"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "create_frame",
+    "title": "Create frame",
+    "description": "Create a new frame (screen) in a project. Width/height are in pixels.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "Project to add the frame to."
+        },
+        "name": {
+          "type": "string",
+          "description": "Frame name."
+        },
+        "width": {
+          "type": "number",
+          "description": "Frame width in pixels."
+        },
+        "height": {
+          "type": "number",
+          "description": "Frame height in pixels."
+        },
+        "description": {
+          "type": "string"
+        },
+        "frameType": {
+          "type": "string",
+          "enum": [
+            "desktop",
+            "macbook",
+            "tablet",
+            "ipad",
+            "android",
+            "iphone"
+          ],
+          "description": "Device preset for the frame."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "Hex background, e.g. #FFFFFF."
+        }
+      },
+      "required": [
+        "projectId",
+        "name",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "frameId",
+        "projectId",
+        "name"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "duplicate_frame",
+    "title": "Duplicate frame",
+    "description": "Duplicate a frame (and its active design) within the same or another project.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "Frame id to duplicate."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the copy."
+        },
+        "targetProjectId": {
+          "type": "string",
+          "description": "Destination project id (defaults to the source project)."
+        }
+      },
+      "required": [
+        "frameId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "projectId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "frameId",
+        "name",
+        "projectId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "edit_design",
+    "title": "Edit design (find/replace)",
+    "description": "Targeted find/replace on a frame’s screen HTML. Replaces only the FIRST occurrence of `find`. Call read_screen first and copy the exact substring — a single-character mismatch errors. A new artifact version is always created. For the replacement: STRICT: (1) NEVER use a style= attribute. (2) No <style> tag/block. (3) No arbitrary colors (no bg-[#xxx]). (4) Style only via class= with Tailwind + theme classes (bg-background, text-primary, font-heading, shadow-md, etc.) so Style Guide changes apply live. Inner body HTML only — no <html>/<head>/<body> tags.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "Frame id from list_frames."
+        },
+        "find": {
+          "type": "string",
+          "description": "Exact substring to find, copied verbatim from read_screen."
+        },
+        "replace": {
+          "type": "string",
+          "description": "Replacement markup. STRICT: (1) NEVER use a style= attribute. (2) No <style> tag/block. (3) No arbitrary colors (no bg-[#xxx]). (4) Style only via class= with Tailwind + theme classes (bg-background, text-primary, font-heading, shadow-md, etc.) so Style Guide changes apply live. Inner body HTML only — no <html>/<head>/<body> tags."
+        },
+        "versionId": {
+          "type": "string",
+          "description": "Optional artifact version to edit; defaults to the active version."
+        }
+      },
+      "required": [
+        "frameId",
+        "find",
+        "replace"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string"
+        },
+        "newVersionId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "frameId",
+        "newVersionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "update_design",
+    "title": "Update design (full body)",
+    "description": "Replace the ENTIRE body of a frame with new markup, creating a new artifact version. Use for broad redesigns/rewrites, not small edits (use edit_design). STRICT: (1) NEVER use a style= attribute. (2) No <style> tag/block. (3) No arbitrary colors (no bg-[#xxx]). (4) Style only via class= with Tailwind + theme classes (bg-background, text-primary, font-heading, shadow-md, etc.) so Style Guide changes apply live. Inner body HTML only — no <html>/<head>/<body> tags.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "Frame id to update."
+        },
+        "screen_html": {
+          "type": "string",
+          "description": "New inner body HTML. STRICT: (1) NEVER use a style= attribute. (2) No <style> tag/block. (3) No arbitrary colors (no bg-[#xxx]). (4) Style only via class= with Tailwind + theme classes (bg-background, text-primary, font-heading, shadow-md, etc.) so Style Guide changes apply live. Inner body HTML only — no <html>/<head>/<body> tags."
+        }
+      },
+      "required": [
+        "frameId",
+        "screen_html"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string"
+        },
+        "newVersionId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "frameId",
+        "newVersionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "replace_image",
+    "title": "Replace image",
+    "description": "Replace an image URL inside a frame’s active design (e.g. swap a placeholder or stock photo for a real asset). Updates in place.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "Frame id."
+        },
+        "oldImageUrl": {
+          "type": "string",
+          "description": "Existing image URL to replace."
+        },
+        "newImageUrl": {
+          "type": "string",
+          "description": "New image URL."
+        },
+        "attribute": {
+          "type": "string",
+          "description": "HTML attribute to update (default \"src\")."
+        },
+        "updateAllOccurrences": {
+          "type": "boolean",
+          "description": "Replace every occurrence (default true) or just the first."
+        }
+      },
+      "required": [
+        "frameId",
+        "oldImageUrl",
+        "newImageUrl"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "export_figma",
+    "title": "Export to Figma",
+    "description": "Export a frame’s design to a Figma-paste clipboard payload. Defaults to the active version. Paste the result with the UX Magic Figma plugin.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "frameId": {
+          "type": "string",
+          "description": "Frame id to export."
+        },
+        "versionId": {
+          "type": "string",
+          "description": "Artifact version to export; defaults to the active version."
+        }
+      },
+      "required": [
+        "frameId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "generate_design",
+    "title": "Generate design (AI agent)",
+    "description": "Start the UX Magic AI design agent to create or modify screens from a natural-language prompt. This is long-running and costs credits. Returns a taskId immediately — then poll generation_status with that taskId (and the returned nextCursor) until done is true. Use cancel_generation to stop it. OMIT projectId to design a NEW product: a fresh project is created and its projectId + projectUrl come back in the result. Pass projectId ONLY to add to or change an existing project (list_projects shows them); optionally frameId to focus on one screen. Never reuse a projectId from an earlier, unrelated brief.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "What to design or change, in natural language."
+        },
+        "projectId": {
+          "type": "string",
+          "description": "Existing project to generate into. Omit for a new product — a project is created automatically."
+        },
+        "frameId": {
+          "type": "string",
+          "description": "Optional frame to focus on / edit."
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "design-faster",
+            "design-better"
+          ],
+          "description": "Agent model mode (default design-faster)."
+        },
+        "documentIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Project document ids to use as context."
+        },
+        "autoApprove": {
+          "type": "boolean",
+          "description": "Default true: the agent approves its own screen plan and runs to completion. Set false only if you will watch generation_status for pendingApproval and answer it with confirm_generation — otherwise the run stalls and expires."
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "openWorldHint": true
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "availableCredits": {
+          "type": "number"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "projectUrl": {
+          "type": "string"
+        },
+        "createdProject": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "taskId",
+        "status",
+        "availableCredits",
+        "projectId",
+        "projectUrl",
+        "createdProject"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "generation_status",
+    "title": "Generation status",
+    "description": "Poll a running generation (from generate_design). Returns the new events since `cursor` (assistant text, actions taken, credits, completion). Keep calling with the returned nextCursor until `done` is true. If pendingApproval is present the agent is waiting for a decision (HITL).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "description": "The taskId returned by generate_design."
+        },
+        "cursor": {
+          "type": "number",
+          "description": "Event cursor from the previous poll (default 0)."
+        }
+      },
+      "required": [
+        "taskId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "cancel_generation",
+    "title": "Cancel generation",
+    "description": "Stop a running generation by taskId.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "description": "The taskId returned by generate_design."
+        }
+      },
+      "required": [
+        "taskId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  },
+  {
+    "name": "confirm_generation",
+    "title": "Confirm generation (human-in-the-loop)",
+    "description": "Approve or reject a pending decision when generation_status reports pendingApproval (e.g. the agent proposed a set of screens to create). Pass the pendingApproval.toolCallId and approved=true/false. Optionally edit payload (e.g. the screen list) or give feedback on rejection.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "description": "The taskId returned by generate_design."
+        },
+        "approved": {
+          "type": "boolean",
+          "description": "true to approve, false to reject."
+        },
+        "toolCallId": {
+          "type": "string",
+          "description": "The pendingApproval.toolCallId from generation_status."
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": {},
+          "description": "Optional edited payload (e.g. an adjusted screen list)."
+        },
+        "feedback": {
+          "type": "string",
+          "description": "Optional note, e.g. why a proposal was rejected."
+        }
+      },
+      "required": [
+        "taskId",
+        "approved"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    }
+  }
+]

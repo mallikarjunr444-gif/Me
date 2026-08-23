@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "uxmagic-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "uxmagic-mcp@1.2.0"
+      ],
+      "env": {
+        "UXMAGIC_API_KEY": "uxm__9L3f2-R4LcQWMXeF3O-7gw0XC0TatSql10722fGDLM"
+      }
+    }
+  }
+}
