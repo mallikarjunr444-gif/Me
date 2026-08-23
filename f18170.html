@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@100..900&family=Fira+Code:wght@300..700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link id="theme-fonts" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+    <style type="text/tailwindcss">
+      @import "tailwindcss";
+      @theme inline {
+        --color-background: var(--background);
+        --color-foreground: var(--foreground);
+        --color-primary: var(--primary);
+        --color-primary-foreground: var(--primary-foreground);
+        --color-secondary: var(--secondary);
+        --color-secondary-foreground: var(--secondary-foreground);
+        --color-tertiary: var(--tertiary);
+        --color-tertiary-foreground: var(--tertiary-foreground);
+        --color-muted: var(--muted);
+        --color-muted-foreground: var(--muted-foreground);
+        --color-accent: var(--accent);
+        --color-accent-foreground: var(--accent-foreground);
+        --color-destructive: var(--destructive);
+        --color-destructive-foreground: var(--destructive-foreground);
+        --color-card: var(--card);
+        --color-card-foreground: var(--card-foreground);
+        --color-popover: var(--popover);
+        --color-popover-foreground: var(--popover-foreground);
+        --color-border: var(--border);
+        --color-input: var(--input);
+        --color-ring: var(--ring);
+        --radius-sm: calc(var(--radius) - 4px);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-lg: var(--radius);
+        --font-family-sans: var(--font-sans);
+        --font-family-heading: var(--font-heading);
+        --font-family-mono: var(--font-mono);
+        /* Tailwind v4's font namespace is --font-*, NOT --font-family-*.
+         *
+         * Without this line the font-heading utility does not exist at all,
+         * so every h1–h6 the design prompt mandates (font-heading) silently
+         * inherited the body's font-sans. A user could set --font-heading a
+         * dozen times, watch the tool report success, and never see the
+         * typeface change — the "font applied but not reflected" report.
+         *
+         * font-sans and font-mono are Tailwind built-ins and already read
+         * :root, which is why only headings were broken. The fallback chain
+         * keeps themes that never set a heading font rendering the body face
+         * instead of nothing. */
+        --font-heading: var(--font-heading, var(--font-sans, ui-sans-serif, system-ui, sans-serif));
+      }
+
+      /* Every filled surface carries its own text colour.
+       *
+       * Without this, <div class="bg-accent"> inherits --foreground from
+       * <html> — a colour chosen to contrast the PAGE, not the accent fill. On
+       * a dark theme with a bright accent that renders near-white text on
+       * near-white (or near-black on near-black): the invisible text users
+       * report. Pairing each fill with its own foreground makes the readable
+       * result the default instead of something the model has to remember.
+       *
+       * These sit in @layer base deliberately. Any explicit text-* utility is
+       * in @layer utilities and therefore still wins, so an intentional colour
+       * choice is never overridden. The neutral surfaces (background, muted)
+       * are left out: --foreground is already guaranteed readable on those, and
+       * forcing --muted-foreground would wash out headings in muted panels.
+       */
+      @layer base {
+        .bg-card { color: var(--card-foreground); }
+        .bg-popover { color: var(--popover-foreground, var(--card-foreground)); }
+        .bg-primary { color: var(--primary-foreground); }
+        .bg-secondary { color: var(--secondary-foreground); }
+        .bg-accent { color: var(--accent-foreground, var(--foreground)); }
+        .bg-tertiary { color: var(--tertiary-foreground, var(--primary-foreground)); }
+        .bg-destructive { color: var(--destructive-foreground, var(--primary-foreground)); }
+      }
+      :root {
+        --background: #212121;
+        --foreground: #E85746;
+        --primary: #0000ee;
+        --primary-foreground: #ffffff;
+        --secondary: #2d2423;
+        --secondary-foreground: #ED5D4B;
+        --tertiary: #0000ee;
+        --muted: #2d2423;
+        --muted-foreground: #CA7568;
+        --accent: #0d0d9c;
+        --destructive: #ef4444;
+        --card: #1c1c1c;
+        --card-foreground: #e35342;
+        --border: #382725;
+        --input: #382725;
+        --ring: #0000ee;
+        --radius: 20px;
+        --font-sans: Inter, sans-serif;
+        --font-heading: Lora, sans-serif;
+        --font-mono: JetBrains Mono, monospace;
+        --shadow-offset-x: 0;
+        --shadow-offset-y: 10;
+        --shadow-blur: 30;
+        --shadow-spread: -8;
+        --shadow-color: rgba(15, 23, 42, 0.12);
+        --accent-foreground: #F86653;
+        --tertiary-foreground: #FF9882;
+        --destructive-foreground: #430000;
+        --primary-text: #3684FF;
+        --secondary-text: #908584;
+        --tertiary-text: #3684FF;
+        --accent-text: #5280FF;
+        --destructive-text: #F44948;
+        }
+    </style>
+    <style>
+      .brand-gradient { background-image: linear-gradient(135deg, var(--primary), var(--accent)); }
+      .shadow-theme {
+        box-shadow:
+          calc(var(--shadow-offset-x, 0) * 1px) calc(var(--shadow-offset-y, 10) * 1px)
+          calc(var(--shadow-blur, 30) * 1px) calc(var(--shadow-spread, -8) * 1px)
+          var(--shadow-color, rgba(15, 23, 42, 0.12));
+      }
+
+      /* Brand colours used as TEXT resolve to a legibility-adjusted variant.
+       *
+       * --primary and friends are tuned to look right as FILLS; painted as text
+       * on the page they are routinely too light — a #16A34A "+8.4%" on a white
+       * card measures 3.3:1. The --*-text tokens are the same hue and chroma
+       * with lightness nudged just far enough to clear AA on the page and card
+       * surfaces, so fills keep the exact brand colour while text becomes
+       * readable.
+       *
+       * This block is intentionally UNLAYERED: unlayered declarations outrank
+       * every cascade layer, so these beat Tailwind's own text-* utilities. The
+       * var() fallbacks leave documents that predate the derived tokens
+       * rendering exactly as before.
+       */
+      .text-primary { color: var(--primary-text, var(--primary)); }
+      .text-secondary { color: var(--secondary-text, var(--secondary)); }
+      .text-tertiary { color: var(--tertiary-text, var(--tertiary)); }
+      .text-accent { color: var(--accent-text, var(--accent)); }
+      .text-destructive { color: var(--destructive-text, var(--destructive)); }
+    </style>
+  </head>
+  <body>
+<div class="min-h-screen w-full bg-background flex flex-col relative">
+<section class="h-[900px] bg-background p-0 text-primary-foreground"><div class="relative"></div></section>
+<section class="relative mx-auto flex h-[1236px] w-full max-w-[932px] flex-col overflow-hidden bg-background text-primary-foreground">
+  <div class="relative h-[608px] shrink-0 rounded-t-[54px] border-x border-t border-primary bg-primary p-5 shadow-lg">
+    <div class="absolute left-0 top-0 h-full w-7 bg-primary/80"></div>
+    <div class="absolute bottom-0 right-0 h-20 w-20 border-b-[18px] border-r-[18px] border-primary-foreground/20"></div>
+    <div class="relative h-full overflow-hidden rounded-t-[34px] border border-primary/70 bg-card shadow-[0_5px_0_0_rgba(0,0,0,0.2)]">
+      <img src="https://framerusercontent.com/images/fiStjr6PCyart5FAr44gZdenfA.png?width=202&amp;height=202" alt="" class="absolute inset-0 h-full w-full object-cover opacity-35">
+      <img src="https://framerusercontent.com/images/FqqwJe3cXajmh3c17ziisS6QOJU.jpg?width=3367&amp;height=2246" alt="" class="absolute inset-0 h-full w-full object-cover opacity-10 mix-blend-multiply">
+      <div class="absolute left-[10%] top-[20%] z-10 text-primary">
+        <div class="mb-1 text-4xl font-medium italic leading-none text-card-foreground">Jackie</div>
+        <div class="mb-2 text-[26px] font-semibold tracking-wide text-card-foreground">Product Designer</div>
+        <div class="text-[44px] font-medium leading-[1.18] tracking-tight">
+          <div class="text-card-foreground">Software should</div>
+          <div class="text-card-foreground">feel <span class="font-bold italic">natural</span></div>
+        </div>
+        <h3 class="mt-5 text-[18px] font-medium text-card-foreground">Cape Town • GMT +2:00</h3>
+      </div>
+      <img src="https://framerusercontent.com/images/zreYWHKtYVvdYwuZm8gBYAa3IiA.png?scale-down-to=1024&amp;width=1687&amp;height=1394" alt="" class="absolute bottom-[-3%] right-[-2%] z-[1] h-[86%] w-[64%] object-contain object-bottom">
+      <img src="https://framerusercontent.com/images/a5uPbmT6PvUwjD3MFRKJ8andRk.png?width=444&amp;height=437" alt="" class="absolute bottom-[-12%] left-[-4%] z-[2] h-[29%] w-[23%] object-contain object-bottom">
+    </div>
+  </div>
+
+  <div class="relative h-[377px] shrink-0 border-t-4 border-primary bg-primary px-7 pt-6 shadow-[0_-6px_10px_rgba(0,0,0,0.25)]">
+    <div class="absolute inset-x-0 top-0 h-full bg-card"></div>
+    <img src="https://framerusercontent.com/images/FqqwJe3cXajmh3c17ziisS6QOJU.jpg?width=3367&amp;height=2246" alt="" class="absolute inset-0 h-full w-full object-cover opacity-[0.05]">
+    <p class="relative z-10 ml-14 text-[16px] font-semibold italic text-primary-foreground">3 things I strongly believe in</p>
+    <img src="https://framerusercontent.com/images/BUQeUkXwalGo0ETntC1tuR9TM.png?scale-down-to=512&amp;width=552&amp;height=242" alt="" class="absolute bottom-0 right-0 z-10 h-[138px] w-[315px] object-contain object-bottom">
+    <img src="https://framerusercontent.com/images/rRKteDbgGPSRnYv0ydZFYq7DfI.png?width=430&amp;height=462" alt="" class="absolute bottom-[-13px] left-[-15px] z-10 h-[145px] w-[140px] object-contain object-bottom">
+    <img src="https://framerusercontent.com/images/a5uPbmT6PvUwjD3MFRKJ8andRk.png?width=444&amp;height=437" alt="" class="absolute bottom-[-5px] right-[-20px] z-0 h-[130px] w-[140px] object-contain object-bottom opacity-60">
+  </div>
+
+  <div class="relative flex h-[251px] shrink-0 justify-center overflow-hidden bg-background">
+    <div class="absolute left-[18%] top-[-38px] z-20 h-[203px] w-[287px] rotate-[5deg] rounded-sm bg-muted p-7 text-primary shadow-xl">
+      <div class="text-4xl leading-[1.02] italic">
+        <div class="text-primary-foreground">Design for</div>
+        <div class="text-primary-foreground">moments</div>
+      </div>
+    </div>
+    <div class="absolute left-[17%] top-[-50px] z-30 h-[130px] w-[280px] -rotate-[5deg] border-b-8 border-primary bg-card px-9 pt-9 text-[39px] font-bold leading-[0.9] text-foreground shadow-md">
+      <div>tirelessly</div>
+      <div>pursue</div>
+      <div>clarity.</div>
+    </div>
+    <div class="absolute left-[49%] top-[-38px] z-40 h-[146px] w-[312px] rotate-[8deg] bg-muted p-5 text-[37px] leading-[0.92] text-foreground shadow-md">
+      <div class="text-primary-foreground">Software</div>
+      <div class="text-primary-foreground">should</div>
+      <div class="text-primary-foreground">empower.</div>
+    </div>
+  </div>
+</section>
+<section class="h-56 bg-muted text-primary-foreground"></section>
+<section id="values-1" class="relative flex h-[1037px] w-full overflow-hidden bg-background px-0 py-[50px] text-primary-foreground">
+  <div class="absolute inset-y-0 left-0 z-0 w-[58px] overflow-hidden">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute left-0 top-0 h-[488px] w-[341px] max-w-none">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute left-0 top-[472px] h-[488px] w-[341px] max-w-none">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute left-0 top-[944px] h-[488px] w-[341px] max-w-none">
+  </div>
+
+  <div class="absolute inset-y-0 right-0 z-0 w-[58px] overflow-hidden">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute right-0 top-0 h-[488px] w-[341px] max-w-none scale-x-[-1]">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute right-0 top-[472px] h-[488px] w-[341px] max-w-none scale-x-[-1]">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute right-0 top-[944px] h-[488px] w-[341px] max-w-none scale-x-[-1]">
+  </div>
+
+  <div class="relative z-10 flex w-[40%]">
+    <img src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&amp;height=488" alt="" class="absolute left-0 top-[-50px] h-[488px] w-[341px] object-contain">
+    <img src="https://framerusercontent.com/images/Wiw196PFt5v5LcQxgcrCUB3F0.png?width=1774&amp;height=1560" alt="" class="absolute left-[128px] top-[61px] w-[385px] -rotate-[4deg]">
+    <img src="https://framerusercontent.com/images/JCVH1U71jmRJSgalqgIDAfuO8.png?scale-down-to=2048&amp;width=2828&amp;height=2444" alt="" class="absolute left-[46px] top-[520px] w-[460px]">
+  </div>
+
+  <div class="relative z-10 w-[20%]"></div>
+
+  <div class="relative z-10 flex w-[40%]">
+    <img src="https://framerusercontent.com/images/qPdyyjiGVcYhSJZ659iudjEFmbw.png?scale-down-to=512&amp;width=1504&amp;height=1284" alt="" class="absolute left-[44px] top-[75px] w-[448px]">
+    <img src="https://framerusercontent.com/images/JiCsfFAbrVrZSX3x7Y9dkgzckI.png?width=831&amp;height=841" alt="" class="absolute left-[67px] top-[450px] w-[405px]">
+    <img src="https://framerusercontent.com/images/EYbfG6roNwIxhPystqzDKOK4.png?width=401&amp;height=464" alt="" class="absolute left-[105px] top-[858px] w-[250px]">
+  </div>
+</section>
+<section id="values2" class="relative flex h-[1050px] w-full overflow-hidden bg-background px-0 py-[50px] text-primary-foreground">
+  <div class="relative flex w-[42%] shrink-0">
+    <div class="relative h-full w-full">
+      <img src="https://framerusercontent.com/images/QvIk4OtR2xbSpy213Cwtbyw6Q.png?scale-down-to=2048&amp;width=2228&amp;height=1894" alt="" class="absolute left-[28%] top-[125px] w-[336px] -translate-x-1/2 object-contain">
+      <img src="https://framerusercontent.com/images/6rBYKVmILDjUMitcTXjMZ0SPM.png?width=1246&amp;height=1378" alt="" class="absolute left-[38%] top-[440px] w-[430px] -translate-x-1/2 object-contain">
+      <img src="https://framerusercontent.com/images/LKbBfnsJYBIcTHb37SByXysxfM.png?width=164&amp;height=151" alt="" class="absolute bottom-[-30px] left-[26%] w-[96px] object-contain">
+      <img src="https://framerusercontent.com/images/PyLCiCXcTclOUzVEMcAaMR8w.png?width=302&amp;height=300" alt="" class="absolute bottom-[-75px] left-[57%] w-[180px] object-contain">
+    </div>
+  </div>
+
+  <div class="w-[16%] shrink-0"></div>
+
+  <div class="relative flex w-[42%] shrink-0">
+    <div class="relative h-full w-full">
+      <img src="https://framerusercontent.com/images/5YyYUryAtcl0ESyOgNb4S9dajw.png?scale-down-to=1024&amp;width=1546&amp;height=1894" alt="" class="absolute left-[17%] top-[62px] w-[330px] object-contain">
+      <img src="https://framerusercontent.com/images/aybhK1OWWsMUjIyA7Kj5iET0zE.png?width=500&amp;height=489" alt="" class="absolute left-[13%] top-[445px] w-[440px] object-contain">
+      <img src="https://framerusercontent.com/images/a4cvua7pf3dgY3RkFzwNmyByP1Y.png?width=322&amp;height=682" alt="" class="absolute bottom-[-165px] left-[18%] w-[137px] object-contain">
+    </div>
+  </div>
+</section>
+<section id="values3" class="relative flex h-[1072px] w-full overflow-hidden bg-background px-0 py-[50px] text-primary-foreground">
+  <div class="relative w-[38%] shrink-0">
+    <a class="absolute left-[14%] top-[68px] block w-[360px]" data-border="true" data-framer-name="Variant 1">
+      <img width="1754" height="1394" src="https://framerusercontent.com/images/afys4KtZC007XBhmTWURY9KL4.png?width=1754&amp;height=1394" alt="" class="block h-auto w-full">
+    </a>
+    <a class="absolute left-[8%] top-[342px] block w-[420px]" data-border="true" data-framer-name="Variant 1">
+      <img width="1728" height="1117" src="https://framerusercontent.com/images/UeG3qBVgjLwvwcGSGQLZM9AI.png?width=1728&amp;height=1117" alt="" class="block h-auto w-full">
+    </a>
+    <a class="absolute left-[2%] top-[606px] block w-[525px]" data-border="true" data-framer-name="Variant 1">
+      <img width="2066" height="1202" src="https://framerusercontent.com/images/CjJRxESsZDM96KjX4zi3ntiSl7c.png?scale-down-to=2048&amp;width=2066&amp;height=1202" alt="" class="block h-auto w-full">
+    </a>
+    <img width="130" height="240" src="https://framerusercontent.com/images/bvaE5Tit9l38Dd7DsufX28pGs.png?width=130&amp;height=240" alt="" class="absolute bottom-[-43px] left-[20%] h-auto w-[130px]">
+  </div>
+
+  <div class="w-[25%] shrink-0"></div>
+
+  <div class="relative flex-1">
+    <a class="absolute left-[3%] top-[-50px] block w-[500px]" data-border="true" data-framer-name="Variant 1">
+      <img width="1754" height="1394" src="https://framerusercontent.com/images/jkezJCVWvw8W2KInfhlRWQOlS4.png?scale-down-to=512&amp;width=1754&amp;height=1394" alt="" class="block h-auto w-full">
+    </a>
+    <a class="hidden" data-border="true" data-framer-name="Variant 1">
+      <img width="2876" height="2870" src="https://framerusercontent.com/images/x3y7QRdmiIS5JFAwhWC4IHHHJsE.png?scale-down-to=512&amp;width=2876&amp;height=2870" alt="" class="h-auto w-full">
+    </a>
+    <img width="408" height="326" src="https://framerusercontent.com/images/Y6jrcs7yZkqh9sRA4eMYaPQ96pk.png?width=408&amp;height=326" alt="" class="absolute left-[1%] top-[503px] h-auto w-[408px]">
+  </div>
+</section>
+<section class="relative h-[894px] w-full overflow-hidden bg-background text-primary-foreground">
+  <div class="absolute left-1/2 top-[-52px] h-[930px] w-[1080px] -translate-x-1/2 rotate-[2deg] border border-border bg-primary/80"></div>
+
+  <div class="absolute left-[30px] top-[12px] h-[840px] w-[1380px] rotate-[1deg] overflow-hidden rounded-[30px] border-2 border-primary-foreground/90 bg-card text-card-foreground shadow-2xl">
+    <img src="https://framerusercontent.com/images/9G25ruOgt322clA0e0vFrw4RNEs.png?width=300&amp;height=300" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20">
+    <div class="absolute inset-[18px] rounded-[20px] border border-primary-foreground/65">
+      <div class="absolute inset-0 grid grid-cols-[42px_repeat(18,minmax(0,1fr))] grid-rows-[repeat(18,minmax(0,1fr))]">
+        <div class="col-start-2 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/30"></div>
+        <div class="col-start-3 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-4 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-5 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-6 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-7 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-8 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-9 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-10 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-11 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-12 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-13 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-14 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-15 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-16 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-17 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-18 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+        <div class="col-start-19 col-end-[-1] row-start-1 row-end-[-1] border-l border-primary-foreground/20"></div>
+
+        <div class="col-start-1 col-end-[-1] row-start-2 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-3 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-4 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-5 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-6 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-7 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-8 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-9 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-10 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-11 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-12 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-13 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-14 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-15 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-16 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-17 border-t border-primary-foreground/20"></div>
+        <div class="col-start-1 col-end-[-1] row-start-18 border-t border-primary-foreground/20"></div>
+      </div>
+
+      <div class="absolute left-[-11px] top-[162px] h-5 w-5 border-t-2 border-primary-foreground/90"></div>
+      <div class="absolute left-[-11px] top-[346px] h-5 w-5 border-t-2 border-primary-foreground/90"></div>
+      <div class="absolute left-[-11px] top-[530px] h-5 w-5 border-t-2 border-primary-foreground/90"></div>
+      <div class="absolute left-[-11px] top-[714px] h-5 w-5 border-t-2 border-primary-foreground/90"></div>
+      <div class="absolute right-[36px] top-[185px] h-7 w-7 before:absolute before:left-3 before:top-0 before:h-7 before:border-l-2 before:border-primary-foreground/90 after:absolute after:left-0 after:top-3 after:w-7 after:border-t-2 after:border-primary-foreground/90"></div>
+      <div class="absolute right-[36px] top-[368px] h-7 w-7 before:absolute before:left-3 before:top-0 before:h-7 before:border-l-2 before:border-primary-foreground/90 after:absolute after:left-0 after:top-3 after:w-7 after:border-t-2 after:border-primary-foreground/90"></div>
+      <div class="absolute right-[36px] top-[552px] h-7 w-7 before:absolute before:left-3 before:top-0 before:h-7 before:border-l-2 before:border-primary-foreground/90 after:absolute after:left-0 after:top-3 after:w-7 after:border-t-2 after:border-primary-foreground/90"></div>
+      <div class="absolute right-[36px] top-[736px] h-7 w-7 before:absolute before:left-3 before:top-0 before:h-7 before:border-l-2 before:border-primary-foreground/90 after:absolute after:left-0 after:top-3 after:w-7 after:border-t-2 after:border-primary-foreground/90"></div>
+
+      <div class="absolute left-[-22px] top-[-7px] flex h-[758px] w-10 flex-col justify-between text-sm text-primary-foreground">
+        <p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p><p>8</p><p>9</p><p>11</p><p>12</p><p>13</p><p>14</p><p>15</p><p>16</p><p>17</p><p>18</p>
+      </div>
+
+      <a class="absolute left-[106px] top-[-12px] h-[288px] w-[282px] -rotate-[2deg] overflow-hidden rounded-[22px] border-[10px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/x3y7QRdmiIS5JFAwhWC4IHHHJsE.png?scale-down-to=512&amp;width=2876&amp;height=2870" alt="" class="h-full w-full object-cover">
+      </a>
+      <a href="https://x.com/jackie_zhang_ls/status/1953203804113125820/video/1" target="_blank" class="absolute left-[466px] top-[1px] h-[269px] w-[355px] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/gaaYI25iUJhP2n1xmahYjO3XRY.png?scale-down-to=512&amp;width=1980&amp;height=1202" alt="" class="h-full w-full object-cover">
+      </a>
+      <a class="absolute right-[135px] top-[-26px] h-[291px] w-[287px] rotate-[6deg] overflow-hidden rounded-[23px] border-[10px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/cmpsfHDSBvMIVkOtMJffhTk8HA.png?scale-down-to=1024&amp;width=1360&amp;height=1394" alt="" class="h-full w-full object-cover">
+      </a>
+      <a href="https://whosspeaking.framer.website" target="_blank" class="absolute left-[72px] top-[285px] h-[207px] w-[361px] -rotate-[4deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/OqvkDghj18vNLRheWfCb9I9ZC5M.png?scale-down-to=512&amp;width=2688&amp;height=1534" alt="" class="h-full w-full object-cover">
+      </a>
+      <a class="absolute left-[459px] top-[276px] h-[247px] w-[319px] -rotate-[6deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/SMhadH5n5CuLH7ZXJnFHzzfUI7k.png?scale-down-to=1024&amp;width=1528&amp;height=2431" alt="" class="h-full w-full object-cover">
+      </a>
+      <a class="absolute right-[135px] top-[265px] h-[252px] w-[287px] -rotate-[6deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/HUqtxwLIEIp2z66d1Rbksv2PbbY.png?scale-down-to=512&amp;width=1696&amp;height=1394" alt="" class="h-full w-full object-cover">
+      </a>
+      <a class="absolute left-[80px] top-[494px] h-[288px] w-[353px] rotate-[3deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/Wiw196PFt5v5LcQxgcrCUB3F0.png?width=1774&amp;height=1560" alt="" class="h-full w-full object-cover">
+      </a>
+      <a href="https://tf2048.io" target="_blank" class="absolute left-[470px] top-[519px] h-[271px] w-[367px] rotate-[2deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/Isusj1Nh2i04aFkiuiBVhYCfec.png?scale-down-to=512&amp;width=1984&amp;height=1400" alt="" class="h-full w-full object-cover">
+      </a>
+      <a class="absolute right-[133px] top-[555px] h-[201px] w-[237px] -rotate-[5deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+        <img src="https://framerusercontent.com/images/5YyYUryAtcl0ESyOgNb4S9dajw.png?scale-down-to=1024&amp;width=1546&amp;height=1894" alt="" class="h-full w-full object-cover">
+      </a>
+
+      <p class="absolute bottom-[-32px] right-[32px] text-sm font-medium text-primary-foreground">Everything you do, do it with care.</p>
+    </div>
+  </div>
+</section>
+<section class="relative h-27 overflow-hidden bg-background text-primary-foreground">
+  <a href="./about" class="absolute left-1/2 top-0 flex h-25 w-55 -translate-x-1/2 flex-col items-center rounded-b-xl border-2 border-dashed border-primary text-primary">
+    <span class="sr-only text-primary-foreground">What's his deal?</span>
+    <span class="sr-only text-primary-foreground">→</span>
+    <span class="mt-8 text-sm font-medium text-primary-foreground">About me</span>
+  </a>
+  <div class="hidden">
+    <img width="1604" height="1608" src="https://framerusercontent.com/images/ijsWM5MtUuc1y8pWtiDWBHCnuXg.png?scale-down-to=1024&amp;width=1604&amp;height=1608" alt="">
+    <img width="312" height="303" src="https://framerusercontent.com/images/QWXam9QLMP7h8aAPrYCUdNZl1NY.png?width=312&amp;height=303" alt="">
+    <img width="77" height="74" src="https://framerusercontent.com/images/w8dKj6vDnhmgdoMID29PJNlVk.png?width=77&amp;height=74" alt="">
+    <img width="76" height="103" src="https://framerusercontent.com/images/YcMQ4LDYe2uFjG6e4POBXesRqRQ.png?width=76&amp;height=103" alt="">
+    <img width="155" height="134" src="https://framerusercontent.com/images/tPjAa3EQM91M0Z9hdHatIpe1Eg.png?width=155&amp;height=134" alt="">
+    <img width="99" height="67" src="https://framerusercontent.com/images/Bn3VpwjRmAnbu3IuroXVQVvQM.png?width=99&amp;height=67" alt="">
+  </div>
+</section>
+<section class="relative h-[942px] overflow-hidden bg-background text-primary-foreground">
+  <div class="relative mx-auto h-full max-w-[1440px]">
+    <img src="https://framerusercontent.com/images/FRkj7J6yOqj9bBSMBJF7zdRGrY.png?width=381&amp;height=325" alt="" class="absolute left-[76px] top-[210px] w-[205px] object-contain">
+
+    <div class="absolute left-1/2 top-[100px] h-[374px] w-[772px] -translate-x-1/2 rounded-[30px] bg-card px-[30px] py-[32px] text-primary">
+      <div class="flex h-full gap-[12px]">
+        <div class="flex w-[392px] flex-col">
+          <div class="border-y border-primary py-[9px]">
+            <p class="text-[29px] leading-none tracking-[-0.06em] text-card-foreground">What I look for</p>
+          </div>
+
+          <div class="mt-[10px]">
+            <div class="flex h-[50px] items-center gap-3 border-b border-dashed border-primary/70">
+              <span class="flex h-[21px] w-[21px] items-center justify-center rounded-[3px] border-2 border-primary"></span>
+              <p class="text-[19px] font-medium leading-none text-card-foreground">Impactful work</p>
+            </div>
+            <div class="flex h-[50px] items-center gap-3 border-b border-dashed border-primary/70">
+              <span class="flex h-[21px] w-[21px] items-center justify-center rounded-[3px] border-2 border-primary"></span>
+              <p class="text-[19px] font-medium leading-none text-card-foreground">Meaningful work</p>
+            </div>
+            <div class="flex h-[50px] items-center gap-3">
+              <span class="flex h-[21px] w-[21px] items-center justify-center rounded-[3px] border-2 border-primary"></span>
+              <p class="text-[18px] font-medium leading-none text-card-foreground">Diversed team of talented folks</p>
+            </div>
+          </div>
+
+          <a href="mailto:lapsun.j.zhang@gmail.com" target="_blank" class="ml-[120px] mt-[20px] flex h-[50px] w-[153px] -rotate-1 items-center justify-center border-[3px] border-primary text-[18px] font-medium text-card-foreground">
+            let's chat!
+          </a>
+        </div>
+
+        <div class="relative ml-auto h-[298px] w-[310px] rounded-[22px] border-[8px] border-primary">
+          <img src="https://framerusercontent.com/images/iSwyFpVCzzKTbmhtq2Gakc2k5Xk.png?scale-down-to=512&amp;width=1602&amp;height=1586" alt="" class="hidden">
+          <img src="https://framerusercontent.com/images/7DHkysRvD4huqiyxAljijYYcc.gif?width=480&amp;height=270" alt="" class="hidden">
+        </div>
+      </div>
+    </div>
+
+    <img src="https://framerusercontent.com/images/raBEoGeB7wmHSyDXXPu6VzQPAg.png?width=242&amp;height=232" alt="" class="absolute left-[634px] top-[530px] w-[181px] object-contain">
+
+    <img src="https://framerusercontent.com/images/EYbfG6roNwIxhPystqzDKOK4.png?width=401&amp;height=464" alt="" class="absolute right-[27px] top-[498px] w-[190px] object-contain">
+
+    <img src="https://framerusercontent.com/images/zbVoYsGmG4nEEedbtgkv5193W6I.png?width=413&amp;height=392" alt="" class="hidden">
+
+    <a href="./#:vgdrfY_Pe" class="absolute left-1/2 top-[744px] flex w-[654px] -translate-x-1/2 items-center gap-3 overflow-hidden whitespace-nowrap text-[18px] font-medium">
+      <span class="text-[20px]">🎶</span>
+      <span>Almost heaven, West Virginia.　 Blue Ridge Mountains Shenandoah River . Life is old there. Older than the trees. Younger than the mountains. Growin like a breeze Country Roads, take me home. To the place I belong West Virginia, mountain momma. Take me home, country roads.</span>
+      <span class="text-[20px]">🎶</span>
+    </a>
+
+    <div class="absolute bottom-[47px] left-1/2 -translate-x-1/2 rotate-[-8deg] text-primary">
+      <iconify-icon icon="lucide:signature" width="154" height="58"></iconify-icon>
+    </div>
+  </div>
+</section>
+</div>
+</body></html>
