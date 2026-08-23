@@ -14,7 +14,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 1,
       title: "Medicus Labs Clinical AI",
       tag: "CLINICAL AI",
-      img: medicus?.image || "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+      img: medicus?.image || "/images/medicus-labs-logo.png",
       rot: "-rotate-[2deg]",
       project: medicus
     },
@@ -22,7 +22,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 2,
       title: "Gemini Vision Heatmap",
       tag: "MULTIMODAL AI",
-      img: vision?.image || "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      img: vision?.image || "/images/medicus-labs-logo.png",
       rot: "rotate-[4deg]",
       project: vision
     },
@@ -30,7 +30,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 3,
       title: "Doctor Review Portal",
       tag: "CLINICAL HUB",
-      img: doctor?.image || "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80",
+      img: doctor?.image || "/images/medicus-labs-logo.png",
       rot: "-rotate-[3deg]",
       project: doctor
     },
@@ -38,7 +38,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 4,
       title: "AR Patient Mobile Client",
       tag: "AR DERMOSCOPY",
-      img: mobile?.image || "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80",
+      img: mobile?.image || "/images/medicus-labs-logo.png",
       rot: "rotate-[3deg]",
       project: mobile
     },
@@ -46,7 +46,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 5,
       title: "HIPAA GCP Architecture",
       tag: "CLOUD RUN & KMS",
-      img: cloud?.image || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      img: cloud?.image || "/images/medicus-labs-logo.png",
       rot: "-rotate-[2deg]",
       project: cloud
     },
@@ -54,7 +54,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
       id: 6,
       title: "ICD-10 Clinical Reports",
       tag: "AUTOMATED PDF",
-      img: reports?.image || "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
+      img: reports?.image || "/images/medicus-labs-logo.png",
       rot: "rotate-[2deg]",
       project: reports
     }

@@ -25,8 +25,8 @@ export function JackieCaseStudyModal({ project, onClose, onNext }) {
         </button>
 
         {/* Lead Image */}
-        <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-[#f4f2ee] border border-[#e7e5df]">
-          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-white border border-[#e7e5df] p-6 flex items-center justify-center shadow-inner">
+          <img src={project.image} alt={project.title} className="max-w-full max-h-full object-contain" />
         </div>
 
         {/* Title Header */}

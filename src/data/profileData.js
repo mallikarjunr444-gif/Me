@@ -4,10 +4,10 @@ export const initialProfileData = {
     handle: "mallikarjunr-com",
     headline: "Engineering ideas into intelligent healthcare systems.",
     roles: [
-      "AI Engineer",
+      "Cloud Engineer and DevOps",
       "Founder @ Medicus Labs",
-      "Machine Learning Engineer",
-      "Computer Vision Specialist"
+      "Cloud Architect",
+      "Full-Stack Engineer"
     ],
     bio: "Computer Science Engineering student at DSATM Bengaluru and Founder of Medicus Labs. Dedicated to forging clinical-grade AI vision pipelines, multimodal reasoning models, and life-saving diagnostic software.",
     location: "Bengaluru, Karnataka, India",
