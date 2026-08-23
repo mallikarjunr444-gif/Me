@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #0a0b0e;
+    --bg-dark-card: #12141c;
+    --bg-dark-card-hover: #181b26;
+    --bg-paper: #f4f1ea;
+    --bg-paper-card: #ffffff;
+    --border-dark: rgba(255, 255, 255, 0.08);
+    --border-dark-hover: rgba(255, 255, 255, 0.18);
+    --border-paper: rgba(0, 0, 0, 0.08);
+    --text-light: #f3f4f6;
+    --text-muted: #8b92a5;
+    --text-dark: #191816;
+    --accent-orange: #f05a3e;
+    --accent-cyan: #38bdf8;
+    --accent-emerald: #10b981;
+    --accent-purple: #a855f7;
+    --accent-amber: #f59e0b;
+  }
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+}
+
+/* ── Typography Classes ── */
+.font-display {
+  font-family: 'Space Grotesk', 'DM Sans', sans-serif;
+  letter-spacing: -0.035em;
+}
+
+.font-serif-italic {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+}
+
+.font-hand {
+  font-family: 'Caveat', 'Kalam', cursive;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Custom Minimal Scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-orange);
+}
+
+/* ── Handcrafted Scrapbook & Tactile Elements ── */
+.washi-tape {
+  background: rgba(244, 241, 234, 0.65);
+  backdrop-filter: blur(4px);
+  border-left: 2px dashed rgba(0, 0, 0, 0.15);
+  border-right: 2px dashed rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.washi-tape-orange {
+  background: rgba(240, 90, 62, 0.55);
+  backdrop-filter: blur(4px);
+  border-left: 2px dashed rgba(0, 0, 0, 0.2);
+  border-right: 2px dashed rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note {
+  background: #fdf6b2;
+  color: #191816;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.4);
+}
+
+.stamp-badge {
+  border: 2px dashed var(--accent-orange);
+  color: var(--accent-orange);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transform: rotate(-3deg);
+}
+
+.paper-card {
+  background: var(--bg-paper);
+  color: var(--text-dark);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.paper-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+.dark-card {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dark-card:hover {
+  background: var(--bg-dark-card-hover);
+  border-color: var(--border-dark-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Interactive Grid Texture Background ── */
+.canvas-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.canvas-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Hand-Drawn SVG Animation ── */
+@keyframes drawStroke {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+.doodle-stroke {
+  stroke-dasharray: 200;
+  animation: drawStroke 1.2s ease-out forwards;
+}
+
+/* ── Floating Gentle Parallax Float ── */
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-8px) rotate(calc(var(--rot, 0deg) + 0.8deg)); }
+}
+
+.float-slow {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.float-medium {
+  animation: gentleFloat 4.5s ease-in-out infinite;
+}
+
+/* ── Laser Scan Animation ── */
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0.8; }
+}
+
+.animate-scanner-line {
+  animation: laserScan 2s ease-in-out infinite alternate;
+}
