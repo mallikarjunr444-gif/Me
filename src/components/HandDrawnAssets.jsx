@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (Exact seamless joint strip uploaded by user)
+// Side Stamp Ribbon for Left and Right vertical borders (Exact seamless joint strip, static without shaking, scrolls with the page)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
 
   return (
     <div
-      className={`fixed top-0 bottom-0 ${
+      className={`absolute top-0 bottom-0 h-full ${
         isLeft ? 'left-0' : 'right-0'
-      } w-[48px] sm:w-[64px] z-40 overflow-hidden pointer-events-none select-none`}
+      } w-[48px] sm:w-[64px] z-10 overflow-hidden pointer-events-none select-none`}
     >
       <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
-        {/* Continuous seamlessly joint stamp ribbon strip */}
+        {/* Continuous seamlessly joint stamp ribbon strip - static and non-shaking */}
         <div
-          className="absolute inset-0 w-full h-full animate-line-boil-slow opacity-95"
+          className="absolute inset-0 w-full h-full opacity-95"
           style={{
             backgroundImage: `url('/images/stamps/stamp-ribbon-joint.png')`,
             backgroundRepeat: 'repeat-y',
