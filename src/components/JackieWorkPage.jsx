@@ -26,23 +26,21 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
     <div className="max-w-5xl mx-auto space-y-28 py-10 select-none">
       
       {/* ══════════════════ 1. TOP HEADER & LUCKY CAT SEAL ══════════════════ */}
-      <div className="text-center space-y-6">
+      <div className="text-center space-y-6 pt-4">
         
         {/* Top Lucky Cat Seal Stamp */}
         <div className="flex justify-center">
-          <div className="w-20 h-28 rounded-2xl border-2 border-[#c93f2c] bg-[#1a1312] p-2 flex flex-col items-center justify-between shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-            <div className="text-[10px] font-mono font-bold text-[#c93f2c] border-b border-[#c93f2c]/40 w-full text-center pb-1">
-              運 // LUCK
-            </div>
-            <ChalkLuckyCat className="w-12 h-12" />
-            <div className="text-[8px] font-mono text-[#c93f2c]/80 tracking-widest">
-              MEDICUS
-            </div>
+          <div className="w-20 sm:w-24 aspect-[1/2] flex items-center justify-center transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+            <img
+              src="/images/stamps/lucky-cat-stamp.png"
+              alt="Lucky Cat Seal Stamp"
+              className="w-full h-full object-contain filter drop-shadow-md animate-line-boil-slow hover:scale-105 transition-transform"
+            />
           </div>
         </div>
 
         {/* Page Title */}
-        <h1 className="font-serif text-3xl sm:text-5xl text-[#faecd8] tracking-tight">
+        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#faecd8] tracking-tight">
           Places I've been, things I've learnt
         </h1>
 
