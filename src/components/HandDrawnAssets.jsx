@@ -382,3 +382,20 @@ export function ChalkOrigamiMap({ className = "" }) {
     </div>
   );
 }
+
+// Chalk Botanical Branch with organic sway
+export function ChalkBotanicalBranch({ className = "" }) {
+  return (
+    <div className={`animate-flowers-sway doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 100 140" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Main curved branch */}
+        <path d="M20 130 Q45 80 80 15" />
+        {/* Leaves */}
+        <path d="M35 105 Q20 95 24 80 Q40 85 38 100" />
+        <path d="M48 80 Q65 70 68 55 Q52 60 50 75" />
+        <path d="M60 55 Q45 45 48 30 Q65 35 62 50" />
+        <path d="M72 30 Q90 20 88 5 Q72 12 74 26" />
+      </svg>
+    </div>
+  );
+}
