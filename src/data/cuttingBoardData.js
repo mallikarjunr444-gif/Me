@@ -2,32 +2,20 @@
  * ==============================================================================
  * CUTTING BOARD MAT PHOTOS & CARDS CONFIGURATION
  * ==============================================================================
- * You can easily customize, add, delete, or replace photos on the Cutting Board!
- * 
- * HOW TO USE:
- * 1. To replace a photo:
- *    Put your image in `public/images/your-photo.jpg` and change the `image` field:
- *    `image: "/images/your-photo.jpg"`
- * 
- * 2. To delete/hide a photo:
- *    Set `visible: false` or delete the object from the array.
- * 
- * 3. To add a new photo:
- *    Add an object with `{ title: "My Project", image: "/images/my-pic.jpg", visible: true }`.
- * ==============================================================================
+ * Photos on the Cutting Board are dynamically configured here.
  */
 
 export const cuttingBoardData = [
   {
     id: "slot-1",
     title: "Pack App",
-    image: "assets/images/0pNvbqriNrL1D2jxTeMwqGMPVo.png", // Replace with your image e.g. "/images/my-app.jpg"
+    image: "assets/images/0pNvbqriNrL1D2jxTeMwqGMPVo.png",
     position: "Top Left Phone Card",
     visible: true
   },
   {
     id: "slot-2",
-    title: "Code Editor / System Architecture",
+    title: "Code Editor / Architecture",
     image: "assets/images/cqrOEukUtJ5q6innagqIo1y7ig.png",
     position: "Top Middle Code Card",
     visible: true
@@ -41,15 +29,15 @@ export const cuttingBoardData = [
   },
   {
     id: "slot-4",
-    title: "Who's Speaking / Conference",
-    image: "assets/images/FRkj7J6yOqj9bBSMBJF7zdRGrY.png",
+    title: "Award Presentation - 1st Position Team",
+    image: "assets/images/mallikarjun-award-team.jpg", // 👈 Team Award Presentation Photo!
     position: "Middle Left Card",
     visible: true
   },
   {
     id: "slot-5",
-    title: "Appointments & Clinic Workflow",
-    image: "assets/images/EYbfG6roNwIxhPystqzDKOK4.png",
+    title: "DSATM 1st Place Certificate of Appreciation",
+    image: "assets/images/mallikarjun-certificate-dsatm.jpg", // 👈 1st Place DSATM Certificate!
     position: "Center Grid Card",
     visible: true
   },
