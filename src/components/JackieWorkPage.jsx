@@ -40,33 +40,12 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
         </div>
       </div>
 
-      {/* ══════════════════ 1. TOP HEADER & LUCKY CAT SEAL ══════════════════ */}
-      <div className="text-center space-y-6 pt-4">
-        {/* Top Lucky Cat Seal Stamp */}
-        <div className="flex justify-center">
-          <div className="w-16 sm:w-20 aspect-[1/2] flex items-center justify-center transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-            <img
-              src="/images/stamps/lucky-cat-stamp.png"
-              alt="Lucky Cat Seal Stamp"
-              className="w-full h-full object-contain filter drop-shadow-md animate-line-boil-slow hover:scale-105 transition-transform"
-            />
-          </div>
-        </div>
-
+      {/* ══════════════════ 1. TOP HEADER ══════════════════ */}
+      <div className="text-center space-y-6 pt-8 pb-4">
         {/* Page Title */}
         <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#faecd8] tracking-tight">
           Places I've been, things I've learnt
         </h1>
-      </div>
-
-
-      {/* ══════════════════ DIAGRAM 1 (hand-drawn illustration) ══════════════════ */}
-      <div className="flex justify-center py-12">
-        <img
-          src="/images/work/diagram-1.png"
-          alt="Hand-drawn illustration"
-          className="w-20 h-auto object-contain opacity-60 animate-line-boil-slow"
-        />
       </div>
 
 
