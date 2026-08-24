@@ -47,84 +47,124 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ 2. THE CLOTHING CARE HANG-TAG WITH LINKEDIN EMBEDDED ══════════════════ */}
+      {/* ══════════════════ 2. THE CLOTHING CARE HANG-TAG WITH FULL LINKEDIN CARD ══════════════════ */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-6">
         
         {/* Hang Tag (Left 7 Cols) */}
         <div className="md:col-span-7 flex justify-center md:justify-end">
-          <div className="relative transform -rotate-2 hover:rotate-0 transition-all duration-300 max-w-sm w-full">
+          <div className="relative transform -rotate-2 hover:rotate-0 transition-all duration-300 max-w-md w-full">
             
             {/* Red Underlay Shadow Card */}
             <div className="absolute inset-0 bg-[#c93f2c] rounded-3xl translate-x-3 translate-y-3" />
 
             {/* Main Cream Hang Tag */}
-            <div className="relative bg-[#faecd8] text-slate-900 rounded-3xl p-7 pt-12 shadow-2xl border border-slate-300 space-y-5">
+            <div className="relative bg-[#faecd8] text-slate-900 rounded-3xl p-6 sm:p-7 pt-12 shadow-2xl border border-slate-300 space-y-4">
               
-              {/* Eyelet & String Ring */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <div className="w-6 h-10 border-2 border-slate-700 rounded-full -mt-7 mb-1" />
-                <div className="w-7 h-7 rounded-full bg-slate-800 border-4 border-slate-400 flex items-center justify-center">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#181716]" />
+              {/* Eyelet & String Loop (Exact from reference) */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+                <div className="w-8 h-12 border-2 border-slate-700 rounded-full -mt-9 mb-1" />
+                <div className="w-8 h-8 rounded-full bg-slate-800 border-4 border-slate-400 flex items-center justify-center shadow-inner">
+                  <div className="w-3 h-3 rounded-full bg-[#181716]" />
                 </div>
               </div>
 
               {/* Laundry Care Icons */}
-              <div className="flex items-center justify-between text-2xl pt-2 text-slate-800 font-mono">
+              <div className="flex items-center justify-between text-2xl pt-1 text-slate-800 font-mono">
                 <span title="Care 30°">🧼 30°</span>
                 <span title="Do Not Bleach">⛝</span>
                 <span title="Tumble Low">⊗</span>
                 <span title="Iron Medium">⨂</span>
               </div>
 
-              {/* Company & Role */}
-              <div className="space-y-1.5">
-                <div className="font-mono text-2xl font-black tracking-tight text-slate-950 flex items-center justify-between">
-                  <span>Medicus Labs</span>
-                  <span className="text-xs font-bold text-[#c93f2c] px-2 py-0.5 rounded bg-[#c93f2c]/10">FOUNDER</span>
+              {/* 💼 COMPLETE LINKEDIN CARD INSIDE THE TAG (Matching 1st pic) */}
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden font-sans">
+                
+                {/* LinkedIn Blue Header Bar */}
+                <div className="bg-[#f3f0e8] px-4 py-2 flex items-center justify-between border-b border-slate-200">
+                  <div className="flex items-center gap-1 font-bold text-[#0077b5] text-lg font-mono tracking-tight">
+                    <span>Linked</span>
+                    <span className="bg-[#0077b5] text-white px-1 rounded text-base">in</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-500 font-bold">VERIFIED</span>
                 </div>
-                <p className="font-mono text-xs text-slate-700 leading-relaxed">
-                  India's leading clinical AI dermatology & multimodal medical triage platform.
-                </p>
-              </div>
 
-              {/* 💼 LINKEDIN BADGE EMBEDDED DIRECTLY ON THE TAG */}
-              <div className="pt-2">
-                <a
-                  href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-[#0077b5] text-white hover:bg-[#005f93] transition-all shadow-md group cursor-pointer"
-                  title="View Mallikarjun R on LinkedIn"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center font-bold text-base">
-                      <LinkedInIcon className="w-4 h-4 text-white fill-current" />
+                {/* Profile Details Body */}
+                <div className="p-4 space-y-3">
+                  
+                  <div className="flex items-center gap-3.5">
+                    {/* User Avatar */}
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#0077b5] shadow-sm bg-slate-900 shrink-0">
+                      <img
+                        src="/images/mallikarjun-avatar.png"
+                        alt="Mallikarjun R"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80";
+                        }}
+                      />
                     </div>
-                    <div className="text-left font-mono">
-                      <div className="text-xs font-black leading-tight flex items-center gap-1">
+
+                    <div>
+                      <h3 className="font-bold text-base text-slate-950 leading-tight flex items-center gap-1">
                         <span>Mallikarjun R</span>
-                        <span className="text-[10px] text-sky-200">✓</span>
-                      </div>
-                      <div className="text-[10px] text-sky-100/80">
-                        in/mallikarjunr-com
-                      </div>
+                        <span className="text-[#0077b5] text-xs">●</span>
+                      </h3>
+                      <p className="text-[11px] text-slate-600 font-medium leading-tight pt-0.5">
+                        Founder @ Medicus Labs & ORVEX Studios
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[11px] font-mono font-bold bg-white/20 px-2 py-1 rounded-lg group-hover:bg-white group-hover:text-[#0077b5] transition-colors">
-                    <span>Profile</span>
-                    <ExternalLink className="w-3 h-3" />
+                  {/* Headline */}
+                  <p className="text-[11px] text-slate-800 font-medium leading-snug">
+                    CSE Student @ DSATM | Founder at ORVEX Studios | Building AI, Cloud & DevOps Projects
+                  </p>
+
+                  {/* Education & Studio */}
+                  <p className="text-[10px] text-slate-500 leading-tight">
+                    Orvex Studios | DAYANANDA SAGAR ACADEMY OF TECHNOLOGY AND MANAGEMENT, BANGALORE
+                  </p>
+
+                  {/* View Profile Action Button */}
+                  <div className="pt-1">
+                    <a
+                      href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center w-full py-2 rounded-full border-2 border-[#0077b5] text-[#0077b5] font-bold text-xs hover:bg-[#0077b5] hover:text-white transition-all shadow-xs"
+                    >
+                      View profile
+                    </a>
                   </div>
-                </a>
+
+                  {/* Official LinkedIn Script Fallback Badge Container */}
+                  <div className="hidden">
+                    <div
+                      className="badge-base LI-profile-badge"
+                      data-locale="en_US"
+                      data-size="medium"
+                      data-theme="light"
+                      data-type="VERTICAL"
+                      data-vanity="mallikarjunr-com"
+                      data-version="v1"
+                    >
+                      <a className="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge">
+                        Mallikarjun R
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+
               </div>
 
               {/* Barcode & Serial */}
-              <div className="pt-3 border-t border-slate-300 space-y-1 text-center font-mono">
+              <div className="pt-2 border-t border-slate-300 space-y-1 text-center font-mono">
                 <div className="tracking-[4px] text-lg font-black text-slate-950">
                   ||||| | |||| || |||||| | |||||
                 </div>
                 <div className="text-[10px] text-slate-600 tracking-widest font-bold">
-                  LI:MALLIKARJUNR-COM // 2026
+                  B45H2024220268 // MALLIKARJUNR
                 </div>
               </div>
 
@@ -140,21 +180,21 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
             <div className="text-xs text-[#c93f2c] font-bold tracking-wider uppercase">
               Notable work
             </div>
-            <ul className="space-y-2 text-sm text-[#faecd8]/90">
-              <li className="hover:text-[#c93f2c] cursor-pointer transition-colors flex items-center gap-2">
-                <span>✦</span> <span>Clinical AI Lesion Classifier</span>
+            <ul className="space-y-2 text-base text-[#c93f2c] font-hand">
+              <li className="hover:text-white cursor-pointer transition-colors">
+                Medicus Labs
               </li>
-              <li className="hover:text-[#c93f2c] cursor-pointer transition-colors flex items-center gap-2">
-                <span>✦</span> <span>Gemini Vision Triage Heatmap</span>
+              <li className="hover:text-white cursor-pointer transition-colors">
+                Clinical AI Diagnostics
               </li>
-              <li className="hover:text-[#c93f2c] cursor-pointer transition-colors flex items-center gap-2">
-                <span>✦</span> <span>Doctor Specialist Review Portal</span>
+              <li className="hover:text-white cursor-pointer transition-colors">
+                ORVEX Studios
               </li>
-              <li className="hover:text-[#c93f2c] cursor-pointer transition-colors flex items-center gap-2">
-                <span>✦</span> <span>AR Dermoscopy Mobile Client</span>
+              <li className="hover:text-white cursor-pointer transition-colors">
+                Vision X Desktop Agent
               </li>
-              <li className="hover:text-[#c93f2c] cursor-pointer transition-colors flex items-center gap-2">
-                <span>✦</span> <span>HIPAA GCP KMS Architecture</span>
+              <li className="hover:text-white cursor-pointer transition-colors">
+                CloudOps & IaC Matrix
               </li>
             </ul>
           </div>
