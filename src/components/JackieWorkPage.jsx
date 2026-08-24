@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { portfolioData } from '../data/portfolioData';
 
 export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   const iframeRef = useRef(null);
@@ -14,12 +15,17 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
           if (onNavigate) onNavigate(e.data.page || 'about');
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
+        } else if (e.data.type === 'SELECT_PROJECT') {
+          const matched = portfolioData.projects.find(
+            (p) => p.id === e.data.projectId || p.title.toLowerCase().includes((e.data.title || '').toLowerCase())
+          ) || portfolioData.projects[0];
+          if (onSelectProject) onSelectProject(matched);
         }
       }
     };
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [onNavigate, onOpenConnect]);
+  }, [onNavigate, onOpenConnect, onSelectProject]);
 
   const attachListeners = () => {
     try {
@@ -67,6 +73,43 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                   return;
                 }
 
+                // Project item clicks
+                if (text.includes('medicus labs')) {
+                  e.preventDefault();
+                  if (onSelectProject) {
+                    const p = portfolioData.projects.find((pr) => pr.id === 'medicus-labs') || portfolioData.projects[0];
+                    onSelectProject(p);
+                  }
+                  return;
+                }
+
+                if (text.includes('vision x')) {
+                  e.preventDefault();
+                  if (onSelectProject) {
+                    const p = portfolioData.projects.find((pr) => pr.id === 'medicus-vision-triage') || portfolioData.projects[1] || portfolioData.projects[0];
+                    onSelectProject(p);
+                  }
+                  return;
+                }
+
+                if (text.includes('orvex') || text.includes('game')) {
+                  e.preventDefault();
+                  if (onSelectProject) {
+                    const p = portfolioData.projects.find((pr) => pr.id === 'medicus-doctor-hub') || portfolioData.projects[0];
+                    onSelectProject(p);
+                  }
+                  return;
+                }
+
+                if (text.includes('tech news') || text.includes('cloud & devops')) {
+                  e.preventDefault();
+                  if (onSelectProject) {
+                    const p = portfolioData.projects.find((pr) => pr.id === 'medicus-cloud-hipaa') || portfolioData.projects[0];
+                    onSelectProject(p);
+                  }
+                  return;
+                }
+
                 el = el.parentElement;
               }
             },
@@ -82,11 +125,11 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   useEffect(() => {
     const interval = setInterval(attachListeners, 500);
     return () => clearInterval(interval);
-  }, [onNavigate, onOpenConnect]);
+  }, [onNavigate, onOpenConnect, onSelectProject]);
 
   return (
     <div className="w-full min-h-screen relative select-none bg-[#181716]">
-      {/* 1:1 Pixel-Perfect Work Page with Live Navigation Hooked Up */}
+      {/* 1:1 Pixel-Perfect Work Page with Live Navigation & Interactive Projects */}
       <iframe
         ref={iframeRef}
         src="/jackie_work/index.html"
