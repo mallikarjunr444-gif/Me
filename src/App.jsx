@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { portfolioData } from './data/portfolioData';
-import { StampRibbon, HandDrawnAvatar } from './components/HandDrawnAssets';
-import { JackieHeroBoard, LayeredPaperNotes } from './components/JackieHeroBoard';
-import { JackieWhatILookForSection } from './components/JackieWhatILookForSection';
 import { JackieCaseStudyModal } from './components/JackieCaseStudyModal';
 import { JackieAboutDrawer } from './components/JackieAboutDrawer';
 import { JackieConnectDrawer } from './components/JackieConnectDrawer';
 import { JackieWorkPage } from './components/JackieWorkPage';
+import { JackieAboutPage } from './components/JackieAboutPage';
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null);
@@ -54,53 +52,21 @@ export default function App() {
     <div className="min-h-screen bg-[#181716] text-[#faecd8] relative font-sans selection:bg-[#c93f2c] selection:text-white pb-24 overflow-x-hidden">
       
       {currentPage === 'work' ? (
-        /* Dedicated Fullscreen Work Page (All projects, luggage tag, Vision X wristband, BUILD ticket, CRT monitor, Certifications) */
+        /* Dedicated Fullscreen 1:1 Cloned Work Page */
         <JackieWorkPage
-          onNavigateHome={() => handleNavigate('about')}
           onNavigate={(page) => handleNavigate(page)}
           onOpenConnect={() => setConnectOpen(true)}
           onSelectProject={(p) => setActiveProject(p)}
         />
       ) : (
-        <>
-          {/* 1. Left Vertical Stamp Ribbon */}
-          <StampRibbon side="left" />
-
-          {/* 2. Right Vertical Stamp Ribbon */}
-          <StampRibbon side="right" />
-
-          {/* Main About Page Container */}
-          <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
-            {/* Top Hand-Drawn Avatar & Navigation Links (about, work, connect) */}
-            <HandDrawnAvatar
-              onNavigate={handleNavigate}
-              activeTab={currentPage}
-            />
-
-            {/* Main Hero Cutting Board / Grid Notebook */}
-            <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
-
-            {/* Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
-            <LayeredPaperNotes />
-
-            {/* "What I Look For" Card + Retro Smiling Computer + Botanicals */}
-            <JackieWhatILookForSection
-              onOpenConnect={() => setConnectOpen(true)}
-              personal={data.personal}
-            />
-
-            {/* Bottom Ending Signoff */}
-            <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2">
-              <div className="font-hand text-xl text-[#faecd8]/70">
-                "Mallikarjun.R • Bengaluru, India • Still building :)"
-              </div>
-              <div>© {new Date().getFullYear()} Mallikarjun.R. All projects & systems verified.</div>
-            </div>
-          </div>
-        </>
+        /* Dedicated Fullscreen 1:1 Cloned About Page */
+        <JackieAboutPage
+          onNavigate={(page) => handleNavigate(page)}
+          onOpenConnect={() => setConnectOpen(true)}
+        />
       )}
 
-      {/* Modals */}
+      {/* Modals & Drawers */}
       {activeProject && (
         <JackieCaseStudyModal
           project={activeProject}
