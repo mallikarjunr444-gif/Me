@@ -742,33 +742,32 @@ I design tools that help people do their best work.">
   }
   window.addEventListener('load', sendHeight);
   window.addEventListener('resize', sendHeight);
-  setInterval(sendHeight, 500);
+  setInterval(sendHeight, 600);
 
-  document.addEventListener('click', function(e) {
+  // High-priority global click listener
+  window.addEventListener('click', function(e) {
     var el = e.target;
-    while (el && el !== document.body) {
-      var text = (el.innerText || '').trim().toLowerCase();
-      var href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
-      
-      if (text === 'about' || href.includes('about') || href === '/' || href === '#about') {
+    while (el && el !== document.body && el !== document.documentElement) {
+      var text = (el.textContent || '').trim();
+      var name = el.getAttribute ? (el.getAttribute('data-framer-name') || '') : '';
+      var href = el.getAttribute ? (el.getAttribute('href') || '') : '';
+
+      // Check Connect
+      if (name === 'Connect' || text === 'Connect' || (el.className && typeof el.className === 'string' && el.className.includes('1t6lft1'))) {
         e.preventDefault();
         e.stopPropagation();
-        window.parent.postMessage({ type: 'NAVIGATE', page: 'about' }, '*');
-        return;
-      }
-      
-      if (text === 'connect' || href.includes('connect') || href === '#connect') {
-        e.preventDefault();
-        e.stopPropagation();
+        e.stopImmediatePropagation();
         window.parent.postMessage({ type: 'OPEN_CONNECT' }, '*');
-        return;
+        return false;
       }
 
-      if (el.getAttribute && (el.getAttribute('data-framer-name') === 'Logo' || (el.className && typeof el.className === 'string' && el.className.includes('Logo')))) {
+      // Check About or Logo
+      if (text === 'about' || text === 'About' || href === './' || href === '/' || name === 'Logo' || (el.className && typeof el.className === 'string' && el.className.includes('3v0uqz'))) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         window.parent.postMessage({ type: 'NAVIGATE', page: 'about' }, '*');
-        return;
+        return false;
       }
 
       el = el.parentElement;
