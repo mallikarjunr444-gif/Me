@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { portfolioData } from './data/portfolioData';
 import { StampRibbon, HandDrawnAvatar } from './components/HandDrawnAssets';
 import { JackieHeroBoard, LayeredPaperNotes } from './components/JackieHeroBoard';
-import { JackieProjectPeelSection } from './components/JackieProjectPeelSection';
-import { JackieCuttingBoardSection } from './components/JackieCuttingBoardSection';
 import { JackieWhatILookForSection } from './components/JackieWhatILookForSection';
 import { JackieCaseStudyModal } from './components/JackieCaseStudyModal';
 import { JackieAboutDrawer } from './components/JackieAboutDrawer';
@@ -56,7 +54,7 @@ export default function App() {
     <div className="min-h-screen bg-[#181716] text-[#faecd8] relative font-sans selection:bg-[#c93f2c] selection:text-white pb-24 overflow-x-hidden">
       
       {currentPage === 'work' ? (
-        /* Dedicated Fullscreen Work Page */
+        /* Dedicated Fullscreen Work Page (All projects, luggage tag, Vision X wristband, BUILD ticket, CRT monitor, Certifications) */
         <JackieWorkPage
           onNavigateHome={() => handleNavigate('about')}
           onNavigate={(page) => handleNavigate(page)}
@@ -71,7 +69,7 @@ export default function App() {
           {/* 2. Right Vertical Stamp Ribbon */}
           <StampRibbon side="right" />
 
-          {/* Main Content Container */}
+          {/* Main About Page Container */}
           <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
             {/* Top Hand-Drawn Avatar & Navigation Links (about, work, connect) */}
             <HandDrawnAvatar
@@ -79,24 +77,13 @@ export default function App() {
               activeTab={currentPage}
             />
 
-            {/* 4. Main Hero Cutting Board / Grid Notebook */}
+            {/* Main Hero Cutting Board / Grid Notebook */}
             <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
 
-            {/* 5. Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
+            {/* Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
             <LayeredPaperNotes />
 
-            {/* 6. Peeling Project Cards & Background Chalk Doodles */}
-            <JackieProjectPeelSection
-              projects={data.projects}
-              onSelectProject={(p) => setActiveProject(p)}
-            />
-
-            {/* 7. The Projects Workspace */}
-            <JackieCuttingBoardSection
-              onSelectProject={(p) => setActiveProject(p)}
-            />
-
-            {/* 8. "What I Look For" Card + Retro Smiling Computer + Botanicals */}
+            {/* "What I Look For" Card + Retro Smiling Computer + Botanicals */}
             <JackieWhatILookForSection
               onOpenConnect={() => setConnectOpen(true)}
               personal={data.personal}
