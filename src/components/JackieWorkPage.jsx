@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { portfolioData } from '../data/portfolioData';
+import { JackieProjectPeelSection } from './JackieProjectPeelSection';
+import { JackieCuttingBoardSection } from './JackieCuttingBoardSection';
 
 export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   const iframeRef = useRef(null);
@@ -57,7 +59,7 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                   return;
                 }
 
-                // 2. Specific social text clicks if clicked on text child
+                // 2. Specific social text clicks
                 if (text.includes('github.com') || (text.includes('github') && (el.closest('a') || tag === 'a'))) {
                   e.preventDefault();
                   e.stopPropagation();
@@ -155,8 +157,8 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   }, [onNavigate, onOpenConnect, onSelectProject]);
 
   return (
-    <div className="w-full min-h-screen relative select-none bg-[#181716]">
-      {/* 1:1 Pixel-Perfect Work Page with Live Navigation & Interactive Projects */}
+    <div className="w-full min-h-screen relative select-none bg-[#181716] space-y-16 pb-20">
+      {/* 1. Cloned Work Page View with Customized Artifacts (Luggage Tag, Vision X, BUILD Ticket, CRT Monitor, Certifications) */}
       <iframe
         ref={iframeRef}
         src="/jackie_work/index.html"
@@ -173,6 +175,37 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         }}
         scrolling="no"
       />
+
+      {/* 2. Interactive Peeling Project Cards Section (Transferred to Work) */}
+      <div className="px-4 sm:px-8 max-w-7xl mx-auto">
+        <div className="text-center py-6">
+          <h2 className="font-serif text-4xl sm:text-5xl text-[#faecd8] tracking-tight">
+            Case Studies & Deep Dives
+          </h2>
+          <p className="font-mono text-xs text-[#faecd8]/60 uppercase tracking-widest mt-2">
+            Click any card to explore full architectural breakdown
+          </p>
+        </div>
+        <JackieProjectPeelSection
+          projects={portfolioData.projects}
+          onSelectProject={(p) => onSelectProject && onSelectProject(p)}
+        />
+      </div>
+
+      {/* 3. The Projects Cutting Board Workspace (Transferred to Work) */}
+      <div className="px-4 sm:px-8 max-w-7xl mx-auto">
+        <JackieCuttingBoardSection
+          onSelectProject={(p) => onSelectProject && onSelectProject(p)}
+        />
+      </div>
+
+      {/* Bottom Ending Signoff on Work */}
+      <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2 max-w-4xl mx-auto">
+        <div className="font-hand text-xl text-[#faecd8]/70">
+          "Mallikarjun.R • Bengaluru, India • Still building :)"
+        </div>
+        <div>© {new Date().getFullYear()} Mallikarjun.R. All projects & systems verified.</div>
+      </div>
     </div>
   );
 }
