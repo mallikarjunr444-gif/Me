@@ -1,15 +1,45 @@
 import React, { useState } from 'react';
 
-export function JackieWorkPage({ onNavigateHome }) {
+export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
   const [activeTooltip, setActiveTooltip] = useState(null);
 
   const toggleTooltip = (id) => {
     setActiveTooltip(activeTooltip === id ? null : id);
   };
 
+  // Close tooltips when clicking outside
+  const handlePageClick = (e) => {
+    if (!e.target.closest('.tooltip-trigger')) {
+      setActiveTooltip(null);
+    }
+  };
+
   return (
-    <div className="max-w-5xl mx-auto space-y-36 py-10 select-none">
-      
+    <div
+      className="max-w-5xl mx-auto select-none"
+      onClick={handlePageClick}
+    >
+
+      {/* ══════════════════ MARQUEE TICKER 1 ══════════════════ */}
+      <div className="overflow-hidden py-4 mb-4 border-t border-b border-white/10">
+        <div className="animate-marquee-smooth">
+          {[...Array(2)].map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-8 text-xs font-mono text-[#faecd8]/50 tracking-widest uppercase whitespace-nowrap mr-8">
+              <span>★ Places I've been</span>
+              <span>◆ Things I've learnt</span>
+              <span>✦ Work that shaped me</span>
+              <span>● Medicus Labs</span>
+              <span>★ BashPay</span>
+              <span>◆ ORVEX Studios</span>
+              <span>✦ Vision X</span>
+              <span>● CloudOps</span>
+              <span>★ Clinical AI</span>
+              <span>◆ Founder & Builder</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ══════════════════ 1. TOP HEADER & LUCKY CAT SEAL ══════════════════ */}
       <div className="text-center space-y-6 pt-4">
         {/* Top Lucky Cat Seal Stamp */}
@@ -30,22 +60,34 @@ export function JackieWorkPage({ onNavigateHome }) {
       </div>
 
 
-      {/* ══════════════════ 2. THE CLOTHING CARE HANG-TAG (BASH) ══════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-6">
-        
+      {/* ══════════════════ DIAGRAM 1 (hand-drawn illustration) ══════════════════ */}
+      <div className="flex justify-center py-12">
+        <img
+          src="/images/work/diagram-1.png"
+          alt="Hand-drawn illustration"
+          className="w-20 h-auto object-contain opacity-60 animate-line-boil-slow"
+        />
+      </div>
+
+
+      {/* ══════════════════ 2. MEDICUS LABS — CLOTHING CARE HANG-TAG ══════════════════ */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
         {/* Slanted Clothing Tag (Left 7 Cols) */}
         <div className="md:col-span-7 flex justify-center md:justify-end">
           <a
             href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative transform -rotate-2 hover:rotate-0 hover:scale-103 transition-all duration-300 max-w-[340px] sm:max-w-[370px] w-full block cursor-pointer group"
+            className="relative transform -rotate-2 hover:rotate-0 hover:scale-[1.03] transition-all duration-500 max-w-[340px] sm:max-w-[370px] w-full block cursor-pointer group"
             title="View LinkedIn Profile"
           >
+            {/* Orange-red underlay shadow */}
+            <div className="absolute inset-0 bg-[#e05638] rounded-xl translate-x-2 translate-y-2 opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
             <img
               src="/images/work/tag-bash.png"
-              alt="Clothing Hang Tag"
-              className="w-full h-auto object-contain filter drop-shadow-2xl"
+              alt="Medicus Labs — Clothing Hang Tag"
+              className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
             />
           </a>
         </div>
@@ -58,10 +100,21 @@ export function JackieWorkPage({ onNavigateHome }) {
             </div>
             <ul className="space-y-2 text-xl text-[#e85746] font-hand">
               <li
-                onClick={() => toggleTooltip('bashpay')}
-                className="hover:text-white cursor-pointer transition-colors relative"
+                onClick={() => toggleTooltip('medicus')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
               >
-                BashPay
+                Medicus Labs
+                {activeTooltip === 'medicus' && (
+                  <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
+                    Founded Medicus Labs — Building AI-driven clinical decision support systems.
+                  </div>
+                )}
+              </li>
+              <li
+                onClick={() => toggleTooltip('bashpay')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
+              >
+                BashPay / Payments
                 {activeTooltip === 'bashpay' && (
                   <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
                     Payment portal that increased payment success rate to <strong>80%</strong>.
@@ -69,37 +122,29 @@ export function JackieWorkPage({ onNavigateHome }) {
                 )}
               </li>
               <li
-                onClick={() => toggleTooltip('packing')}
-                className="hover:text-white cursor-pointer transition-colors relative"
+                onClick={() => toggleTooltip('clinical_ai')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
               >
-                Internal Packing Tool
-                {activeTooltip === 'packing' && (
+                Clinical AI
+                {activeTooltip === 'clinical_ai' && (
                   <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                    Warehouse tool reducing picking and packaging errors across fulfillment centers.
+                    AI-powered diagnostic assistance for healthcare professionals.
                   </div>
                 )}
               </li>
               <li
-                onClick={() => toggleTooltip('kiosk')}
-                className="hover:text-white cursor-pointer transition-colors relative"
+                onClick={() => toggleTooltip('orvex')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
               >
-                Kiosk
-                {activeTooltip === 'kiosk' && (
+                ORVEX Studios
+                {activeTooltip === 'orvex' && (
                   <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                    In-store interactive self-service ordering terminals.
+                    Full-stack product studio — design, engineering, and strategy.
                   </div>
                 )}
               </li>
-              <li
-                onClick={() => toggleTooltip('pos')}
-                className="hover:text-white cursor-pointer transition-colors relative"
-              >
-                Point of Sale
-                {activeTooltip === 'pos' && (
-                  <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                    Omni-channel checkout and real-time inventory synchronization.
-                  </div>
-                )}
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">
+                CloudOps & IaC Matrix
               </li>
             </ul>
           </div>
@@ -113,109 +158,172 @@ export function JackieWorkPage({ onNavigateHome }) {
       </div>
 
 
-      {/* ══════════════════ 3. PULSE WRISTBAND & HEYGO TICKET ══════════════════ */}
-      <div className="space-y-28 pt-6">
-        
-        {/* Pulse Marathon Wristband */}
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            
-            {/* Slanted Wristband Graphic (Left 8 Cols) */}
-            <div className="md:col-span-8 flex justify-center md:justify-start">
-              <div className="w-full max-w-[620px] transform -rotate-2 hover:rotate-0 transition-transform duration-300">
-                <img
-                  src="/images/work/wristband-pulse.png"
-                  alt="Pulse Wristband"
-                  className="w-full h-auto object-contain filter drop-shadow-2xl"
-                />
-              </div>
-            </div>
-
-            {/* Notable Work Right (Right 4 Cols) */}
-            <div className="md:col-span-4 space-y-2 pl-0 md:pl-4 font-mono">
-              <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase mb-3">
-                Notable work
-              </div>
-              <ul className="space-y-1.5 text-lg text-[#e85746] font-hand">
-                <li
-                  onClick={() => toggleTooltip('stream_uploader')}
-                  className="hover:text-white cursor-pointer transition-colors relative"
-                >
-                  Stream uploader
-                  {activeTooltip === 'stream_uploader' && (
-                    <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                      Enabled athletes to easily upload their GoPro footages onto the app.
-                    </div>
-                  )}
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors">Home feed</li>
-                <li className="hover:text-white cursor-pointer transition-colors">Race platform</li>
-                <li className="hover:text-white cursor-pointer transition-colors">Event timeline</li>
-              </ul>
-            </div>
-
-          </div>
-
-          {/* Learning Quote below Wristband on Left */}
-          <div className="font-hand text-lg text-[#faecd8]/90 max-w-sm pt-1 pl-4">
-            Learnt that design is a team's sports that involves people outside of design
-          </div>
+      {/* ══════════════════ MARQUEE TICKER 2 ══════════════════ */}
+      <div className="overflow-hidden py-4 mt-16 mb-4 border-t border-b border-white/5">
+        <div className="animate-marquee-smooth" style={{ animationDirection: 'reverse', animationDuration: '30s' }}>
+          {[...Array(2)].map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-8 text-xs font-mono text-[#faecd8]/30 tracking-widest uppercase whitespace-nowrap mr-8">
+              <span>☆ Systems Design</span>
+              <span>◇ Cloud Infrastructure</span>
+              <span>✧ Product Engineering</span>
+              <span>○ Full-Stack Development</span>
+              <span>☆ AI / ML Integration</span>
+              <span>◇ DevOps & CI/CD</span>
+              <span>✧ Healthcare Tech</span>
+              <span>○ Payments & Fintech</span>
+            </span>
+          ))}
         </div>
-
-
-        {/* HEYGO ADMIT 1 Linocut Mountain Ticket */}
-        <div className="space-y-6 pt-4">
-          <div className="flex justify-center">
-            <div className="w-full max-w-[780px] transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <img
-                src="/images/work/ticket-heygo.png"
-                alt="HEYGO Ticket Admit 1"
-                className="w-full h-auto object-contain filter drop-shadow-2xl"
-              />
-            </div>
-          </div>
-
-          {/* Quote & Notable Work below Heygo Ticket */}
-          <div className="flex flex-col sm:flex-row justify-between items-start max-w-3xl mx-auto px-4 gap-6 font-mono">
-            <div className="font-hand text-lg text-[#faecd8]/90 max-w-xs">
-              Learnt design is a powerful alignment tool
-            </div>
-            
-            <div className="space-y-1">
-              <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase mb-1">
-                Notable work
-              </div>
-              <ul className="space-y-1 text-base text-[#e85746] font-hand">
-                <li className="hover:text-white cursor-pointer transition-colors">Streaming UI</li>
-                <li
-                  onClick={() => toggleTooltip('stream_creator')}
-                  className="hover:text-white cursor-pointer transition-colors relative"
-                >
-                  Stream creator
-                  {activeTooltip === 'stream_creator' && (
-                    <div className="absolute right-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                      Platform to stream on Heygo. Better streaming experience also increased tipping by 8%/stream.
-                    </div>
-                  )}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
       </div>
 
 
-      {/* ══════════════════ 4. RETRO RED CRT MONITOR (DOTSLASH) ══════════════════ */}
+      {/* ══════════════════ DIAGRAM 2 (hand-drawn illustration) ══════════════════ */}
+      <div className="flex justify-center py-10">
+        <img
+          src="/images/work/diagram-2.png"
+          alt="Hand-drawn illustration"
+          className="w-28 h-auto object-contain opacity-50 animate-line-boil-slow"
+        />
+      </div>
+
+
+      {/* ══════════════════ 3. PULSE WRISTBAND ══════════════════ */}
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
+          {/* Slanted Wristband Graphic (Left 8 Cols) */}
+          <div className="md:col-span-8 flex justify-center md:justify-start">
+            <div className="w-full max-w-[620px] transform -rotate-2 hover:rotate-0 transition-all duration-500 group">
+              {/* Orange-red underlay shadow */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-2 translate-y-2 opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                <img
+                  src="/images/work/wristband-pulse.png"
+                  alt="Pulse Wristband"
+                  className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Notable Work Right (Right 4 Cols) */}
+          <div className="md:col-span-4 space-y-2 pl-0 md:pl-4 font-mono">
+            <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase mb-3">
+              Notable work
+            </div>
+            <ul className="space-y-1.5 text-lg text-[#e85746] font-hand">
+              <li
+                onClick={() => toggleTooltip('vision_x')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
+              >
+                Vision X AI Agent
+                {activeTooltip === 'vision_x' && (
+                  <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
+                    Autonomous AI agent for visual recognition and real-time decision making.
+                  </div>
+                )}
+              </li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Stream Uploader</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Home Feed</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Event Timeline</li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Learning Quote below Wristband on Left */}
+        <div className="font-hand text-lg text-[#faecd8]/90 max-w-sm pt-1 pl-4">
+          Learnt that design is a team sport that involves people outside of design
+        </div>
+      </div>
+
+
+      {/* ══════════════════ DIAGRAM 6 (hand-drawn illustration) ══════════════════ */}
+      <div className="flex justify-center py-14">
+        <img
+          src="/images/work/diagram-6.png"
+          alt="Hand-drawn illustration"
+          className="w-32 h-auto object-contain opacity-45 animate-line-boil-slow"
+        />
+      </div>
+
+
+      {/* ══════════════════ 4. HEYGO — LINOCUT MOUNTAIN TICKET ══════════════════ */}
+      <div className="space-y-6">
+        <div className="flex justify-center">
+          <div className="w-full max-w-[780px] transform rotate-1 hover:rotate-0 transition-all duration-500 group">
+            {/* Orange-red underlay shadow */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-2 translate-y-3 opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+              <img
+                src="/images/work/ticket-heygo.png"
+                alt="HEYGO Ticket — Admit 1"
+                className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Quote & Notable Work below Heygo Ticket */}
+        <div className="flex flex-col sm:flex-row justify-between items-start max-w-3xl mx-auto px-4 gap-6 font-mono">
+          <div className="font-hand text-lg text-[#faecd8]/90 max-w-xs">
+            Learnt design is a powerful alignment tool
+          </div>
+
+          <div className="space-y-1">
+            <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase mb-1">
+              Notable work
+            </div>
+            <ul className="space-y-1 text-base text-[#e85746] font-hand">
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Streaming UI</li>
+              <li
+                onClick={() => toggleTooltip('stream_creator')}
+                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
+              >
+                Stream Creator
+                {activeTooltip === 'stream_creator' && (
+                  <div className="absolute right-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
+                    Platform to stream on Heygo. Better streaming experience also increased tipping by 8%/stream.
+                  </div>
+                )}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      {/* ══════════════════ MARQUEE TICKER 3 ══════════════════ */}
+      <div className="overflow-hidden py-4 mt-16 mb-4 border-t border-b border-white/5">
+        <div className="animate-marquee-smooth" style={{ animationDuration: '20s' }}>
+          {[...Array(2)].map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-8 text-xs font-mono text-[#faecd8]/25 tracking-widest uppercase whitespace-nowrap mr-8">
+              <span>♦ Founder</span>
+              <span>♣ Builder</span>
+              <span>♠ Engineer</span>
+              <span>♥ Designer</span>
+              <span>♦ Architect</span>
+              <span>♣ Maker</span>
+              <span>♠ Thinker</span>
+              <span>♥ Creator</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+
+      {/* ══════════════════ 5. RETRO RED CRT MONITOR (DOTSLASH) ══════════════════ */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-10">
-        
+
         {/* Beige CRT Computer Frame (Left 7 Cols) */}
         <div className="md:col-span-7 flex justify-center md:justify-end">
-          <div className="relative max-w-[480px] w-full transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+          <div className="relative max-w-[480px] w-full transform -rotate-1 hover:rotate-0 transition-all duration-500 group">
+            {/* Orange-red underlay shadow */}
+            <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-3 translate-y-3 opacity-55 group-hover:opacity-80 transition-opacity duration-300" />
             <img
               src="/images/work/crt-monitor.png"
               alt="Dotslash CRT Monitor"
-              className="w-full h-auto object-contain filter drop-shadow-2xl"
+              className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
             />
           </div>
         </div>
@@ -231,10 +339,10 @@ export function JackieWorkPage({ onNavigateHome }) {
               Notable work
             </div>
             <ul className="space-y-2 text-xl text-[#e85746] font-hand">
-              <li className="hover:text-white cursor-pointer transition-colors">Dekra</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Balwin Fibre</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Junk Mail</li>
-              <li className="hover:text-white cursor-pointer transition-colors">+4 other large projects...</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Internal Packing Tool</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Kiosk</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Point of Sale</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">+4 other large projects...</li>
             </ul>
           </div>
         </div>
@@ -242,12 +350,12 @@ export function JackieWorkPage({ onNavigateHome }) {
       </div>
 
 
-      {/* ══════════════════ 5. "SIDE QUESTS" 5 PROJECTS SPIRAL NOTEBOOK ══════════════════ */}
-      <div className="pt-20 space-y-12">
-        
+      {/* ══════════════════ 6. "SIDE QUESTS" 5 PROJECTS SPIRAL NOTEBOOK ══════════════════ */}
+      <div className="pt-24 space-y-12">
+
         {/* Mouse Hero & Garden Linocut Illustration */}
         <div className="flex justify-center -mb-8">
-          <div className="w-full max-w-lg transform hover:scale-103 transition-transform duration-300">
+          <div className="w-full max-w-lg transform hover:scale-[1.03] transition-transform duration-300">
             <img
               src="/images/work/diagram-3.png"
               alt="Side Quests Mouse Hero Illustration"
@@ -265,7 +373,7 @@ export function JackieWorkPage({ onNavigateHome }) {
 
         {/* Top-Bound Spiral Notebook Container */}
         <div className="relative max-w-4xl mx-auto bg-[#faecd8] text-slate-900 rounded-[2.5rem] p-8 sm:p-12 shadow-2xl border border-[#e5d5c0] space-y-14">
-          
+
           {/* Metal Spiral Wire Loops at Top */}
           <div className="absolute -top-4 left-8 right-8 flex justify-between pointer-events-none">
             {Array.from({ length: 22 }).map((_, i) => (
@@ -289,9 +397,9 @@ export function JackieWorkPage({ onNavigateHome }) {
 
             <div className="md:col-span-7 rounded-2xl overflow-hidden shadow-xl border border-slate-300 bg-black">
               <img
-                src="/images/work/diagram-4.png"
+                src="/images/work/sidequest-drift.png"
                 alt="Drift Project"
-                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
@@ -315,9 +423,9 @@ export function JackieWorkPage({ onNavigateHome }) {
 
             <div className="md:col-span-7 rounded-2xl overflow-hidden shadow-xl border border-slate-300 bg-[#2d5248]">
               <img
-                src="/images/work/diagram-5.png"
+                src="/images/work/sidequest-tf2048.png"
                 alt="TF2048 Project"
-                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
@@ -340,7 +448,7 @@ export function JackieWorkPage({ onNavigateHome }) {
               <img
                 src="/images/work/sidequest-whos-speaking.png"
                 alt="Who's Speaking Project"
-                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
@@ -366,7 +474,7 @@ export function JackieWorkPage({ onNavigateHome }) {
               <img
                 src="/images/work/sidequest-triple-time.png"
                 alt="Triple Time Project"
-                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
@@ -389,7 +497,7 @@ export function JackieWorkPage({ onNavigateHome }) {
               <img
                 src="/images/work/sidequest-resqued.png"
                 alt="ResQued Project"
-                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
@@ -399,8 +507,8 @@ export function JackieWorkPage({ onNavigateHome }) {
       </div>
 
 
-      {/* ══════════════════ 6. BOTTOM GUEST MESSAGE & SIGNATURE ══════════════════ */}
-      <div className="text-center space-y-4 max-w-xl mx-auto px-6 pt-10 font-hand text-lg text-[#faecd8]/80 leading-relaxed">
+      {/* ══════════════════ 7. BOTTOM GUEST MESSAGE & SIGNATURE ══════════════════ */}
+      <div className="text-center space-y-4 max-w-xl mx-auto px-6 pt-20 font-hand text-lg text-[#faecd8]/80 leading-relaxed">
         <div className="text-3xl pb-2">🎶</div>
         <p>
           "Hi! Thanks for visiting my site! Feel free to explore and connect anytime."
