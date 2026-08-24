@@ -748,6 +748,19 @@ I design tools that help people do their best work.">
   max-width: 220px !important;
 }
 </style>
+
+<style>
+/* Purge legacy side quests */
+.framer-14gsk9m, .framer-at9ms9, .framer-1lcr2us, .framer-kq2r7z, .framer-130r8m6, .framer-ol4pwr {
+  display: none !important;
+}
+.framer-byn02k {
+  min-height: 400px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+</style>
+
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
@@ -798,6 +811,50 @@ I design tools that help people do their best work.">
   
   
   
+  
+  function purgeLegacySideQuests() {
+    // Hide or remove any element linking to legacy projects
+    var legacyLinks = document.querySelectorAll('a[href*="tf2048"], a[href*="whosspeaking"], a[href*="tripletime"], a[href*="resqued"]');
+    legacyLinks.forEach(function(l) {
+      var card = l.closest('.framer-52ghen-container, .framer-UOiGm, .framer-at9ms9, .framer-14gsk9m, .framer-1lcr2us') || l;
+      if (card) card.remove();
+    });
+
+    // Remove old side-quest image slices
+    var slices = document.querySelectorAll('.framer-130r8m6, .framer-ol4pwr, [data-framer-name="Slice 52"], [data-framer-name="Slice 38"]');
+    slices.forEach(function(s) { s.remove(); });
+
+    // Clean text
+    var texts = document.querySelectorAll('.framer-text');
+    texts.forEach(function(t) {
+      var txt = t.textContent.trim();
+      if (txt === 'Drift' || txt === 'TF2048' || txt === "Who's Speaking" || txt === 'Triple Time' || txt === 'ResQued' || txt.includes('Personal library of images') || txt.includes('Puzzle based NFT') || txt.includes('medical note taker') || txt.includes('acts of kindness')) {
+        var p = t.closest('.framer-52ghen-container, .framer-UOiGm, .framer-at9ms9, .framer-14gsk9m') || t;
+        if (p) p.remove();
+      }
+    });
+
+    // Ensure the notebook contains the clean blank state ready for adding
+    var note = document.querySelector('.framer-byn02k');
+    if (note && !note.querySelector('.clean-blank-notebook')) {
+      note.innerHTML = `
+        <div class="clean-blank-notebook" style="width:100%; min-height:420px; padding: 60px 40px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-family:'Gochi Hand', sans-serif;">
+          <div style="font-size:36px; color:#e05638; margin-bottom:12px;">✦</div>
+          <p style="font-size:24px; color:#3a3835; margin:0; line-height:1.4;">
+            Certifications archive is clean & blank.
+          </p>
+          <p style="font-size:16px; color:#7a7269; margin:10px 0 0 0;">
+            Ready for your certificates in <code style="background:rgba(0,0,0,0.06); padding:3px 8px; border-radius:6px; font-family:monospace; color:#e05638;">src/data/certificationsData.js</code>
+          </p>
+        </div>
+      `;
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', purgeLegacySideQuests);
+  window.addEventListener('load', purgeLegacySideQuests);
+  setInterval(purgeLegacySideQuests, 200);
+
   function updateCertificationsSection() {
     var titles = document.querySelectorAll('.framer-text');
     titles.forEach(function(t) {
