@@ -726,36 +726,7 @@ I design tools that help people do their best work.">
 }
 
 
-/* Hide Cutting Board Project Slices from About Page */
-.framer-qrdfe1,
-.framer-1hjpp53,
-.framer-su76c3,
-.framer-2s944w,
-.framer-bxtkhp,
-.framer-1ceza1p,
-.framer-oemwiw,
-.framer-12ziibl,
-.framer-o0dvfa,
-.framer-r1x875,
-.framer-1y25785,
-.framer-g4w32b,
-.framer-1g6x5c5,
-.framer-1v96q3m,
-.framer-11e2yom,
-.framer-87588b,
-.framer-y9w223,
-.framer-1r511w7,
-.framer-1q22t56,
-.framer-1d1235b,
-.framer-143g78p,
-[data-framer-name*="Slice"] {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  width: 0 !important;
-  overflow: hidden !important;
-  pointer-events: none !important;
-}
+
 
 </style>
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -965,17 +936,26 @@ I design tools that help people do their best work.">
   setInterval(forceMallikarjunName, 150);
 
   
-  function hideCuttingBoardMat() {
-    var slices = document.querySelectorAll('.framer-qrdfe1, .framer-1hjpp53, .framer-su76c3, .framer-bxtkhp, [data-framer-name*="Slice"], .framer-1ceza1p, .framer-oemwiw, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875');
-    slices.forEach(function(el) {
-      el.style.display = 'none';
-      el.style.visibility = 'hidden';
-      el.style.height = '0px';
+  
+
+  
+  function syncCuttingBoardRealPhotos() {
+    var allImgs = document.querySelectorAll('img');
+    allImgs.forEach(function(img) {
+      var src = img.getAttribute('src') || '';
+      if (src.includes('FRkj7J6yOqj9bBSMBJF7zdRGrY') || src.includes('zbVoYsGmG4nEEedbtgkv5193W6I') || src.includes('0pNvbqriNrL1D2jxTeMwqGMPVo')) {
+        img.src = 'assets/images/mallikarjun-award-team.jpg';
+        img.srcset = 'assets/images/mallikarjun-award-team.jpg';
+      }
+      if (src.includes('raBEoGeB7wmHSyDXXPu6VzQPAg') || src.includes('EYbfG6roNwIxhPystqzDKOK4') || src.includes('cqrOEukUtJ5q6innagqIo1y7ig')) {
+        img.src = 'assets/images/mallikarjun-certificate-dsatm.jpg';
+        img.srcset = 'assets/images/mallikarjun-certificate-dsatm.jpg';
+      }
     });
   }
-  window.addEventListener('DOMContentLoaded', hideCuttingBoardMat);
-  window.addEventListener('load', hideCuttingBoardMat);
-  setInterval(hideCuttingBoardMat, 150);
+  window.addEventListener('DOMContentLoaded', syncCuttingBoardRealPhotos);
+  window.addEventListener('load', syncCuttingBoardRealPhotos);
+  setInterval(syncCuttingBoardRealPhotos, 200);
 
   function syncAboutHeroAndContent() {
     // ══════════════ WHAT I LOOK FOR FRAME PORTRAIT ══════════════
