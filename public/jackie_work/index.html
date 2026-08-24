@@ -761,6 +761,38 @@ I design tools that help people do their best work.">
 }
 </style>
 
+
+<style>
+/* Remove all clothing-care symbols */
+[data-framer-name*="Clothing tag"],
+.framer-1a7m7l9,
+.framer-37599v,
+.framer-1u737d9,
+.framer-n7nxql,
+.framer-7613vu {
+  display: none !important;
+}
+
+.mallikarjun-portrait-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.mallikarjun-portrait-img {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  border: 3px solid #1a1a1a;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: #faecd8;
+}
+</style>
+
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
@@ -1109,6 +1141,85 @@ I design tools that help people do their best work.">
   window.addEventListener('DOMContentLoaded', updateWristbandSection);
   window.addEventListener('load', updateWristbandSection);
   setInterval(updateWristbandSection, 300);
+
+  
+  function updatePersonalIdentityTag() {
+    // Hide all clothing tag icons
+    var clothingTags = document.querySelectorAll('[data-framer-name*="Clothing tag"], .framer-1a7m7l9, .framer-37599v, .framer-1u737d9, .framer-n7nxql, .framer-7613vu');
+    clothingTags.forEach(function(el) { el.style.display = 'none'; });
+
+    // Inject circular portrait if not already injected
+    var tagCard = document.querySelector('.framer-1rkvcds');
+    if (tagCard && !tagCard.querySelector('.mallikarjun-portrait-container')) {
+      var portraitDiv = document.createElement('div');
+      portraitDiv.className = 'mallikarjun-portrait-container';
+      portraitDiv.innerHTML = '<img class="mallikarjun-portrait-img" src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />';
+      tagCard.insertBefore(portraitDiv, tagCard.firstChild);
+    }
+
+    // Name & Subtitle
+    var tagLink = document.querySelector('a[href*="linkedin.com/in/mallikarjunr"], a[href*="bash.com"], .framer-9lyop8');
+    if (tagLink) {
+      tagLink.href = 'https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge';
+      var textEl = tagLink.querySelector('p');
+      if (textEl) {
+        textEl.textContent = 'Mallikarjun R';
+        textEl.style.fontSize = '21px';
+        textEl.style.fontWeight = 'bold';
+        textEl.style.whiteSpace = 'nowrap';
+      }
+    }
+
+    var parent = document.querySelector('.framer-1rkvcds');
+    if (parent) {
+      var subText = parent.querySelector('.framer-htzbp2 p');
+      if (subText) {
+        subText.textContent = 'Computer Science Engineering student building AI, Cloud & DevOps solutions';
+        subText.style.fontSize = '13px';
+        subText.style.lineHeight = '1.35';
+      }
+    }
+
+    // Barcode Serial Text
+    var barcodeTexts = document.querySelectorAll('.framer-text');
+    barcodeTexts.forEach(function(t) {
+      if (t.textContent.includes('B45H') || t.textContent.includes('2024220268')) {
+        t.textContent = 'MR•CSE•AI•2026';
+      }
+      if (t.textContent.includes("beyond what's expected") || t.textContent.includes('beyond what')) {
+        t.textContent = 'Learn. Build. Deploy. Repeat.';
+        t.style.fontWeight = 'bold';
+      }
+    });
+
+    // Right Side: Find Me Online
+    var featuredHeader = document.querySelector('.framer-1biissb p');
+    if (featuredHeader && featuredHeader.textContent !== 'Find Me Online') {
+      featuredHeader.textContent = 'Find Me Online';
+    }
+
+    // Update Right Side Links
+    var linkTitles = document.querySelectorAll('.framer-888d9o p, .framer-1a23gvw p, .framer-il8yuu p');
+    linkTitles.forEach(function(p) {
+      var txt = p.textContent.trim();
+      if (txt === 'BashPay') {
+        p.innerHTML = '<a href="https://github.com/mallikarjunr444-gif" target="_blank" style="color:inherit; text-decoration:none;">GitHub <span style="font-size:13px; opacity:0.7; display:block;">Projects & Open Source</span></a>';
+      }
+      if (txt === 'Internal Packing Tool') {
+        p.innerHTML = '<a href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" style="color:inherit; text-decoration:none;">LinkedIn <span style="font-size:13px; opacity:0.7; display:block;">Professional Profile</span></a>';
+      }
+      if (txt === 'Kiosk') {
+        p.innerHTML = '<a href="https://www.credly.com/" target="_blank" style="color:inherit; text-decoration:none;">Credly <span style="font-size:13px; opacity:0.7; display:block;">Certifications & Badges</span></a>';
+      }
+      if (txt === 'Point of Sale') {
+        p.innerHTML = '<a href="https://www.cloudskillsboost.google/" target="_blank" style="color:inherit; text-decoration:none;">Google Skills <span style="font-size:13px; opacity:0.7; display:block;">Cloud & AI Learning</span></a>';
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', updatePersonalIdentityTag);
+  window.addEventListener('load', updatePersonalIdentityTag);
+  setInterval(updatePersonalIdentityTag, 300);
 
   function updateTag() {
     var tagLink = document.querySelector('a[href*="bash.com"], a[href*="linkedin.com/in/mallikarjunr"]');
