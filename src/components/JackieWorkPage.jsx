@@ -15,6 +15,8 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
           if (onNavigate) onNavigate(e.data.page || 'about');
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
+        } else if (e.data.type === 'OPEN_URL' && e.data.url) {
+          window.open(e.data.url, '_blank', 'noopener,noreferrer');
         } else if (e.data.type === 'SELECT_PROJECT') {
           const matched = portfolioData.projects.find(
             (p) => p.id === e.data.projectId || p.title.toLowerCase().includes((e.data.title || '').toLowerCase())
@@ -45,7 +47,32 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
               while (el && el !== doc.body) {
                 const text = (el.innerText || '').trim().toLowerCase();
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
+                const tag = el.tagName ? el.tagName.toLowerCase() : '';
 
+                // 1. External Links (GitHub, LinkedIn, Credly, Google Skills, etc.)
+                if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(href, '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                // 2. Specific social text clicks if clicked on text child
+                if (text.includes('github.com') || (text.includes('github') && (el.closest('a') || tag === 'a'))) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open('https://github.com/mallikarjunr444-gif', '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                if (text.includes('linkedin.com') || (text.includes('linkedin') && (el.closest('a') || tag === 'a'))) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open('https://www.linkedin.com/in/mallikarjunr-com/', '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                // 3. Navigation
                 if (text === 'about' || href.includes('about') || href === '/' || href === '#about') {
                   e.preventDefault();
                   e.stopPropagation();
@@ -73,7 +100,7 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                   return;
                 }
 
-                // Project item clicks
+                // 4. Project clicks
                 if (text.includes('medicus labs')) {
                   e.preventDefault();
                   if (onSelectProject) {
@@ -113,12 +140,12 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                 el = el.parentElement;
               }
             },
-            true // Capture phase to intercept before Framer
+            true // Capture phase
           );
         }
       }
     } catch {
-      // Ignore cross-origin issues if any
+      // Ignore cross-origin issues
     }
   };
 
