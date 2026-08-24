@@ -294,41 +294,80 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ 5. RETRO RED CRT MONITOR (DOTSLASH / TECH DISCOVER) ══════════════════ */}
+      {/* ══════════════════ 5. RETRO RED CRT MONITOR (EXACT REPLICA FROM SCREENSHOT) ══════════════════ */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-8">
         
         {/* Beige CRT Computer Frame (Left 7 Cols) */}
         <div className="md:col-span-7 flex justify-center md:justify-end">
-          <div className="relative w-full max-w-md bg-[#e5dfd5] rounded-[2.5rem] p-6 shadow-2xl border-4 border-[#c8c0b2] text-slate-900 space-y-4 transform -rotate-1 hover:rotate-0 transition-transform">
+          <div className="relative max-w-[480px] w-full">
             
-            {/* Red CRT Screen with Scanlines */}
-            <div className="aspect-[4/3] rounded-2xl bg-[#c93f2c] p-6 shadow-inner relative overflow-hidden flex flex-col justify-between text-white font-mono border-4 border-slate-800">
+            {/* Dark bottom stand base underneath */}
+            <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-[88%] h-5 bg-[#635d56] rounded-b-[2rem] -z-10 shadow-xl" />
+
+            {/* Main Outer Beige Chassis */}
+            <div className="bg-[#ede5d8] rounded-[2.8rem] pt-6 px-6 pb-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-3px_6px_rgba(0,0,0,0.15)] border border-[#dfd6c7] relative text-slate-900 space-y-4">
               
-              {/* Scanline Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none opacity-40" />
+              {/* Deep Recessed Dark Bezel / Cavity */}
+              <div className="rounded-[2.2rem] bg-[#1a1918] p-4 sm:p-5 relative overflow-hidden shadow-[inset_0_18px_30px_rgba(0,0,0,0.95),inset_0_-18px_30px_rgba(0,0,0,0.95),inset_18px_0_30px_rgba(0,0,0,0.95),inset_-18px_0_30px_rgba(0,0,0,0.95)] border border-[#2b2826]">
+                
+                {/* Red CRT Phosphor Screen */}
+                <div className="aspect-[4/3] rounded-[1.6rem] bg-[#e85746] relative overflow-hidden flex items-center p-6 sm:p-8 shadow-[0_0_25px_rgba(232,87,70,0.35),inset_0_0_25px_rgba(0,0,0,0.35)]">
+                  
+                  {/* High Density Horizontal Scanlines */}
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.22)_50%)] bg-[length:100%_3px] pointer-events-none z-10 opacity-70" />
 
-              <div className="relative z-10 space-y-2">
-                <div className="text-xl font-bold tracking-tight">
-                  Dotslash // Tech Discover
+                  {/* Convex Glass Reflection / Vignette */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.12)_0%,rgba(0,0,0,0.25)_100%)] pointer-events-none z-10" />
+
+                  {/* Text Content (Side-by-side exact layout from screenshot) */}
+                  <div className="relative z-20 grid grid-cols-12 gap-3 items-center w-full text-white font-mono">
+                    
+                    {/* Left Column: Dotslash + Digital transformation agency */}
+                    <div className="col-span-5 space-y-2">
+                      <div className="text-xl sm:text-2xl font-bold tracking-tight text-white leading-none font-mono">
+                        Dotslash
+                      </div>
+                      <div className="text-[11px] sm:text-xs text-white/95 leading-tight font-mono">
+                        Digital<br />
+                        transformati<br />
+                        on agency
+                      </div>
+                    </div>
+
+                    {/* Right Column: Helping businesses thrive in the digital landscape. */}
+                    <div className="col-span-7 pl-1">
+                      <div className="text-xs sm:text-[14px] text-white font-normal leading-snug font-mono">
+                        Helping businesses<br />
+                        thrive in the<br />
+                        digital landscape.
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
-                <div className="text-[10px] text-white/80 uppercase tracking-widest">
-                  AI Transformation & Radar Platform
+
+              </div>
+
+              {/* Bottom Speaker Matrix & Control Panel */}
+              <div
+                className="pt-3 pb-1 border-t border-[#d8cfbf] shadow-[0_1px_0_rgba(255,255,255,0.6)] rounded-b-3xl px-2"
+                style={{
+                  backgroundImage: 'radial-gradient(#5a544c 1.2px, transparent 1.2px)',
+                  backgroundSize: '7px 7px'
+                }}
+              >
+                {/* 3-LED Pill Left */}
+                <div className="w-14 h-4.5 rounded-full bg-[#181716] px-1.5 flex items-center justify-between shadow-inner mb-2">
+                  <span className="w-2 h-2 rounded-full bg-[#ff4d3d] shadow-[0_0_6px_#ff4d3d]" />
+                  <span className="w-2 h-2 rounded-full bg-[#0a0909]" />
+                  <span className="w-2 h-2 rounded-full bg-[#0a0909]" />
                 </div>
+
+                {/* Floppy Disk Drive Slot */}
+                <div className="w-48 sm:w-56 h-2.5 bg-[#181716] rounded-xs shadow-[inset_0_2px_4px_rgba(0,0,0,0.9)] border-t border-black/40 mb-1" />
               </div>
 
-              <div className="relative z-10 text-xs text-white/90 leading-relaxed font-mono">
-                Helping researchers, developers, and businesses thrive in the modern intelligence landscape.
-              </div>
-
-            </div>
-
-            {/* Front Panel Speaker Grill & Switch */}
-            <div className="pt-2 flex items-center justify-between px-2">
-              <div className="flex gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-[#c93f2c]" />
-                <span className="w-3 h-3 rounded-full bg-slate-400" />
-              </div>
-              <div className="h-3 w-32 bg-slate-400/50 rounded-full" />
             </div>
 
           </div>
@@ -349,8 +388,7 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
               <li>✦ Dekra</li>
               <li>✦ Balwin Fibre</li>
               <li>✦ Junk Mail</li>
-              <li>✦ arXiv Research Paper Radar</li>
-              <li>✦ +4 other enterprise projects...</li>
+              <li>✦ +4 other large projects...</li>
             </ul>
           </div>
 
