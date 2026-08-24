@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, RotateCw, Sparkles, Layers, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, RotateCw, Layers, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function JackieCuttingBoardSection({ projects, onSelectProject }) {
@@ -7,15 +7,12 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
   const [activeImageIndex, setActiveImageIndex] = useState({});
 
   const medicus = projects[0] || {};
-  const visionx = projects[1] || {};
-  const orvex = projects[2] || {};
-  const techNews = projects[3] || {};
 
   const boardItems = [
     {
       id: 1,
-      title: "Medicus Labs",
-      subtitle: "AI Dermatology Diagnostics",
+      title: "Medicus Clinical AI",
+      subtitle: "Multimodal Skin Lesion Scan",
       tag: "CLINICAL AI",
       rot: "-rotate-[2.5deg]",
       images: [
@@ -23,90 +20,90 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
         "/images/medicus-labs-logo.png",
         "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80"
       ],
-      description: "Gemini-powered multimodal clinical pre-screening tool analyzing skin lesions with heatmap overlays and ICD-10 automated reports.",
-      stats: ["98.4% Precision", "12 Clinics", "HIPAA GCP"],
-      tech: ["Gemini Vision", "Python", "GCP Cloud Run", "React"],
+      description: "Gemini Vision multimodal pre-screening model scanning dermatological images with clinical precision and sub-second diagnostic inference.",
+      stats: ["98.4% Precision", "Multimodal AI", "< 1.2s Latency"],
+      tech: ["Gemini 1.5 Pro", "PyTorch", "GCP Cloud Run", "React"],
       project: medicus
     },
     {
       id: 2,
-      title: "Vision X",
-      subtitle: "Air-Gapped AI Desktop Agent",
-      tag: "AUTONOMOUS AI",
+      title: "Gemini Vision Heatmap",
+      subtitle: "Lesion Boundary Triage Engine",
+      tag: "HEATMAP & TRIAGE",
       rot: "rotate-[3.5deg]",
       images: [
-        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+        "/images/medicus-labs-logo.png"
       ],
-      description: "Offline autonomous assistant executing OS tasks, vector document search, and local ONNX vision without internet connection.",
-      stats: ["500+ docs/hr", "100% Offline", "Zero Latency"],
-      tech: ["Local ONNX", "ChromaDB", "Tesseract", "FastAPI"],
-      project: visionx
+      description: "Computer vision segmentation generating color-coded attention heatmaps, confidence distribution bands, and risk classification tiers.",
+      stats: ["Bounding Box AI", "Lesion Scoring", "YOLOv8 + Gemini"],
+      tech: ["Computer Vision", "Grad-CAM", "OpenCV", "FastAPI"],
+      project: medicus
     },
     {
       id: 3,
-      title: "ORVEX Games",
-      subtitle: "3D Indie Studio & Shaders",
-      tag: "WEBGL & UNITY",
+      title: "Doctor Review Portal",
+      subtitle: "Clinical Triage & Verification",
+      tag: "DOCTOR PORTAL",
       rot: "-rotate-[3deg]",
       images: [
-        "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+        "/images/medicus-labs-logo.png"
       ],
-      description: "Interactive 3D shader simulation, procedural lighting systems, and indie game experiences built with Unity and GLSL.",
-      stats: ["150K+ Plays", "60 FPS WebGL", "Custom Shaders"],
-      tech: ["Unity LTS", "C#", "GLSL Shaders", "WebGL"],
-      project: orvex
+      description: "Specialist dashboard with triage queue management, second-opinion verification workflows, and seamless 1-click clinical approval.",
+      stats: ["12 Partner Clinics", "1-Click Approval", "EHR Sync"],
+      tech: ["Next.js 14", "TailwindCSS", "PostgreSQL", "WebSockets"],
+      project: medicus
     },
     {
       id: 4,
-      title: "Tech Discover",
-      subtitle: "AI News & Research Radar",
-      tag: "RADAR FEED",
+      title: "AR Dermoscopy Client",
+      subtitle: "Patient Guided Intake",
+      tag: "AR DERMOSCOPY",
       rot: "rotate-[2.5deg]",
       images: [
-        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80",
+        "/images/medicus-labs-logo.png"
       ],
-      description: "Automated aggregation pipeline clustering arXiv papers, open-source AI breakthroughs, and technology news with semantic vectors.",
-      stats: ["45K Readers", "Real-time NLP", "Daily Digest"],
-      tech: ["Next.js 14", "FastAPI", "Vector Embeddings", "PostgreSQL"],
-      project: techNews
+      description: "Mobile patient capture client with real-time lighting calibration, macro focal guide, and on-device privacy pre-checks.",
+      stats: ["Macro Lens AI", "Lighting Guide", "iOS & Android"],
+      tech: ["React Native", "WebRTC", "TensorFlow Lite", "Expo"],
+      project: medicus
     },
     {
       id: 5,
-      title: "CloudOps Matrix",
-      subtitle: "DevOps & IaC Pipeline",
-      tag: "INFRASTRUCTURE",
+      title: "HIPAA GCP Architecture",
+      subtitle: "KMS Encrypted Pipeline",
+      tag: "CLOUD RUN & KMS",
       rot: "-rotate-[2deg]",
       images: [
         "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
+        "/images/medicus-labs-logo.png"
       ],
-      description: "Declarative cloud provisioning with Terraform, automated Docker CI/CD pipelines, and multi-region Kubernetes cluster autoscaling.",
-      stats: ["99.99% Uptime", "Zero-downtime", "Auto-scaling"],
-      tech: ["Terraform", "Docker", "Kubernetes", "GCP Cloud KMS"],
+      description: "High-compliance cloud infrastructure on Google Cloud Platform with Cloud KMS encryption, zero-knowledge FHIR store, and audit trails.",
+      stats: ["AES-256 KMS", "Zero-Knowledge", "FHIR Data Store"],
+      tech: ["Google Cloud KMS", "Cloud Run", "Terraform", "Docker"],
       project: medicus
     },
     {
       id: 6,
-      title: "Shader Physics Lab",
-      subtitle: "Procedural GPU Graphics",
-      tag: "GPU SIMULATION",
+      title: "ICD-10 Report Engine",
+      subtitle: "Structured Pathology PDF",
+      tag: "AUTOMATED PDF",
       rot: "rotate-[3deg]",
       images: [
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+        "/images/medicus-labs-logo.png"
       ],
-      description: "Interactive real-time fluid dynamic simulator and procedural particle mesh deformers running in WebGL with compute shaders.",
-      stats: ["1M+ Particles", "Compute Pass", "Live Audio Sync"],
-      tech: ["WebGPU", "GLSL", "Three.js", "Audio API"],
-      project: orvex
+      description: "Automated diagnostic PDF generator compiling Gemini clinical findings, ICD-10 pathology codes, and doctor signatures into clinical summaries.",
+      stats: ["Automated ICD-10", "Instant PDF", "Clinical Audit"],
+      tech: ["Node.js", "PDFKit", "GCS Bucket", "DocuSign API"],
+      project: medicus
     }
   ];
 
@@ -140,7 +137,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
         <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10 text-xs font-mono text-[#faecd8]/50">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#c93f2c] animate-pulse" />
-            <span className="font-bold text-[#faecd8]">THE CUTTING BOARD // INTERACTIVE LAB PROJECTS</span>
+            <span className="font-bold text-[#faecd8]">THE CUTTING BOARD // MEDICUS LABS ECOSYSTEM</span>
           </div>
           <div className="flex items-center gap-3">
             <span>GRID 01 — 18</span>
@@ -282,7 +279,7 @@ export function JackieCuttingBoardSection({ projects, onSelectProject }) {
           <div className="font-hand text-lg text-[#faecd8]">
             "Everything you do, do it with care." ✦
           </div>
-          <div>MALLIKARJUN.R // 6 DISTINCT LAB PROJECTS</div>
+          <div>MALLIKARJUN.R // MEDICUS LABS ECOSYSTEM</div>
         </div>
 
       </div>
