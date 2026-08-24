@@ -1,28 +1,175 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Badges for the Left and Right vertical borders (Authentic continuous illustrated stamp strip from reference)
+// Side Stamp Badges for the Left and Right vertical borders in warm terracotta-orange with authentic vector icons (Owl, Flower, Teapot, Noodles, Cursor, Cat, etc.)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
+
+  const stamps = [
+    {
+      id: 'owl',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          {/* Owl Ears & Body */}
+          <path d="M7 10 L10 5 L14 8 L18 8 L22 5 L25 10 Q26 22 16 27 Q6 22 7 10 Z" />
+          {/* Big Owl Eyes */}
+          <circle cx="11.5" cy="14" r="3" fill="#faecd8" />
+          <circle cx="20.5" cy="14" r="3" fill="#faecd8" />
+          <circle cx="11.5" cy="14" r="1.2" fill="#c93f2c" />
+          <circle cx="20.5" cy="14" r="1.2" fill="#c93f2c" />
+          {/* Beak */}
+          <path d="M14 17 L16 20 L18 17" fill="currentColor" />
+        </svg>
+      )
+    },
+    {
+      id: 'flower-diamond',
+      shape: 'diamond',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          {/* Blooming Petals */}
+          <circle cx="16" cy="13" r="3.5" />
+          <path d="M16 6 Q13 10 16 13 Q19 10 16 6 Z" fill="currentColor" fillOpacity="0.2" />
+          <path d="M23 13 Q19 10 16 13 Q19 16 23 13 Z" fill="currentColor" fillOpacity="0.2" />
+          <path d="M9 13 Q13 10 16 13 Q13 16 9 13 Z" fill="currentColor" fillOpacity="0.2" />
+          <path d="M16 20 Q13 16 16 13 Q19 16 16 20 Z" fill="currentColor" fillOpacity="0.2" />
+          <path d="M16 20 L16 26 M16 23 Q12 21 11 24" />
+        </svg>
+      )
+    },
+    {
+      id: 'ramen',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="16" cy="15" rx="11" ry="4.5" />
+          <path d="M5 15 Q16 27 27 15" />
+          <path d="M8 8 L27 19" />
+          <path d="M12 6 Q11 3 13 1 M16 6 Q15 3 17 1" />
+        </svg>
+      )
+    },
+    {
+      id: 'teapot',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10 12 L22 12 L25 24 L7 24 Z" />
+          <path d="M13 12 Q16 9 19 12" />
+          <circle cx="16" cy="8.5" r="1.5" fill="currentColor" />
+          <path d="M7 16 Q3 12 5 7 Q8 7 8 10" />
+          <path d="M22 14 Q28 17 26 22 L24 23" />
+        </svg>
+      )
+    },
+    {
+      id: 'cursor-window',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="5" y="6" width="22" height="20" rx="3" />
+          <line x1="5" y1="12" x2="27" y2="12" />
+          {/* Arrow Cursor */}
+          <path d="M12 15 L18 21 L15 22 L17 25 L15 26 L13 23 L11 25 Z" fill="currentColor" />
+        </svg>
+      )
+    },
+    {
+      id: 'botanical-rose',
+      shape: 'diamond',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="11" r="4" />
+          <circle cx="20" cy="11" r="4" />
+          <circle cx="16" cy="17" r="4" />
+          <path d="M16 21 Q14 26 15 28" />
+          <path d="M15 24 Q11 23 10 26" />
+        </svg>
+      )
+    },
+    {
+      id: 'lucky-cat',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="16" cy="17" rx="9" ry="8" />
+          <path d="M8 12 L10 6 L14 11" />
+          <path d="M18 11 L22 6 L24 12" />
+          <circle cx="13" cy="15" r="1" fill="currentColor" />
+          <circle cx="19" cy="15" r="1" fill="currentColor" />
+          <path d="M14 19 Q16 21 18 19" />
+          <path d="M22 16 Q26 11 24 8 Q21 8 21 14" />
+        </svg>
+      )
+    },
+    {
+      id: 'dino',
+      shape: 'diamond',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10 20 L8 18 L6 13 L12 9 L18 10 L16 20 L22 20 Q27 20 28 25 L22 25 L19 23 L16 25 L10 25 Z" />
+          <circle cx="10" cy="12" r="1" fill="currentColor" />
+        </svg>
+      )
+    },
+    {
+      id: 'juice-box',
+      shape: 'square',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 6 L16 2 M16 2 L21 2 M21 2 L21 8" />
+          <rect x="8" y="10" width="16" height="18" rx="2" />
+          <circle cx="16" cy="19" r="3.5" />
+        </svg>
+      )
+    },
+    {
+      id: 'cloud-seal',
+      shape: 'diamond',
+      svg: (
+        <svg viewBox="0 0 32 32" className="w-5 h-5 text-[#faecd8]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10 20 Q6 20 6 16 Q6 12 11 11 Q12 7 17 8 Q22 8 23 12 Q27 12 27 16 Q27 20 22 20 Z" />
+        </svg>
+      )
+    }
+  ];
+
+  const handleStampClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    confetti({
+      particleCount: 16,
+      spread: 35,
+      origin: {
+        x: (rect.left + rect.width / 2) / window.innerWidth,
+        y: (rect.top + rect.height / 2) / window.innerHeight
+      },
+      colors: ['#c93f2c', '#faecd8', '#38bdf8', '#f59e0b']
+    });
+  };
 
   return (
     <div
       className={`fixed top-0 bottom-0 ${
         isLeft ? 'left-0' : 'right-0'
-      } w-[42px] sm:w-[58px] z-40 overflow-hidden pointer-events-none select-none`}
+      } w-9 sm:w-11 z-40 flex flex-col justify-around items-center select-none bg-[#141211] border-${
+        isLeft ? 'r' : 'l'
+      } border-[#c93f2c]/30 overflow-hidden py-1`}
     >
-      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
-        {/* Repeating authentic illustrated vertical stamp ribbon from Jackie Zhang */}
+      {stamps.map((stamp, idx) => (
         <div
-          className="absolute inset-0 w-full h-full animate-line-boil-slow opacity-95"
-          style={{
-            backgroundImage: `url('https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488')`,
-            backgroundRepeat: 'repeat-y',
-            backgroundSize: '100% auto',
-            backgroundPosition: 'top center'
-          }}
-        />
-      </div>
+          key={idx}
+          onClick={handleStampClick}
+          className={`w-7 h-7 sm:w-8 sm:h-8 ${
+            stamp.shape === 'diamond' ? 'rotate-45 rounded-sm' : 'rounded-md'
+          } bg-[#c93f2c] border-2 border-[#a12f1f] flex items-center justify-center shadow-lg cursor-pointer transform hover:scale-115 active:scale-95 transition-all duration-200 animate-line-boil-slow my-0.5 group`}
+          title={stamp.id}
+        >
+          <div className={stamp.shape === 'diamond' ? '-rotate-45' : ''}>
+            {stamp.svg}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
