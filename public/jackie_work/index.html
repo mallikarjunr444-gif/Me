@@ -881,6 +881,7 @@ I design tools that help people do their best work.">
   setInterval(sendHeight, 600);
 
   
+  
   function syncTagSkillsAndOnline() {
     // Barcode Serial Text
     var barcodeTexts = document.querySelectorAll('.framer-text');
@@ -895,76 +896,26 @@ I design tools that help people do their best work.">
 
     // Right Side Container next to luggage tag
     var tagRight = document.querySelector('.framer-faazwn-container');
-    if (tagRight && !tagRight.getAttribute('data-skills-online-done')) {
-      tagRight.setAttribute('data-skills-online-done', 'true');
+    if (tagRight && !tagRight.getAttribute('data-notable-work-set')) {
+      tagRight.setAttribute('data-notable-work-set', 'true');
       tagRight.innerHTML = `
-        <div style="display:flex; flex-direction:column; gap:16px; width:100%; min-width:200px;">
-          <!-- 1. Skills -->
-          <div>
-            <div style="font-family:'Departure Mono Regular', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#e05638; font-weight:bold; margin-bottom:8px;">
-              Skills
-            </div>
-            <div style="display:flex; flex-direction:column; gap:6px; font-family:'Gochi Hand', cursive; font-size:19px; color:#e05638; line-height:1.15;">
-              <div>AI & Machine Learning</div>
-              <div>Cloud Computing</div>
-              <div>DevOps</div>
-              <div>Python • C • C++</div>
-              <div>Git & GitHub</div>
-            </div>
+        <div style="display:flex; flex-direction:column; gap:12px; width:100%; min-width:200px;">
+          <div style="font-family:'Departure Mono Regular', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#e05638; font-weight:bold; margin-bottom:4px;">
+            Notable work
           </div>
-
-          <div style="width:100%; height:1px; background:rgba(224,86,56,0.25); margin:2px 0;"></div>
-
-          <!-- 2. Find Me Online -->
-          <div>
-            <div style="font-family:'Departure Mono Regular', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#e05638; font-weight:bold; margin-bottom:8px;">
-              Find Me Online
-            </div>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              <a href="https://github.com/mallikarjunr444-gif" target="_blank" rel="noopener noreferrer" 
-                 style="display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;">
-                <span style="color:#e05638; font-size:14px;">✦</span>
-                <div>
-                  <span style="font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638; display:block; line-height:1;">GitHub</span>
-                  <span style="font-family:'Departure Mono Regular', monospace; font-size:10px; color:#faecd8; opacity:0.75;">Projects & Open Source</span>
-                </div>
-              </a>
-
-              <a href="https://www.linkedin.com/in/mallikarjunr-com/" target="_blank" rel="noopener noreferrer" 
-                 style="display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;">
-                <span style="color:#e05638; font-size:14px;">✦</span>
-                <div>
-                  <span style="font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638; display:block; line-height:1;">LinkedIn</span>
-                  <span style="font-family:'Departure Mono Regular', monospace; font-size:10px; color:#faecd8; opacity:0.75;">Professional Profile</span>
-                </div>
-              </a>
-
-              <a href="https://www.credly.com/" target="_blank" rel="noopener noreferrer" 
-                 style="display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;">
-                <span style="color:#e05638; font-size:14px;">✦</span>
-                <div>
-                  <span style="font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638; display:block; line-height:1;">Credly</span>
-                  <span style="font-family:'Departure Mono Regular', monospace; font-size:10px; color:#faecd8; opacity:0.75;">Certifications & Badges</span>
-                </div>
-              </a>
-
-              <a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer" 
-                 style="display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;">
-                <span style="color:#e05638; font-size:14px;">✦</span>
-                <div>
-                  <span style="font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638; display:block; line-height:1;">Google Skills</span>
-                  <span style="font-family:'Departure Mono Regular', monospace; font-size:10px; color:#faecd8; opacity:0.75;">Cloud & AI Learning</span>
-                </div>
-              </a>
-            </div>
+          <div style="display:flex; flex-direction:column; gap:8px; font-family:'Gochi Hand', cursive; font-size:22px; color:#e05638; line-height:1.2;">
+            <div>AI & Machine Learning</div>
+            <div>Cloud Computing</div>
+            <div>DevOps</div>
+            <div>Python • C • C++</div>
           </div>
         </div>
       `;
     }
   }
 
-  window.addEventListener('DOMContentLoaded', syncTagSkillsAndOnline);
-  window.addEventListener('load', syncTagSkillsAndOnline);
+  window.addEventListener("DOMContentLoaded", syncTagSkillsAndOnline);
+  window.addEventListener("load", syncTagSkillsAndOnline);
   setInterval(syncTagSkillsAndOnline, 200);
 
   function syncDOM() {
