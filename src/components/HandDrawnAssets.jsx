@@ -1,53 +1,58 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (Exact asset & layout from https://jackiezhang.co.za/)
+// Side Stamp Ribbon for Left and Right vertical borders (Exact 5 authentic stamps provided by user)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
+
+  const stampList = [
+    { id: 'seal', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
+    { id: 'bowl', img: '/images/stamps/stamp-bowl.png', label: 'Traditional Bowl' },
+    { id: 'cursor', img: '/images/stamps/stamp-cursor.png', label: 'Browser Cursor' },
+    { id: 'owl', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
+    { id: 'flower', img: '/images/stamps/stamp-flower.png', label: 'Blooming Flower' },
+    { id: 'seal-2', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
+    { id: 'bowl-2', img: '/images/stamps/stamp-bowl.png', label: 'Traditional Bowl' },
+    { id: 'cursor-2', img: '/images/stamps/stamp-cursor.png', label: 'Browser Cursor' },
+    { id: 'owl-2', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
+    { id: 'flower-2', img: '/images/stamps/stamp-flower.png', label: 'Blooming Flower' }
+  ];
+
+  const handleStampClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    confetti({
+      particleCount: 16,
+      spread: 35,
+      origin: {
+        x: (rect.left + rect.width / 2) / window.innerWidth,
+        y: (rect.top + rect.height / 2) / window.innerHeight
+      },
+      colors: ['#c93f2c', '#faecd8', '#38bdf8', '#f59e0b']
+    });
+  };
 
   return (
     <div
       className={`fixed top-0 bottom-0 ${
         isLeft ? 'left-0' : 'right-0'
-      } w-[42px] sm:w-[58px] z-40 overflow-hidden pointer-events-none select-none`}
+      } w-10 sm:w-12 z-40 flex flex-col justify-around items-center select-none bg-[#141211]/90 border-${
+        isLeft ? 'r' : 'l'
+      } border-[#c93f2c]/20 overflow-hidden py-2 backdrop-blur-xs`}
     >
-      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-0 h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[472px] h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[944px] h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[1416px] h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[1888px] h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[2360px] h-[488px] w-[341px] max-w-none"
-        />
-        <img
-          src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-          alt=""
-          className="absolute left-0 top-[2832px] h-[488px] w-[341px] max-w-none"
-        />
-      </div>
+      {stampList.map((stamp, idx) => (
+        <div
+          key={idx}
+          onClick={handleStampClick}
+          className="w-8 h-8 sm:w-9 sm:h-9 rounded-md overflow-hidden flex items-center justify-center cursor-pointer transform hover:scale-125 active:scale-90 transition-all duration-200 animate-line-boil-slow my-0.5 group shadow-md"
+          title={stamp.label}
+        >
+          <img
+            src={stamp.img}
+            alt={stamp.label}
+            className="w-full h-full object-cover rounded-md group-hover:rotate-3 transition-transform"
+          />
+        </div>
+      ))}
     </div>
   );
 }
