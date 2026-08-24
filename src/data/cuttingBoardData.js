@@ -2,7 +2,19 @@
  * ==============================================================================
  * CUTTING BOARD MAT PHOTOS & CARDS CONFIGURATION
  * ==============================================================================
- * Photos on the Cutting Board are dynamically configured here.
+ * You can easily customize, add, delete, or replace photos on the Cutting Board!
+ *
+ * HOW TO USE:
+ * 1. To replace a photo:
+ *    Put your image in `public/images/your-photo.jpg` and change the `image` field:
+ *    `image: "/images/your-photo.jpg"`
+ *
+ * 2. To delete/hide a photo:
+ *    Set `visible: false`
+ *
+ * 3. To add a new photo:
+ *    Add an object with `{ title: "My Project", image: "/images/my-pic.jpg", visible: true }`.
+ * ==============================================================================
  */
 
 export const cuttingBoardData = [
@@ -29,15 +41,15 @@ export const cuttingBoardData = [
   },
   {
     id: "slot-4",
-    title: "Award Presentation - 1st Position Team",
-    image: "assets/images/mallikarjun-award-team.jpg", // 👈 Team Award Presentation Photo!
+    title: "Card 4",
+    image: "assets/images/FRkj7J6yOqj9bBSMBJF7zdRGrY.png",  // Replace with your image
     position: "Middle Left Card",
     visible: true
   },
   {
     id: "slot-5",
-    title: "DSATM 1st Place Certificate of Appreciation",
-    image: "assets/images/mallikarjun-certificate-dsatm.jpg", // 👈 1st Place DSATM Certificate!
+    title: "Card 5",
+    image: "assets/images/EYbfG6roNwIxhPystqzDKOK4.png",  // Replace with your image
     position: "Center Grid Card",
     visible: true
   },
