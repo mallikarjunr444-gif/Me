@@ -1,338 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
+import confetti from 'canvas-confetti';
 
-// 1. Traditional Ramen Bowl with Ornate Lattice Frame & 寿 Seal (User Image 1)
-export function StampRamenBowl({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Outer Square Lattice Frame */}
-      <rect x="8" y="8" width="84" height="84" rx="4" stroke="#e0523d" strokeWidth="2.8" />
-      <rect x="14" y="14" width="72" height="72" stroke="#e0523d" strokeWidth="1.5" strokeDasharray="6 2" opacity="0.85" />
-      
-      {/* Lattice Corner Cross Joints */}
-      <line x1="8" y1="24" x2="24" y2="8" stroke="#e0523d" strokeWidth="2" />
-      <line x1="76" y1="8" x2="92" y2="24" stroke="#e0523d" strokeWidth="2" />
-      <line x1="8" y1="76" x2="24" y2="92" stroke="#e0523d" strokeWidth="2" />
-      <line x1="76" y1="92" x2="92" y2="76" stroke="#e0523d" strokeWidth="2" />
-      
-      {/* Center Circular Medallion */}
-      <circle cx="50" cy="50" r="33" stroke="#e0523d" strokeWidth="2.5" fill="#191816" fillOpacity="0.4" />
-      <circle cx="50" cy="50" r="30" stroke="#e0523d" strokeWidth="1" strokeDasharray="3 2" />
-
-      {/* Traditional Ramen Bowl */}
-      {/* Noodle / Rice Mound */}
-      <path d="M 28 46 Q 50 30 72 46" stroke="#e0523d" strokeWidth="2.2" fill="#e0523d" fillOpacity="0.25" />
-      <path d="M 36 39 Q 44 34 52 38 Q 60 34 66 40" stroke="#e0523d" strokeWidth="1.8" />
-      <circle cx="43" cy="38" r="1.5" fill="#e0523d" />
-      <circle cx="55" cy="37" r="1.5" fill="#e0523d" />
-      <circle cx="49" cy="42" r="1.5" fill="#e0523d" />
-
-      {/* Bowl Rim & Body */}
-      <path d="M 25 46 L 75 46 Q 73 70 50 72 Q 27 70 25 46 Z" stroke="#e0523d" strokeWidth="2.5" fill="#191816" />
-      
-      {/* Greek Key Meander Pattern on Rim */}
-      <path d="M 27 49 L 73 49" stroke="#e0523d" strokeWidth="1.5" strokeDasharray="2 2" />
-
-      {/* Chinese Longevity Character (寿) Seal in Center of Bowl */}
-      <circle cx="50" cy="59" r="6.5" stroke="#e0523d" strokeWidth="1.5" />
-      <text x="47" y="62.5" fill="#e0523d" fontSize="7" fontWeight="bold" fontFamily="serif">
-        寿
-      </text>
-
-      {/* Bowl Foot / Stand */}
-      <rect x="42" y="72" width="16" height="3" rx="1" stroke="#e0523d" strokeWidth="1.5" fill="#e0523d" />
-    </svg>
-  );
-}
-
-// 2. Browser Window with Chunky Pointer Cursor (User Image 2)
-export function StampBrowserCursor({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Solid Terracotta Red Rounded Card */}
-      <rect x="6" y="6" width="88" height="88" rx="16" fill="#e0523d" />
-
-      {/* Top Window Bar Division */}
-      <line x1="6" y1="26" x2="94" y2="26" stroke="#191816" strokeWidth="2.8" strokeLinecap="round" />
-
-      {/* 3 Window Controls Dots */}
-      <circle cx="20" cy="16" r="3.2" fill="#191816" />
-      <circle cx="32" cy="16" r="3.2" fill="#191816" />
-      <circle cx="44" cy="16" r="3.2" fill="#191816" />
-
-      {/* Chunky Hand-Drawn Mouse Pointer Cursor Arrow */}
-      <path
-        d="M 32 36 L 32 70 L 44 60 L 56 75 L 63 70 L 51 54 L 66 54 Z"
-        fill="#191816"
-        stroke="#191816"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-
-      {/* Right Scrollbar Accent Slit */}
-      <line x1="84" y1="36" x2="84" y2="56" stroke="#191816" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// 3. Lotus Botanical Flower Stem in Rounded Frame (User Image 3)
-export function StampLotusFlower({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Outer Rounded Line Frame with Hand-Drawn Corner Breaks */}
-      <rect x="8" y="8" width="84" height="84" rx="14" stroke="#e0523d" strokeWidth="2.8" />
-      
-      {/* Lotus Flower Stem */}
-      <path d="M 50 54 Q 46 72 38 84" stroke="#e0523d" strokeWidth="3.2" strokeLinecap="round" />
-
-      {/* Lower Leaf */}
-      <path d="M 42 74 Q 22 72 26 62 Q 38 62 43 72" stroke="#e0523d" strokeWidth="2.5" fill="#e0523d" fillOpacity="0.2" />
-
-      {/* Lotus Petals Blooming Upward */}
-      <path d="M 50 20 Q 56 36 50 48 Q 44 36 50 20 Z" stroke="#e0523d" strokeWidth="2.5" fill="#e0523d" fillOpacity="0.2" />
-      <circle cx="50" cy="34" r="1.5" fill="#e0523d" />
-      <circle cx="48" cy="38" r="1.5" fill="#e0523d" />
-      <circle cx="52" cy="38" r="1.5" fill="#e0523d" />
-
-      {/* Left Petals */}
-      <path d="M 50 48 Q 30 38 24 24 Q 38 28 50 48" stroke="#e0523d" strokeWidth="2.5" fill="#e0523d" fillOpacity="0.15" />
-      <path d="M 48 50 Q 24 48 16 38 Q 32 40 48 50" stroke="#e0523d" strokeWidth="2.5" />
-
-      {/* Right Petals */}
-      <path d="M 50 48 Q 70 38 76 24 Q 62 28 50 48" stroke="#e0523d" strokeWidth="2.5" fill="#e0523d" fillOpacity="0.15" />
-      <path d="M 52 50 Q 76 48 84 38 Q 68 40 52 50" stroke="#e0523d" strokeWidth="2.5" />
-
-      {/* Base Calyx */}
-      <path d="M 38 52 Q 50 56 62 52" stroke="#e0523d" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// 4. Night Owl on Tree Branch with Full Moon (User Image 4)
-export function StampNightOwl({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Solid Terracotta Red Rounded Card */}
-      <rect x="6" y="6" width="88" height="88" rx="16" fill="#e0523d" />
-
-      {/* Left Tree Trunk with Bark Texture */}
-      <path d="M 6 6 L 24 6 L 18 94 L 6 94 Z" fill="#191816" />
-      <line x1="12" y1="12" x2="10" y2="88" stroke="#e0523d" strokeWidth="1.6" strokeLinecap="round" />
-      <line x1="18" y1="12" x2="15" y2="88" stroke="#e0523d" strokeWidth="1.6" strokeLinecap="round" />
-
-      {/* Tree Branch */}
-      <path d="M 18 72 Q 40 76 76 66 L 78 74 Q 40 82 18 80 Z" fill="#191816" />
-
-      {/* Full Moon in Night Sky */}
-      <circle cx="36" cy="22" r="7.5" fill="#191816" />
-
-      {/* Owl Silhouette Perched on Branch */}
-      <circle cx="58" cy="38" r="12" fill="#191816" />
-      <path d="M 50 36 Q 58 32 66 36 Q 64 44 58 44 Q 52 44 50 36" stroke="#e0523d" strokeWidth="1.6" />
-      <circle cx="54" cy="36" r="2.2" fill="#e0523d" />
-      <circle cx="62" cy="36" r="2.2" fill="#e0523d" />
-      <path d="M 58 39 L 57 42 L 59 42 Z" fill="#e0523d" />
-
-      {/* Body & Wings */}
-      <path d="M 48 46 Q 44 68 58 72 Q 72 68 68 46 Z" fill="#191816" />
-      <path d="M 50 50 Q 44 64 54 68" stroke="#e0523d" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M 54 74 L 56 82 L 60 74" stroke="#191816" strokeWidth="3.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// 5. Diamond Blossom Flower (User Image 5)
-export function StampDiamondBlossom({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Rotated 45-Degree Diamond Frame */}
-      <path d="M 50 8 L 92 50 L 50 92 L 8 50 Z" stroke="#e0523d" strokeWidth="3.2" strokeLinejoin="round" />
-      <path d="M 50 14 L 86 50 L 50 86 L 14 50 Z" stroke="#e0523d" strokeWidth="1" strokeDasharray="3 2" opacity="0.6" />
-
-      {/* Central 5-Petal Blossom */}
-      <circle cx="50" cy="40" r="4.5" fill="#e0523d" />
-      <circle cx="50" cy="30" r="5" fill="#e0523d" />
-      <circle cx="59" cy="36" r="5" fill="#e0523d" />
-      <circle cx="56" cy="47" r="5" fill="#e0523d" />
-      <circle cx="44" cy="47" r="5" fill="#e0523d" />
-      <circle cx="41" cy="36" r="5" fill="#e0523d" />
-
-      {/* Flower Stem */}
-      <path d="M 50 48 Q 50 68 46 76" stroke="#e0523d" strokeWidth="3" strokeLinecap="round" />
-
-      {/* Curved Leaves */}
-      <path d="M 47 62 Q 28 64 30 50 Q 45 52 48 58" fill="#e0523d" />
-      <path d="M 49 60 Q 68 58 64 46 Q 51 50 49 56" fill="#e0523d" />
-    </svg>
-  );
-}
-
-// 6. Diamond Sunflower with Flying Bees (User Image 6)
-export function StampDiamondButterflies({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Diamond Frame */}
-      <path d="M 50 8 L 92 50 L 50 92 L 8 50 Z" stroke="#e0523d" strokeWidth="3.2" strokeLinejoin="round" />
-      <path d="M 50 14 L 86 50 L 50 86 L 14 50 Z" stroke="#e0523d" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
-
-      {/* Center Dark-Hatched Seed Cone */}
-      <path d="M 42 36 Q 50 20 58 32 Q 58 40 42 36 Z" fill="#e0523d" stroke="#e0523d" strokeWidth="1.5" />
-      <line x1="46" y1="28" x2="54" y2="36" stroke="#191816" strokeWidth="1.5" />
-      <line x1="50" y1="24" x2="56" y2="32" stroke="#191816" strokeWidth="1.5" />
-      <line x1="44" y1="32" x2="52" y2="38" stroke="#191816" strokeWidth="1.5" />
-
-      {/* Radiating Petals */}
-      <path d="M 42 36 L 28 34 M 44 40 L 30 44 M 46 44 L 36 54 M 52 44 L 52 56 M 56 42 L 68 44 M 58 38 L 72 34 M 56 34 L 66 26" stroke="#e0523d" strokeWidth="2.5" strokeLinecap="round" />
-
-      {/* Center Stem */}
-      <path d="M 50 44 L 46 82" stroke="#e0523d" strokeWidth="3.5" strokeLinecap="round" />
-
-      {/* Leaves on Left and Right of Stem */}
-      <path d="M 47 62 Q 30 60 32 50 Q 42 52 48 58" fill="#e0523d" />
-      <path d="M 48 68 Q 66 68 64 56 Q 52 58 47 64" fill="#e0523d" />
-
-      {/* Left Flying Bee / Butterfly */}
-      <path d="M 20 42 Q 24 36 28 40 Q 26 46 20 42 M 20 44 Q 24 50 28 46 Q 26 42 20 44" fill="#e0523d" />
-      <line x1="16" y1="42" x2="26" y2="42" stroke="#e0523d" strokeWidth="2.5" strokeLinecap="round" />
-
-      {/* Right Flying Bee / Butterfly */}
-      <path d="M 76 44 Q 70 38 66 42 Q 68 48 76 44 M 76 46 Q 70 52 66 48 Q 68 44 76 46" fill="#e0523d" />
-      <line x1="72" y1="44" x2="80" y2="44" stroke="#e0523d" strokeWidth="2.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// 7. Chinese Calligraphy Seal Character (User Image 7)
-export function StampCalligraphySeal({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Solid Terracotta Red Rounded Seal Block */}
-      <rect x="6" y="6" width="88" height="88" rx="16" fill="#e0523d" />
-
-      {/* Authentic Hand-Carved Seal Script Brush Strokes in Black */}
-      {/* Left Radical Wavy Serpentine Brush Stroke */}
-      <path
-        d="M 32 18 Q 24 28 30 38 Q 36 46 24 58 Q 18 68 26 82"
-        stroke="#191816"
-        strokeWidth="6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      {/* Right Radical Upper Cross */}
-      <path
-        d="M 46 22 L 68 30"
-        stroke="#191816"
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
-
-      {/* Right Radical Center Horizontal Bar */}
-      <path
-        d="M 34 38 L 74 36"
-        stroke="#191816"
-        strokeWidth="6.5"
-        strokeLinecap="round"
-      />
-
-      {/* Right Radical Archway / Bell Legs */}
-      <path
-        d="M 48 38 Q 42 60 34 82"
-        stroke="#191816"
-        strokeWidth="6.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M 58 38 Q 66 60 72 82"
-        stroke="#191816"
-        strokeWidth="6.5"
-        strokeLinecap="round"
-      />
-
-      {/* Inner Characteristic Tick */}
-      <path
-        d="M 48 64 L 54 72"
-        stroke="#191816"
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-// 8. Magic Teapot / Urn with Spiral Motif
-export function StampMagicTeapot({ className = "" }) {
-  return (
-    <svg viewBox="0 0 100 100" className={`select-none ${className}`} fill="none">
-      {/* Solid Red Block */}
-      <rect x="6" y="6" width="88" height="88" rx="16" fill="#e0523d" />
-
-      {/* Teapot / Urn with Spiral Emblem */}
-      <path
-        d="M 38 22 L 62 22 L 60 30 L 40 30 Z M 40 30 Q 22 42 26 68 Q 34 82 50 82 Q 66 82 74 68 Q 78 42 60 30 Z"
-        fill="#191816"
-      />
-      {/* Handle */}
-      <path d="M 26 44 Q 14 54 26 64" stroke="#191816" strokeWidth="4" strokeLinecap="round" />
-      {/* Spout */}
-      <path d="M 72 42 Q 84 38 82 56 L 74 54" fill="#191816" />
-      {/* Spiral motif on belly */}
-      <path d="M 50 56 Q 44 56 44 50 Q 44 44 50 44 Q 56 44 56 52 Q 56 60 48 60 Q 40 60 40 48" stroke="#e0523d" strokeWidth="2.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// Side Stamp Ribbons running vertically along left and right borders
+// Side Stamp Badges for the Left and Right vertical borders (Authentic continuous illustrated stamp strip from reference)
 export function StampRibbon({ side = 'left' }) {
-  const stampComponents = [
-    StampCalligraphySeal,
-    StampRamenBowl,
-    StampBrowserCursor,
-    StampLotusFlower,
-    StampNightOwl,
-    StampDiamondSunflower,
-    StampDiamondBlossom,
-    StampMagicTeapot
-  ];
-
-  function StampDiamondSunflower(props) {
-    return <StampDiamondButterflies {...props} />;
-  }
+  const isLeft = side === 'left';
 
   return (
     <div
       className={`fixed top-0 bottom-0 ${
-        side === 'left' ? 'left-0' : 'right-0'
-      } z-40 w-[48px] sm:w-[56px] overflow-hidden pointer-events-none select-none flex flex-col justify-start items-center py-2 space-y-3`}
+        isLeft ? 'left-0' : 'right-0'
+      } w-[42px] sm:w-[58px] z-40 overflow-hidden pointer-events-none select-none`}
     >
-      {/* Render 24 sequential stamps tiling down the viewport */}
-      {Array.from({ length: 24 }).map((_, i) => {
-        const StampComponent = stampComponents[i % stampComponents.length];
-        return (
-          <div
-            key={i}
-            className={`w-9 h-9 sm:w-11 sm:h-11 shrink-0 ${
-              side === 'right' ? 'scale-x-[-1]' : ''
-            } transform hover:scale-115 transition-transform duration-200 drop-shadow-md opacity-95`}
-          >
-            <StampComponent className="w-full h-full" />
-          </div>
-        );
-      })}
+      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
+        {/* Repeating authentic illustrated vertical stamp ribbon from Jackie Zhang */}
+        <div
+          className="absolute inset-0 w-full h-full animate-line-boil-slow opacity-95"
+          style={{
+            backgroundImage: `url('https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488')`,
+            backgroundRepeat: 'repeat-y',
+            backgroundSize: '100% auto',
+            backgroundPosition: 'top center'
+          }}
+        />
+      </div>
     </div>
   );
 }
 
-// Hand-Drawn Avatar Face with Socials Branching (Top of Hero)
+// Hand-Drawn Avatar Face with Socials Branching (Live hair bounce + eye blink + line boil)
 export function HandDrawnAvatar({ onNavigate }) {
+  const [blinking, setBlinking] = useState(false);
+
+  const handleFaceClick = () => {
+    setBlinking(true);
+    setTimeout(() => setBlinking(false), 800);
+    confetti({
+      particleCount: 20,
+      spread: 45,
+      origin: { x: 0.5, y: 0.15 },
+      colors: ['#c93f2c', '#faecd8']
+    });
+  };
+
   return (
-    <div className="flex flex-col items-center select-none pt-2">
+    <div className="flex flex-col items-center select-none animate-line-boil-slow">
       {/* Branching Social Links */}
-      <div className="flex items-center gap-4 text-white/70 font-mono text-sm mb-2">
+      <div className="flex items-center gap-5 text-white/80 font-mono text-sm mb-2">
         <a
           href="https://www.linkedin.com/in/mallikarjunr-com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-[#e0523d] hover:scale-125 transition-all"
+          className="hover:text-[#c93f2c] hover:scale-125 transition-all inline-block hover:-rotate-6"
           title="LinkedIn"
         >
           <span className="font-bold">in</span>
@@ -341,7 +59,7 @@ export function HandDrawnAvatar({ onNavigate }) {
           href="https://github.com/mallikarjunr444-gif"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-[#e0523d] hover:scale-125 transition-all text-xs"
+          className="hover:text-[#c93f2c] hover:scale-125 transition-all text-xs inline-block hover:rotate-6"
           title="GitHub"
         >
           <svg className="w-4 h-4 fill-current inline" viewBox="0 0 24 24">
@@ -349,30 +67,40 @@ export function HandDrawnAvatar({ onNavigate }) {
           </svg>
         </a>
         <a
-          href="https://medium.com/@mallikarjunr444"
+          href="https://medium.com/@mallikarjunr"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-[#e0523d] hover:scale-125 transition-all text-xs font-serif italic font-bold"
+          className="hover:text-[#c93f2c] hover:scale-125 transition-all text-xs font-serif italic font-bold inline-block hover:-rotate-6"
           title="Medium"
         >
           M
         </a>
       </div>
 
-      {/* Hand Drawn Face Icon */}
+      {/* Hand Drawn Face Icon with live hair and blinking eyes */}
       <div
-        onClick={() => onNavigate && onNavigate('about')}
-        className="w-12 h-12 text-[#faecd8] hover:text-[#e0523d] transition-colors cursor-pointer"
-        title="About Mallikarjun"
+        onClick={handleFaceClick}
+        className="w-13 h-13 text-[#faecd8] hover:text-[#c93f2c] transition-colors cursor-pointer doodle-interactive"
       >
         <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          {/* Hair spikes */}
-          <path d="M16 22 L20 12 L26 20 L30 10 L34 20 L40 12 L44 22" />
+          {/* Hair spikes with continuous live bounce */}
+          <g className="animate-avatar-hair">
+            <path d="M16 22 L20 12 L26 20 L30 10 L34 20 L40 12 L44 22" />
+          </g>
           {/* Head circle */}
           <circle cx="30" cy="34" r="18" />
-          {/* Eyes */}
-          <circle cx="23" cy="32" r="1.5" fill="currentColor" />
-          <circle cx="37" cy="32" r="1.5" fill="currentColor" />
+          {/* Eyes with live blink */}
+          {blinking ? (
+            <g>
+              <line x1="20" y1="32" x2="26" y2="32" strokeWidth="2.5" />
+              <line x1="34" y1="32" x2="40" y2="32" strokeWidth="2.5" />
+            </g>
+          ) : (
+            <g className="animate-screen-blink">
+              <circle cx="23" cy="32" r="1.8" fill="currentColor" />
+              <circle cx="37" cy="32" r="1.8" fill="currentColor" />
+            </g>
+          )}
           {/* Smile */}
           <path d="M24 38 Q30 44 36 38" />
           {/* Ears */}
@@ -381,22 +109,30 @@ export function HandDrawnAvatar({ onNavigate }) {
         </svg>
       </div>
 
-      {/* Hand-Drawn Navigation Links */}
-      <div className="flex items-center gap-6 text-base font-hand text-[#faecd8] mt-3">
-        <a href="#about" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('about'); }} className="hover:text-[#e0523d] transition-colors cursor-pointer">
+      {/* Hand-Drawn Navigation Links with live hover wiggle */}
+      <div className="flex items-center gap-6 text-lg font-hand text-[#faecd8] mt-3">
+        <a
+          href="#about"
+          onClick={() => onNavigate && onNavigate('about')}
+          className="hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:-rotate-3"
+        >
           about
         </a>
-        <a href="#work" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('work'); }} className="hover:text-[#e0523d] transition-colors cursor-pointer">
+        <a
+          href="#work"
+          onClick={() => onNavigate && onNavigate('work')}
+          className="hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:rotate-3"
+        >
           work
         </a>
         <a
           href="#connect"
-          onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('connect'); }}
-          className="relative px-3 py-0.5 hover:text-[#e0523d] transition-colors cursor-pointer"
+          onClick={() => onNavigate && onNavigate('connect')}
+          className="relative px-4 py-1 hover:text-[#c93f2c] hover:scale-105 transition-all inline-block group"
         >
           <span>Connect</span>
-          {/* Hand drawn oval ring around Connect */}
-          <svg className="absolute inset-0 w-full h-full text-[#faecd8] pointer-events-none" viewBox="0 0 80 32" fill="none" stroke="currentColor" strokeWidth="1.8">
+          {/* Hand drawn oval ring around Connect with live line boil */}
+          <svg className="absolute inset-0 w-full h-full text-[#faecd8] group-hover:text-[#c93f2c] pointer-events-none animate-line-boil" viewBox="0 0 80 32" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M10 16 C8 6, 72 4, 72 16 C72 26, 6 28, 12 16" />
           </svg>
         </a>
@@ -405,102 +141,244 @@ export function HandDrawnAvatar({ onNavigate }) {
   );
 }
 
-// Authentic Image Chalk Doodles from jackiezhang.co.za
-export function ChalkLuckyCat({ className = "" }) {
-  return (
-    <img
-      src="https://framerusercontent.com/images/LKbBfnsJYBIcTHb37SByXysxfM.png?width=164&height=151"
-      alt="Maneki Neko"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
-  );
-}
-
-export function ChalkOrigamiMap({ className = "" }) {
-  return (
-    <img
-      src="https://framerusercontent.com/images/Y6jrcs7yZkqh9sRA4eMYaPQ96pk.png?width=408&height=326"
-      alt="Origami Map"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
-  );
-}
-
-export function ChalkCoffeeKettle({ className = "" }) {
-  return (
-    <img
-      src="https://framerusercontent.com/images/bvaE5Tit9l38Dd7DsufX28pGs.png?width=130&height=240"
-      alt="Coffee Kettle"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
-  );
-}
-
-export function ChalkJuiceBox({ className = "" }) {
-  return (
-    <img
-      src="https://framerusercontent.com/images/PyLCiCXcTclOUzVEMcAaMR8w.png?width=302&height=300"
-      alt="Juice Box"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
-  );
-}
-
-export function ChalkRamenBowl({ className = "" }) {
-  return (
-    <img
-      src="https://framerusercontent.com/images/a4cvua7pf3dgY3RkFzwNmyByP1Y.png?width=322&height=682"
-      alt="Ramen / Plant"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
-  );
-}
-
+// Chalk Flowers with LIVE Wind Sway Animation
 export function ChalkFlowers({ className = "" }) {
   return (
-    <img
-      src="https://framerusercontent.com/images/FRkj7J6yOqj9bBSMBJF7zdRGrY.png?width=381&height=325"
-      alt="Flowers"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
+    <div className={`animate-flowers-sway doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 100 160" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Flower 1 (Top Left) */}
+        <circle cx="30" cy="35" r="12" />
+        <path d="M22 28 Q30 22 38 28 M22 42 Q30 48 38 42 M18 35 Q24 35 24 35" />
+        
+        {/* Flower 2 (Top Right) */}
+        <circle cx="65" cy="25" r="14" />
+        <path d="M56 18 Q65 12 74 18 M56 32 Q65 38 74 32" />
+
+        {/* Flower 3 (Center Bottom) */}
+        <circle cx="50" cy="70" r="13" />
+        <path d="M42 63 Q50 57 58 63 M42 77 Q50 83 58 77" />
+
+        {/* Stems */}
+        <path d="M30 47 Q35 90 45 150" />
+        <path d="M65 39 Q55 90 48 150" />
+        <path d="M50 83 Q48 110 46 150" />
+
+        {/* Leaves */}
+        <path d="M38 90 Q20 85 22 105 Q35 105 40 95" />
+        <path d="M52 110 Q70 105 68 125 Q55 125 48 115" />
+      </svg>
+    </div>
   );
 }
 
+// Chalk Retro Smiling CRT Monitor with LIVE Blinking Eyes & Shaking Wobble
 export function ChalkRetroComputer({ className = "" }) {
+  const [clicked, setClicked] = useState(false);
+
+  const handleClick = () => {
+    setClicked(true);
+    setTimeout(() => setClicked(false), 600);
+    confetti({
+      particleCount: 25,
+      spread: 50,
+      origin: { x: 0.5, y: 0.8 },
+      colors: ['#38bdf8', '#faecd8', '#c93f2c']
+    });
+  };
+
   return (
-    <img
-      src="https://framerusercontent.com/images/raBEoGeB7wmHSyDXXPu6VzQPAg.png?width=242&height=232"
-      alt="Retro Computer"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
+    <div onClick={handleClick} className={`animate-computer-live doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 140 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* 3D CRT Monitor Body */}
+        <path d="M35 15 L105 15 L125 30 L125 70 L105 70 L35 70 L20 55 L20 25 Z" />
+        <path d="M105 15 L105 70" />
+        
+        {/* Inner Screen */}
+        <rect x="42" y="22" width="55" height="40" rx="4" />
+        
+        {/* Smiling Face inside screen (•‿•) with live blink */}
+        <g className="animate-screen-blink">
+          <circle cx="58" cy="38" r="2.5" fill="currentColor" />
+          <circle cx="80" cy="38" r="2.5" fill="currentColor" />
+        </g>
+        <path d="M64 47 Q69 53 74 47" />
+
+        {/* Monitor Stand Base */}
+        <path d="M30 70 L110 70 L115 85 L25 85 Z" />
+        <circle cx="95" cy="78" r="2.5" />
+        <line x1="45" y1="78" x2="80" y2="78" />
+      </svg>
+    </div>
   );
 }
 
+// Chalk Perched Bird with LIVE Head Bobbing
 export function ChalkPerchedBird({ className = "" }) {
   return (
-    <img
-      src="https://framerusercontent.com/images/zbVoYsGmG4nEEedbtgkv5193W6I.png?width=413&height=392"
-      alt="Perched Bird"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
+    <div className={`doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Animated Head & Beak */}
+        <g className="animate-bird-head">
+          <circle cx="85" cy="35" r="18" />
+          <path d="M68 35 L55 40 L68 44" fill="currentColor" fillOpacity="0.2" />
+          <circle cx="80" cy="32" r="2.5" fill="currentColor" />
+        </g>
+        
+        {/* Body */}
+        <path d="M72 45 Q50 65 60 90 Q85 100 105 85 Q115 65 98 45" />
+        
+        {/* Wing */}
+        <path d="M75 58 Q60 75 72 85 Q85 85 92 70 Q92 58 75 58" />
+        
+        {/* Tail feathers */}
+        <path d="M100 85 L120 105 M95 88 L115 112" />
+        
+        {/* Feet perching */}
+        <path d="M70 95 L65 110 M75 95 L75 110 M60 110 L78 110" />
+      </svg>
+    </div>
   );
 }
 
-export function ChalkBotanicalBranch({ className = "" }) {
+// Chalk Lucky Cat with LIVE WAVING PAW Animation
+export function ChalkLuckyCat({ className = "" }) {
+  const [patted, setPatted] = useState(false);
+
+  const handlePat = () => {
+    setPatted(true);
+    setTimeout(() => setPatted(false), 500);
+    confetti({
+      particleCount: 25,
+      spread: 40,
+      origin: { x: 0.15, y: 0.4 },
+      colors: ['#c93f2c', '#faecd8', '#f59e0b']
+    });
+  };
+
   return (
-    <img
-      src="https://framerusercontent.com/images/EYbfG6roNwIxhPystqzDKOK4.png?width=401&height=464"
-      alt="Botanical Branch"
-      className={`object-contain select-none ${className}`}
-      loading="lazy"
-    />
+    <div onClick={handlePat} className={`doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 100 120" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Head */}
+        <ellipse cx="50" cy="50" rx="28" ry="24" />
+        {/* Ears */}
+        <path d="M25 38 L30 18 L42 30" />
+        <path d="M58 30 L70 18 L75 38" />
+        {/* Eyes & Whiskers with live blink */}
+        <g className="animate-screen-blink">
+          <path d="M38 48 Q42 44 44 48 M56 48 Q58 44 62 48" />
+          <circle cx="50" cy="54" r="2" fill="currentColor" />
+        </g>
+        <path d="M46 58 Q50 62 54 58" />
+        <path d="M20 50 L32 52 M20 56 L32 56 M68 52 L80 50 M68 56 L80 56" />
+        
+        {/* CONTINUOUSLY WAVING PAW! (Exact live motion!) */}
+        <g className="animate-cat-paw">
+          <path d="M72 50 Q85 30 80 20 Q70 20 68 38" />
+        </g>
+
+        {/* Collar & Bell */}
+        <path d="M30 70 Q50 78 70 70" />
+        <circle cx="50" cy="76" r="5" />
+        {/* Body & Coin */}
+        <path d="M25 72 Q20 110 50 110 Q80 110 75 72" />
+        <ellipse cx="50" cy="94" rx="12" ry="10" />
+      </svg>
+    </div>
+  );
+}
+
+// Chalk Juice Box with LIVE Wobble & Bubbles
+export function ChalkJuiceBox({ className = "" }) {
+  return (
+    <div className={`animate-juice-box doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 100 130" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 15 L50 2 M50 2 L65 2 M65 2 L65 20" />
+        <path d="M25 30 L65 30 L80 45 L80 115 L40 115 L25 100 Z" />
+        <path d="M25 30 L40 45 L80 45" />
+        <path d="M40 45 L40 115" />
+        <circle cx="58" cy="80" r="14" />
+        <path d="M58 66 L58 72 M54 68 L62 68" />
+      </svg>
+    </div>
+  );
+}
+
+// Chalk Ramen Bowl with LIVE RISING STEAM Animation
+export function ChalkRamenBowl({ className = "" }) {
+  return (
+    <div className={`doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 120 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Live Rising Steam wisps */}
+        <g className="animate-steam-1">
+          <path d="M45 28 Q40 18 45 10" />
+        </g>
+        <g className="animate-steam-2">
+          <path d="M60 25 Q65 15 60 8" />
+        </g>
+        <g className="animate-steam-1">
+          <path d="M75 28 Q70 18 75 10" />
+        </g>
+
+        {/* Chopsticks */}
+        <path d="M20 10 L110 50 M25 22 L110 58" />
+        {/* Bowl Rim */}
+        <ellipse cx="60" cy="50" rx="45" ry="18" />
+        {/* Bowl Body */}
+        <path d="M15 50 Q60 100 105 50" />
+        {/* Bowl Base */}
+        <ellipse cx="60" cy="85" rx="18" ry="5" />
+      </svg>
+    </div>
+  );
+}
+
+// Chalk Dinosaur with LIVE Chomping & Tail Wag
+export function ChalkDino({ className = "" }) {
+  return (
+    <div className={`animate-dino-live doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 120 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M30 65 L20 60 L15 45 L35 30 L55 35 L50 65 L70 65 Q90 65 105 85 L85 85 L75 75 L65 85 L45 85 L40 70 Z" />
+        <circle cx="30" cy="40" r="3" fill="currentColor" />
+        <path d="M20 52 L24 48 L28 52 L32 48 L36 52" />
+        <path d="M45 32 L48 24 L52 34 M60 48 L65 42 L68 52 M75 58 L82 52 L82 64" />
+      </svg>
+    </div>
+  );
+}
+
+// Chalk Coffee Kettle with live steam and wobble
+export function ChalkCoffeeKettle({ className = "" }) {
+  return (
+    <div className={`doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Steam */}
+        <g className="animate-steam-1">
+          <path d="M25 15 Q20 8 25 2" />
+        </g>
+        {/* Gooseneck Spout */}
+        <path d="M30 45 Q15 35 22 20 Q28 20 28 24" />
+        {/* Kettle Body */}
+        <path d="M35 35 L65 35 L75 75 L25 75 Z" />
+        {/* Lid & Knob */}
+        <path d="M40 35 Q50 30 60 35" />
+        <circle cx="50" cy="30" r="2.5" fill="currentColor" />
+        {/* Handle */}
+        <path d="M68 40 Q85 45 80 65 L72 70" />
+      </svg>
+    </div>
+  );
+}
+
+// Chalk Origami Map
+export function ChalkOrigamiMap({ className = "" }) {
+  return (
+    <div className={`doodle-interactive ${className}`}>
+      <svg className="w-full h-full text-[#faecd8] select-none animate-line-boil" viewBox="0 0 120 90" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="10,25 40,15 70,25 100,15 110,65 80,75 50,65 20,75" />
+        <line x1="40" y1="15" x2="50" y2="65" />
+        <line x1="70" y1="25" x2="80" y2="75" />
+        <circle cx="60" cy="45" r="3" fill="#c93f2c" />
+      </svg>
+    </div>
   );
 }

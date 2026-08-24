@@ -1,10 +1,24 @@
 import React from 'react';
+import confetti from 'canvas-confetti';
 
 export function JackieHeroBoard({ onSelectProject }) {
+  const triggerConfetti = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    confetti({
+      particleCount: 25,
+      spread: 50,
+      origin: {
+        x: (rect.left + rect.width / 2) / window.innerWidth,
+        y: (rect.top + rect.height / 2) / window.innerHeight
+      },
+      colors: ['#c93f2c', '#faecd8', '#38bdf8']
+    });
+  };
+
   return (
     <div className="relative w-full max-w-5xl mx-auto px-2 sm:px-4">
       
-      {/* Outer Red Layer Mat (Exact red bevel from user screenshot) */}
+      {/* Outer Red Layer Mat (Exact red bevel from reference screenshot) */}
       <div className="relative rounded-[2.5rem] p-3 sm:p-4 bg-[#c93f2c] border-2 border-[#a12f1f] shadow-2xl">
         
         {/* Inner Cream Grid Paper Mat */}
@@ -25,9 +39,12 @@ export function JackieHeroBoard({ onSelectProject }) {
             {/* Left Column: Hand Signature, Role, 4-Line Headline & Metadata */}
             <div className="md:col-span-6 space-y-6">
               
-              {/* Hand-drawn Signature */}
-              <div className="space-y-1">
-                <div className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#c93f2c] font-bold tracking-tight -rotate-1">
+              {/* Hand-drawn Signature with LIVE LINE BOIL */}
+              <div
+                onClick={triggerConfetti}
+                className="space-y-1 cursor-pointer group doodle-interactive"
+              >
+                <div className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#c93f2c] font-bold tracking-tight -rotate-1 animate-line-boil-slow group-hover:scale-105 transition-transform">
                   Mallikarjun.R :)
                 </div>
                 <div className="font-serif italic text-lg sm:text-xl text-[#c93f2c]/90 font-medium">
@@ -35,7 +52,7 @@ export function JackieHeroBoard({ onSelectProject }) {
                 </div>
               </div>
 
-              {/* Big 4-Line Manifesto Headline (Exact from reference screenshot) */}
+              {/* Big 4-Line Manifesto Headline */}
               <div className="space-y-4 pt-1">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#c93f2c] font-normal leading-[1.04] tracking-tight">
                   Software
@@ -44,24 +61,24 @@ export function JackieHeroBoard({ onSelectProject }) {
                   <br />
                   <span className="italic">feel</span>
                   <br />
-                  <span className="italic font-bold">intelligent</span>
+                  <span className="italic font-bold animate-line-boil-slow inline-block">intelligent</span>
                 </h1>
 
-                {/* 3-Column Monospace Metadata with Dot Separators (Clear separation from corner sketch) */}
+                {/* 3-Column Monospace Metadata with Dot Separators */}
                 <div className="text-xs sm:text-sm font-mono text-[#c93f2c] pt-3 flex items-center gap-3 sm:gap-4 relative z-10">
                   <div className="leading-tight">
                     <div>Bengaluru,</div>
                     <div>India</div>
                   </div>
                   
-                  <span className="font-bold text-[#c93f2c] text-sm">.</span>
+                  <span className="font-bold text-[#c93f2c] text-sm animate-line-boil">.</span>
                   
                   <div className="leading-tight">
                     <div>GMT +5:30</div>
                     <div>(IST)</div>
                   </div>
                   
-                  <span className="font-bold text-[#c93f2c] text-sm">.</span>
+                  <span className="font-bold text-[#c93f2c] text-sm animate-line-boil">.</span>
                   
                   <div className="leading-tight">
                     <div>Founder @ Medicus</div>
@@ -73,31 +90,31 @@ export function JackieHeroBoard({ onSelectProject }) {
 
             </div>
 
-            {/* Right Column: Authentic Illustrated Developer Window & Birds */}
+            {/* Right Column: Authentic Illustrated Developer Window & Perched Birds with LIVE BOIL */}
             <div className="md:col-span-6 flex justify-center md:justify-end relative">
-              <div className="relative max-w-[390px] w-full">
+              <div className="relative max-w-[390px] w-full doodle-interactive">
                 <img
                   src="https://framerusercontent.com/images/zreYWHKtYVvdYwuZm8gBYAa3IiA.png?scale-down-to=1024&width=1687&height=1394"
                   alt="Mallikarjun.R Workspace Illustration"
-                  className="w-full h-auto object-contain filter drop-shadow-md"
+                  className="w-full h-auto object-contain filter drop-shadow-md animate-line-boil-slow hover:rotate-1 transition-transform"
                 />
               </div>
             </div>
 
           </div>
 
-          {/* Bottom-left botanical flower sketch (tucked into corner, non-overlapping with text) */}
+          {/* Bottom-left botanical flower sketch with live organic sway */}
           <img
             src="https://framerusercontent.com/images/a5uPbmT6PvUwjD3MFRKJ8andRk.png?width=444&height=437"
             alt=""
-            className="absolute -bottom-8 -left-8 w-24 sm:w-28 h-auto pointer-events-none opacity-40 object-contain z-0"
+            className="absolute -bottom-8 -left-8 w-24 sm:w-28 h-auto pointer-events-none opacity-40 object-contain z-0 animate-flowers-sway"
           />
 
           {/* Bottom-right log sketch with mushrooms */}
           <img
             src="https://framerusercontent.com/images/BUQeUkXwalGo0ETntC1tuR9TM.png?scale-down-to=512&width=552&height=242"
             alt=""
-            className="absolute -bottom-2 right-0 w-40 sm:w-48 h-auto pointer-events-none opacity-65 object-contain z-0"
+            className="absolute -bottom-2 right-0 w-40 sm:w-48 h-auto pointer-events-none opacity-65 object-contain z-0 animate-line-boil-slow"
           />
 
         </div>
@@ -108,17 +125,33 @@ export function JackieHeroBoard({ onSelectProject }) {
   );
 }
 
-// Layered Physical Paper Scraps (Screenshot 2 exact style from jackiezhang.co.za)
+// Layered Physical Paper Scraps with LIVE Hover Physics & Confetti
 export function LayeredPaperNotes() {
+  const triggerSparkle = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    confetti({
+      particleCount: 18,
+      spread: 40,
+      origin: {
+        x: (rect.left + rect.width / 2) / window.innerWidth,
+        y: (rect.top + rect.height / 2) / window.innerHeight
+      },
+      colors: ['#c93f2c', '#faecd8', '#f59e0b', '#38bdf8']
+    });
+  };
+
   return (
     <div className="relative max-w-4xl mx-auto -mt-8 sm:-mt-12 z-30 px-4">
       <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
         
-        {/* Note 1: Torn Lined Notebook Paper (Left) */}
-        <div className="paper-card p-5 sm:p-6 max-w-[260px] bg-[#fdfaf2] border border-slate-300 shadow-xl -rotate-[5deg] hover:rotate-0 transition-transform duration-300">
+        {/* Note 1: Torn Lined Notebook Paper with Live Boil */}
+        <div
+          onClick={triggerSparkle}
+          className="paper-card p-5 sm:p-6 max-w-[260px] bg-[#fdfaf2] border border-slate-300 shadow-xl -rotate-[5deg] hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-pointer doodle-interactive"
+        >
           <div className="space-y-2">
             <div className="h-0.5 w-full border-t border-rose-300 mb-2" />
-            <p className="font-hand text-2xl sm:text-3xl text-slate-900 font-bold leading-tight">
+            <p className="font-hand text-2xl sm:text-3xl text-slate-900 font-bold leading-tight animate-line-boil-slow">
               tirelessly
               <br />
               pursue
@@ -129,9 +162,10 @@ export function LayeredPaperNotes() {
           </div>
         </div>
 
-        {/* Note 2: Graph Paper Note (Center Right) */}
+        {/* Note 2: Graph Paper Note with Live Boil */}
         <div
-          className="paper-card p-5 sm:p-6 max-w-[280px] bg-[#f5efe4] border border-slate-300 shadow-xl rotate-[8deg] hover:rotate-0 transition-transform duration-300"
+          onClick={triggerSparkle}
+          className="paper-card p-5 sm:p-6 max-w-[280px] bg-[#f5efe4] border border-slate-300 shadow-xl rotate-[8deg] hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-pointer doodle-interactive"
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
@@ -140,7 +174,7 @@ export function LayeredPaperNotes() {
             backgroundSize: '12px 12px'
           }}
         >
-          <p className="font-mono text-xl sm:text-2xl text-slate-900 font-extrabold leading-tight tracking-tight">
+          <p className="font-mono text-xl sm:text-2xl text-slate-900 font-extrabold leading-tight tracking-tight animate-line-boil-slow">
             Software
             <br />
             should
@@ -149,17 +183,20 @@ export function LayeredPaperNotes() {
           </p>
         </div>
 
-        {/* Note 3: Craft Paper Note with Metal Paperclip (Bottom Center) */}
-        <div className="paper-card p-6 sm:p-7 max-w-[240px] bg-[#e3d3bd] border border-[#c9b59b] shadow-xl rotate-[4deg] hover:rotate-0 transition-transform duration-300 relative">
+        {/* Note 3: Craft Paper Note with Metal Paperclip */}
+        <div
+          onClick={triggerSparkle}
+          className="paper-card p-6 sm:p-7 max-w-[240px] bg-[#e3d3bd] border border-[#c9b59b] shadow-xl rotate-[4deg] hover:rotate-0 hover:scale-105 transition-all duration-300 relative cursor-pointer doodle-interactive"
+        >
           
           {/* Metal Paperclip Doodle on top-left */}
-          <div className="absolute -top-3 left-6 w-5 h-10 text-slate-700">
+          <div className="absolute -top-3 left-6 w-5 h-10 text-slate-700 animate-line-boil">
             <svg viewBox="0 0 20 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M6 10 L6 30 Q6 36 10 36 Q14 36 14 30 L14 6 Q14 2 8 2 Q2 2 2 6 L2 32" />
             </svg>
           </div>
 
-          <p className="font-serif italic text-2xl sm:text-3xl text-slate-900 font-normal leading-tight pt-1">
+          <p className="font-serif italic text-2xl sm:text-3xl text-slate-900 font-normal leading-tight pt-1 animate-line-boil-slow">
             Engineering
             <br />
             for moments

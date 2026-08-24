@@ -2,17 +2,18 @@
 
 @layer base {
   :root {
-    --bg-dark: #0a0b0e;
-    --bg-dark-card: #12141c;
-    --bg-dark-card-hover: #181b26;
-    --bg-paper: #f4f1ea;
+    --bg-dark: #181716;
+    --bg-dark-card: #212121;
+    --bg-dark-card-hover: #292827;
+    --bg-paper: #fbf5ea;
     --bg-paper-card: #ffffff;
     --border-dark: rgba(255, 255, 255, 0.08);
     --border-dark-hover: rgba(255, 255, 255, 0.18);
     --border-paper: rgba(0, 0, 0, 0.08);
-    --text-light: #f3f4f6;
-    --text-muted: #8b92a5;
+    --text-light: #faecd8;
+    --text-muted: #a69888;
     --text-dark: #191816;
+    --accent-red: #c93f2c;
     --accent-orange: #f05a3e;
     --accent-cyan: #38bdf8;
     --accent-emerald: #10b981;
@@ -58,11 +59,11 @@ body {
   background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(201, 63, 44, 0.4);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-orange);
+  background: var(--accent-red);
 }
 
 /* ── Handcrafted Scrapbook & Tactile Elements ── */
@@ -75,31 +76,10 @@ body {
 }
 
 .washi-tape-orange {
-  background: rgba(240, 90, 62, 0.55);
+  background: rgba(201, 63, 44, 0.55);
   backdrop-filter: blur(4px);
   border-left: 2px dashed rgba(0, 0, 0, 0.2);
   border-right: 2px dashed rgba(0, 0, 0, 0.2);
-}
-
-.sticky-note {
-  background: #fdf6b2;
-  color: #191816;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.15);
-  transform: rotate(-1.5deg);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.sticky-note:hover {
-  transform: rotate(0deg) scale(1.02);
-  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.4);
-}
-
-.stamp-badge {
-  border: 2px dashed var(--accent-orange);
-  color: var(--accent-orange);
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transform: rotate(-3deg);
 }
 
 .paper-card {
@@ -128,51 +108,230 @@ body {
   box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.7);
 }
 
-/* ── Interactive Grid Texture Background ── */
-.canvas-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* ── LIVE HAND-DRAWN SHAKING / BOIL ANIMATION SYSTEM ── */
+
+/* 1. Organic Line Boil / Jitter Animation (3-frame stop-motion shake) */
+@keyframes lineBoil {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  20% {
+    transform: translate(-0.8px, 0.8px) rotate(-0.4deg) scale(1.003);
+  }
+  40% {
+    transform: translate(0.9px, -0.6px) rotate(0.5deg) scale(0.998);
+  }
+  60% {
+    transform: translate(-0.6px, -0.8px) rotate(-0.3deg) scale(1.002);
+  }
+  80% {
+    transform: translate(0.7px, 0.6px) rotate(0.4deg) scale(0.999);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
 }
 
-.canvas-dots {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
+.animate-line-boil {
+  animation: lineBoil 0.35s steps(2, start) infinite;
+  transform-origin: center;
 }
 
-/* ── Hand-Drawn SVG Animation ── */
-@keyframes drawStroke {
-  from { stroke-dashoffset: 200; }
-  to { stroke-dashoffset: 0; }
+.animate-line-boil-slow {
+  animation: lineBoil 0.75s steps(3, start) infinite;
+  transform-origin: center;
 }
 
-.doodle-stroke {
-  stroke-dasharray: 200;
-  animation: drawStroke 1.2s ease-out forwards;
+/* 2. Lucky Cat Waving Paw Animation */
+@keyframes catWavePaw {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-18deg) translate(-2px, -3px);
+  }
 }
 
-/* ── Floating Gentle Parallax Float ── */
-@keyframes gentleFloat {
-  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
-  50% { transform: translateY(-8px) rotate(calc(var(--rot, 0deg) + 0.8deg)); }
+.animate-cat-paw {
+  transform-origin: 68px 50px;
+  animation: catWavePaw 1.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-.float-slow {
-  animation: gentleFloat 6s ease-in-out infinite;
+/* 3. Rising Steam Animation from Ramen */
+@keyframes steamDrift {
+  0% {
+    opacity: 0.2;
+    transform: translateY(0) scaleX(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(-8px) scaleX(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scaleX(0.85);
+  }
 }
 
-.float-medium {
-  animation: gentleFloat 4.5s ease-in-out infinite;
+.animate-steam-1 {
+  animation: steamDrift 2s ease-in-out infinite;
+}
+.animate-steam-2 {
+  animation: steamDrift 2s ease-in-out infinite 0.7s;
 }
 
-/* ── Laser Scan Animation ── */
-@keyframes laserScan {
-  0% { top: 0%; opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { top: 100%; opacity: 0.8; }
+/* 4. Retro Computer Smile & Blink */
+@keyframes screenBlink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
 }
 
-.animate-scanner-line {
-  animation: laserScan 2s ease-in-out infinite alternate;
+.animate-screen-blink {
+  transform-origin: center;
+  animation: screenBlink 3.5s ease-in-out infinite;
+}
+
+@keyframes computerWobble {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(1deg);
+  }
+  75% {
+    transform: translateY(1.5px) rotate(-1deg);
+  }
+}
+
+.animate-computer-live {
+  animation: computerWobble 4s ease-in-out infinite;
+}
+
+/* 5. Perched Bird Head Bob & Tail Wag */
+@keyframes birdHeadBob {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-3px) rotate(-4deg);
+  }
+  60% {
+    transform: translateY(1px) rotate(3deg);
+  }
+}
+
+.animate-bird-head {
+  transform-origin: 85px 45px;
+  animation: birdHeadBob 2.5s ease-in-out infinite;
+}
+
+/* 6. Botanical Flowers Organic Sway */
+@keyframes flowersSway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2.5deg) translateY(-1px);
+  }
+}
+
+.animate-flowers-sway {
+  transform-origin: 45px 150px;
+  animation: flowersSway 4.5s ease-in-out infinite;
+}
+
+/* 7. Dinosaur Chomping & Tail Wag */
+@keyframes dinoChomp {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(-3deg) scale(1.02);
+  }
+  80% {
+    transform: rotate(2deg) scale(0.99);
+  }
+}
+
+.animate-dino-live {
+  transform-origin: bottom center;
+  animation: dinoChomp 3.2s ease-in-out infinite;
+}
+
+/* 8. Juice Box Straw Bubble & Shake */
+@keyframes juiceWiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}
+
+.animate-juice-box {
+  transform-origin: bottom center;
+  animation: juiceWiggle 3s ease-in-out infinite;
+}
+
+/* 9. Interactive Doodle Hover Physics (Playful bounce on mouse hover) */
+.doodle-interactive {
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.doodle-interactive:hover {
+  transform: scale(1.15) rotate(4deg);
+  filter: drop-shadow(0 0 10px rgba(232, 87, 70, 0.5));
+}
+
+.doodle-interactive:active {
+  transform: scale(0.92) rotate(-3deg);
+}
+
+/* 10. Hand-Drawn Avatar Spikes Bounce */
+@keyframes avatarHairBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px) scaleY(1.08);
+  }
+}
+
+.animate-avatar-hair {
+  animation: avatarHairBounce 2s ease-in-out infinite;
+  transform-origin: 30px 22px;
+}
+
+/* 11. Stamp Ribbon Pulse */
+@keyframes stampShake {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(1deg);
+  }
+}
+
+.animate-stamp-hover:hover {
+  animation: stampShake 0.4s ease-in-out infinite;
+}
+
+/* 12. Running Marquee Animation */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-smooth {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marqueeScroll 25s linear infinite;
 }
