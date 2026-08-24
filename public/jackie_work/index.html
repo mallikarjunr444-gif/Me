@@ -762,9 +762,16 @@ I design tools that help people do their best work.">
 </style>
 
 
+
 <style>
-/* Remove all clothing-care symbols */
-[data-framer-name*="Clothing tag"],
+/* Hide only the 5 clothing laundry icons */
+[data-framer-name="Clothing tag 01"],
+[data-framer-name="Clothing tag 02"],
+[data-framer-name="Clothing tag 03"],
+[data-framer-name="Clothing tag 04"],
+[data-framer-name="Clothing tag 05"],
+.framer-f3pk7n,
+.framer-qifsj7,
 .framer-1a7m7l9,
 .framer-37599v,
 .framer-1u737d9,
@@ -773,25 +780,36 @@ I design tools that help people do their best work.">
   display: none !important;
 }
 
-.mallikarjun-portrait-container {
+/* Ensure string loop & hole are always visible */
+[data-framer-name="Clothing tag string"],
+.framer-hur2en {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 20 !important;
+}
+
+/* Custom circular portrait frame integrated into the tag */
+.mallikarjun-tag-portrait-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
+  margin: 40px auto 14px auto;
   position: relative;
-  z-index: 10;
+  z-index: 15;
 }
 
-.mallikarjun-portrait-img {
-  width: 82px;
-  height: 82px;
+.mallikarjun-tag-portrait-wrap img {
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
-  border: 3px solid #1a1a1a;
+  border: 3.5px solid #1a1a1a;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
   background: #faecd8;
 }
 </style>
+
 
 </head>
 <body>
@@ -1144,17 +1162,24 @@ I design tools that help people do their best work.">
 
   
   function updatePersonalIdentityTag() {
-    // Hide all clothing tag icons
-    var clothingTags = document.querySelectorAll('[data-framer-name*="Clothing tag"], .framer-1a7m7l9, .framer-37599v, .framer-1u737d9, .framer-n7nxql, .framer-7613vu');
-    clothingTags.forEach(function(el) { el.style.display = 'none'; });
+    // Hide ONLY laundry icons
+    var icons = document.querySelectorAll('[data-framer-name="Clothing tag 01"], [data-framer-name="Clothing tag 02"], [data-framer-name="Clothing tag 03"], [data-framer-name="Clothing tag 04"], [data-framer-name="Clothing tag 05"], .framer-f3pk7n, .framer-qifsj7, .framer-n7nxql, .framer-7613vu');
+    icons.forEach(function(el) { el.style.display = 'none'; });
 
-    // Inject circular portrait if not already injected
+    // Ensure String is visible
+    var stringEl = document.querySelectorAll('[data-framer-name="Clothing tag string"], .framer-hur2en');
+    stringEl.forEach(function(el) {
+      el.style.display = 'block';
+      el.style.visibility = 'visible';
+    });
+
+    // Inject portrait photo into tag
     var tagCard = document.querySelector('.framer-1rkvcds');
-    if (tagCard && !tagCard.querySelector('.mallikarjun-portrait-container')) {
-      var portraitDiv = document.createElement('div');
-      portraitDiv.className = 'mallikarjun-portrait-container';
-      portraitDiv.innerHTML = '<img class="mallikarjun-portrait-img" src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />';
-      tagCard.insertBefore(portraitDiv, tagCard.firstChild);
+    if (tagCard && !tagCard.querySelector('.mallikarjun-tag-portrait-wrap')) {
+      var pWrap = document.createElement('div');
+      pWrap.className = 'mallikarjun-tag-portrait-wrap';
+      pWrap.innerHTML = '<img src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />';
+      tagCard.insertBefore(pWrap, tagCard.firstChild);
     }
 
     // Name & Subtitle
@@ -1180,7 +1205,7 @@ I design tools that help people do their best work.">
       }
     }
 
-    // Barcode Serial Text
+    // Barcode Serial Text & Quote
     var barcodeTexts = document.querySelectorAll('.framer-text');
     barcodeTexts.forEach(function(t) {
       if (t.textContent.includes('B45H') || t.textContent.includes('2024220268')) {
@@ -1198,7 +1223,6 @@ I design tools that help people do their best work.">
       featuredHeader.textContent = 'Find Me Online';
     }
 
-    // Update Right Side Links
     var linkTitles = document.querySelectorAll('.framer-888d9o p, .framer-1a23gvw p, .framer-il8yuu p');
     linkTitles.forEach(function(p) {
       var txt = p.textContent.trim();
@@ -1220,6 +1244,7 @@ I design tools that help people do their best work.">
   window.addEventListener('DOMContentLoaded', updatePersonalIdentityTag);
   window.addEventListener('load', updatePersonalIdentityTag);
   setInterval(updatePersonalIdentityTag, 300);
+
 
   function updateTag() {
     var tagLink = document.querySelector('a[href*="bash.com"], a[href*="linkedin.com/in/mallikarjunr"]');
