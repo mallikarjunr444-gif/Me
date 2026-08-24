@@ -287,21 +287,85 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ 3. PULSE WRISTBAND ══════════════════ */}
+      {/* ══════════════════ 3. PULSE WRISTBAND — CSS-BUILT ══════════════════ */}
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
 
-          {/* Slanted Wristband Graphic (Left 8 Cols) */}
+          {/* CSS-Built Wristband (Left 8 Cols) */}
           <div className="md:col-span-8 flex justify-center md:justify-start">
-            <div className="w-full max-w-[620px] transform -rotate-2 hover:rotate-0 transition-all duration-500 group">
-              {/* Orange-red underlay shadow */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-2 translate-y-2 opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-                <img
-                  src="/images/work/wristband-pulse.png"
-                  alt="Pulse Wristband"
-                  className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
-                />
+            <div className="w-full max-w-[680px] transform -rotate-1 hover:rotate-0 transition-all duration-500 group cursor-pointer">
+              <div className="relative flex items-stretch h-[110px] sm:h-[130px]">
+
+                {/* ── Left cream end with zigzag & snap holes ── */}
+                <div
+                  className="relative flex-shrink-0 w-[70px] sm:w-[90px] rounded-l-xl flex flex-col items-center justify-between py-3"
+                  style={{ backgroundColor: '#f5e0c8' }}
+                >
+                  {/* Zigzag pattern */}
+                  <svg viewBox="0 0 40 60" className="w-8 h-12 opacity-60" fill="none" stroke="#1a1a1a" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M5 5 L20 15 L5 25 L20 35 L5 45 L20 55" />
+                    <path d="M20 5 L35 15 L20 25 L35 35 L20 45 L35 55" />
+                  </svg>
+                  {/* Snap hole */}
+                  <div className="w-5 h-5 rounded-full bg-[#1a1a1a] border-2 border-[#3d3a36]" />
+                  {/* Rotated text */}
+                  <div
+                    className="absolute left-1 top-1/2 -translate-y-1/2 text-[7px] tracking-[0.3em] font-mono text-[#1a1a1a]/50 uppercase"
+                    style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg) translateX(50%)' }}
+                  >
+                    PULSE
+                  </div>
+                </div>
+
+                {/* ── Center red band with abstract contour lines ── */}
+                <div
+                  className="relative flex-1 overflow-hidden flex items-center justify-end px-6 sm:px-8"
+                  style={{ backgroundColor: '#e05638' }}
+                >
+                  {/* Abstract topographic / contour SVG lines */}
+                  <svg
+                    viewBox="0 0 500 130"
+                    className="absolute inset-0 w-full h-full opacity-30"
+                    fill="none"
+                    stroke="#fae0c8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  >
+                    <path d="M0 65 C40 30, 80 90, 120 50 C160 10, 200 100, 240 60 C280 20, 320 90, 360 45 C400 0, 440 80, 500 50" />
+                    <path d="M0 80 C50 50, 100 110, 150 70 C200 30, 250 100, 300 65 C350 30, 400 95, 450 55 L500 70" />
+                    <path d="M0 40 C60 70, 100 10, 160 50 C220 90, 260 20, 320 60 C380 100, 420 30, 500 60" />
+                    <path d="M0 95 C70 60, 130 110, 200 80 C270 50, 330 100, 400 75 L500 90" />
+                    <path d="M0 25 C30 55, 90 5, 140 40 C190 75, 240 15, 300 45 C360 75, 410 25, 500 35" />
+                    <circle cx="80" cy="55" r="30" />
+                    <circle cx="80" cy="55" r="18" />
+                    <circle cx="250" cy="70" r="25" />
+                    <circle cx="250" cy="70" r="12" />
+                    <circle cx="400" cy="50" r="22" />
+                  </svg>
+
+                  {/* Text content */}
+                  <div className="relative z-10 text-right">
+                    <div
+                      className="text-[#1a1a1a] text-2xl sm:text-3xl leading-none mb-1"
+                      style={{ fontFamily: "'Courier New', 'Geist Mono', monospace", fontWeight: 900 }}
+                    >
+                      Pulse
+                    </div>
+                    <div className="font-hand text-[#1a1a1a]/90 text-sm sm:text-base leading-snug max-w-[220px] sm:max-w-[260px]">
+                      Watch the race from the athletes point of view
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── Right cream end with snap holes ── */}
+                <div
+                  className="relative flex-shrink-0 w-[45px] sm:w-[55px] rounded-r-xl flex flex-col items-center justify-center gap-4 py-3"
+                  style={{ backgroundColor: '#f5e0c8' }}
+                >
+                  <div className="w-4 h-4 rounded-full bg-[#1a1a1a] border-2 border-[#3d3a36]" />
+                  <div className="w-4 h-4 rounded-full bg-[#1a1a1a] border-2 border-[#3d3a36]" />
+                </div>
+
               </div>
             </div>
           </div>
@@ -316,16 +380,16 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
                 onClick={() => toggleTooltip('vision_x')}
                 className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
               >
-                Vision X AI Agent
+                Stream uploader
                 {activeTooltip === 'vision_x' && (
                   <div className="absolute left-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                    Autonomous AI agent for visual recognition and real-time decision making.
+                    Enabled athletes to easily upload their GoPro footages onto the app.
                   </div>
                 )}
               </li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Stream Uploader</li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Home Feed</li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Event Timeline</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Home feed</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Race platform</li>
+              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Event timeline</li>
             </ul>
           </div>
 
@@ -333,7 +397,7 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
 
         {/* Learning Quote below Wristband on Left */}
         <div className="font-hand text-lg text-[#faecd8]/90 max-w-sm pt-1 pl-4">
-          Learnt that design is a team sport that involves people outside of design
+          Learnt that design is a team's sports that involves people outside of design
         </div>
       </div>
 
