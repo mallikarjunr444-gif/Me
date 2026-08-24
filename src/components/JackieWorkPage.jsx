@@ -47,7 +47,7 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ 2. THE CLOTHING CARE HANG-TAG (MEDICUS LABS) ══════════════════ */}
+      {/* ══════════════════ 2. THE CLOTHING CARE HANG-TAG WITH LINKEDIN EMBEDDED ══════════════════ */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-6">
         
         {/* Hang Tag (Left 7 Cols) */}
@@ -58,7 +58,7 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
             <div className="absolute inset-0 bg-[#c93f2c] rounded-3xl translate-x-3 translate-y-3" />
 
             {/* Main Cream Hang Tag */}
-            <div className="relative bg-[#faecd8] text-slate-900 rounded-3xl p-7 pt-12 shadow-2xl border border-slate-300 space-y-6">
+            <div className="relative bg-[#faecd8] text-slate-900 rounded-3xl p-7 pt-12 shadow-2xl border border-slate-300 space-y-5">
               
               {/* Eyelet & String Ring */}
               <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -77,22 +77,54 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
               </div>
 
               {/* Company & Role */}
-              <div className="space-y-2">
-                <div className="font-mono text-2xl font-black tracking-tight text-slate-950">
-                  Medicus Labs
+              <div className="space-y-1.5">
+                <div className="font-mono text-2xl font-black tracking-tight text-slate-950 flex items-center justify-between">
+                  <span>Medicus Labs</span>
+                  <span className="text-xs font-bold text-[#c93f2c] px-2 py-0.5 rounded bg-[#c93f2c]/10">FOUNDER</span>
                 </div>
                 <p className="font-mono text-xs text-slate-700 leading-relaxed">
                   India's leading clinical AI dermatology & multimodal medical triage platform.
                 </p>
               </div>
 
+              {/* 💼 LINKEDIN BADGE EMBEDDED DIRECTLY ON THE TAG */}
+              <div className="pt-2">
+                <a
+                  href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-[#0077b5] text-white hover:bg-[#005f93] transition-all shadow-md group cursor-pointer"
+                  title="View Mallikarjun R on LinkedIn"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center font-bold text-base">
+                      <LinkedInIcon className="w-4 h-4 text-white fill-current" />
+                    </div>
+                    <div className="text-left font-mono">
+                      <div className="text-xs font-black leading-tight flex items-center gap-1">
+                        <span>Mallikarjun R</span>
+                        <span className="text-[10px] text-sky-200">✓</span>
+                      </div>
+                      <div className="text-[10px] text-sky-100/80">
+                        in/mallikarjunr-com
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1 text-[11px] font-mono font-bold bg-white/20 px-2 py-1 rounded-lg group-hover:bg-white group-hover:text-[#0077b5] transition-colors">
+                    <span>Profile</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </div>
+                </a>
+              </div>
+
               {/* Barcode & Serial */}
-              <div className="pt-4 border-t border-slate-300 space-y-1 text-center font-mono">
+              <div className="pt-3 border-t border-slate-300 space-y-1 text-center font-mono">
                 <div className="tracking-[4px] text-lg font-black text-slate-950">
                   ||||| | |||| || |||||| | |||||
                 </div>
                 <div className="text-[10px] text-slate-600 tracking-widest font-bold">
-                  MEDICUS2026BENGALURU
+                  LI:MALLIKARJUNR-COM // 2026
                 </div>
               </div>
 
@@ -131,53 +163,6 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
           <div className="font-hand text-xl text-[#faecd8]/80 pl-2 border-l-2 border-[#c93f2c]/50">
             "Learnt to think beyond what's expected"
           </div>
-
-        </div>
-
-      </div>
-
-
-      {/* ══════════════════ 3. LINKEDIN BADGE INTEGRATION (2ND SECTION) ══════════════════ */}
-      <div className="pt-4 pb-8 flex flex-col items-center justify-center">
-        
-        <div className="w-full max-w-xl p-6 rounded-3xl bg-[#1f1d1c] border-2 border-[#382725] shadow-2xl space-y-6 text-center relative overflow-hidden transform rotate-[0.5deg]">
-          
-          {/* Top Label */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3 text-xs font-mono text-[#faecd8]/60">
-            <div className="flex items-center gap-2">
-              <LinkedInIcon className="w-4 h-4 text-[#0077b5]" />
-              <span className="font-bold text-[#faecd8]">VERIFIED LINKEDIN PROFILE</span>
-            </div>
-            <span>MALLIKARJUN R</span>
-          </div>
-
-          {/* Official LinkedIn Profile Badge Widget */}
-          <div className="flex justify-center py-2">
-            <div
-              className="badge-base LI-profile-badge"
-              data-locale="en_US"
-              data-size="medium"
-              data-theme="dark"
-              data-type="VERTICAL"
-              data-vanity="mallikarjunr-com"
-              data-version="v1"
-            >
-              <a
-                className="badge-base__link LI-simple-link inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0077b5] text-white font-mono text-sm font-bold hover:bg-[#005f93] transition-colors"
-                href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <LinkedInIcon className="w-4 h-4" />
-                <span>View Mallikarjun R on LinkedIn</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          <p className="text-xs font-mono text-[#faecd8]/50">
-            AI Engineer • Full-Stack Developer • Founder @ Medicus Labs
-          </p>
 
         </div>
 
