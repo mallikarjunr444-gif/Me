@@ -846,6 +846,26 @@ I design tools that help people do their best work.">
 .framer-1a7m7l9, .framer-37599v, .framer-1u737d9 {
   animation: handDrawnChalkJitter 0.5s steps(2, start) infinite !important;
 }
+
+/* ══════════════ CLEANUP: HIDE ALL BROKEN / EMPTY PHOTO BOXES ══════════════ */
+img:not([src]),
+img[src=""],
+img[src*="undefined"],
+img.broken-photo {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.broken-photo-card,
+.empty-box-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
 </style>
 
 </head>
@@ -952,8 +972,6 @@ I design tools that help people do their best work.">
   });
 
   function applyCuttingBoardConfig() {
-    if (!cachedCuttingBoardData) return;
-    
     // Map slice elements on Cutting Board Mat
     var sliceSelectors = [
       '[data-framer-name*="Slice 01"], .framer-12ziibl',
@@ -967,28 +985,102 @@ I design tools that help people do their best work.">
       '[data-framer-name*="Slice 09"]'
     ];
 
-    cachedCuttingBoardData.forEach(function(card, index) {
-      if (index < sliceSelectors.length) {
-        var el = document.querySelector(sliceSelectors[index]);
-        if (el) {
-          if (card.visible === false) {
-            el.style.display = 'none';
-          } else {
-            el.style.display = 'block';
-            var img = el.querySelector('img');
-            if (img && card.image) {
-              img.src = card.image;
-              img.srcset = card.image;
+    if (cachedCuttingBoardData && cachedCuttingBoardData.length) {
+      cachedCuttingBoardData.forEach(function(card, index) {
+        if (index < sliceSelectors.length) {
+          var el = document.querySelector(sliceSelectors[index]);
+          if (el) {
+            if (card.visible === false || !card.image || card.image === '') {
+              el.style.display = 'none';
+            } else {
+              el.style.display = 'block';
+              var img = el.querySelector('img');
+              if (img && card.image) {
+                img.src = card.image;
+                img.srcset = card.image;
+              }
             }
           }
         }
+      });
+    } else {
+      // If no data supplied, hide empty slice placeholders
+      sliceSelectors.forEach(function(sel) {
+        var el = document.querySelector(sel);
+        if (el) {
+          var img = el.querySelector('img');
+          if (!img || !img.src || (img.complete && img.naturalWidth === 0)) {
+            el.style.display = 'none';
+          }
+        }
+      });
+    }
+  }
+
+  // ══════════════ AUTO REMOVE ALL BROKEN / EMPTY PHOTO BOXES ══════════════
+  function removeBrokenImageBoxes() {
+    var imgs = document.querySelectorAll('img');
+    imgs.forEach(function(img) {
+      // Preserve user's portrait
+      if (img.src && img.src.includes('mallikarjun')) return;
+
+      var isBroken = false;
+      var src = img.getAttribute('src') || '';
+      
+      if (!src || src === '' || src === 'null' || src === 'undefined') {
+        isBroken = true;
+      } else if (img.complete && img.naturalWidth === 0) {
+        isBroken = true;
+      }
+
+      if (isBroken) {
+        img.classList.add('broken-photo');
+        img.style.display = 'none';
+
+        // Find enclosing card / frame box / polaroid
+        var card = img.closest('[data-framer-name*="Slice"], [data-framer-name*="Variant"], .framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, [data-border="true"], a');
+        if (card && !card.closest('.what-i-look-for-portrait-wrap') && !card.closest('.hero-dev-card') && !card.closest('.framer-1n1sql7')) {
+          card.classList.add('broken-photo-card');
+          card.style.display = 'none';
+        }
+      }
+
+      img.onerror = function() {
+        if (this.src && this.src.includes('mallikarjun')) return;
+        this.classList.add('broken-photo');
+        this.style.display = 'none';
+        var card = this.closest('[data-framer-name*="Slice"], [data-framer-name*="Variant"], .framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, [data-border="true"], a');
+        if (card && !card.closest('.what-i-look-for-portrait-wrap') && !card.closest('.hero-dev-card') && !card.closest('.framer-1n1sql7')) {
+          card.classList.add('broken-photo-card');
+          card.style.display = 'none';
+        }
+      };
+    });
+
+    // Also hide any floating empty photo frames around "What I look for" and background
+    var decoBoxes = document.querySelectorAll('.framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, .framer-1ixi539, .framer-1bwkuht');
+    decoBoxes.forEach(function(box) {
+      if (box.closest('.hero-dev-card') || box.closest('.what-i-look-for-portrait-wrap') || box.closest('.framer-1n1sql7')) return;
+      var innerImg = box.querySelector('img');
+      if (!innerImg || !innerImg.src || innerImg.classList.contains('broken-photo') || (innerImg.complete && innerImg.naturalWidth === 0)) {
+        box.classList.add('empty-box-hidden');
+        box.style.display = 'none';
       }
     });
   }
 
-  window.addEventListener('DOMContentLoaded', applyCuttingBoardConfig);
-  window.addEventListener('load', applyCuttingBoardConfig);
-  setInterval(applyCuttingBoardConfig, 400);
+  window.addEventListener('DOMContentLoaded', function() {
+    applyCuttingBoardConfig();
+    removeBrokenImageBoxes();
+  });
+  window.addEventListener('load', function() {
+    applyCuttingBoardConfig();
+    removeBrokenImageBoxes();
+  });
+  setInterval(function() {
+    applyCuttingBoardConfig();
+    removeBrokenImageBoxes();
+  }, 200);
 
   function syncAboutHeroAndContent() {
     // ══════════════ WHAT I LOOK FOR FRAME PORTRAIT ══════════════

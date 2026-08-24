@@ -20,65 +20,65 @@
 export const cuttingBoardData = [
   {
     id: "slot-1",
-    title: "Pack App",
-    image: "assets/images/0pNvbqriNrL1D2jxTeMwqGMPVo.png",
+    title: "Project 1",
+    image: "",  // Add your image: "/images/your-photo-1.jpg" and set visible: true
     position: "Top Left Phone Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-2",
-    title: "Code Editor / Architecture",
-    image: "assets/images/cqrOEukUtJ5q6innagqIo1y7ig.png",
+    title: "Project 2",
+    image: "",  // Add your image: "/images/your-photo-2.jpg" and set visible: true
     position: "Top Middle Code Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-3",
-    title: "Live Stream Platform",
-    image: "assets/images/CMfmtNsS4WRTLeJcQt1lujXYM.png",
+    title: "Project 3",
+    image: "",  // Add your image: "/images/your-photo-3.jpg" and set visible: true
     position: "Top Right Stream Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-4",
-    title: "Card 4",
-    image: "assets/images/FRkj7J6yOqj9bBSMBJF7zdRGrY.png",  // Replace with your image
+    title: "Project 4",
+    image: "",  // Add your image: "/images/your-photo-4.jpg" and set visible: true
     position: "Middle Left Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-5",
-    title: "Card 5",
-    image: "assets/images/EYbfG6roNwIxhPystqzDKOK4.png",  // Replace with your image
+    title: "Project 5",
+    image: "",  // Add your image: "/images/your-photo-5.jpg" and set visible: true
     position: "Center Grid Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-6",
-    title: "Race Platform & Timeline",
-    image: "assets/images/0Kj6KlVZPILk9uoSPK7tmq8hGJU.png",
+    title: "Project 6",
+    image: "",  // Add your image: "/images/your-photo-6.jpg" and set visible: true
     position: "Middle Right Timeline Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-7",
-    title: "Logistics & Shipping Dashboard",
-    image: "assets/images/raBEoGeB7wmHSyDXXPu6VzQPAg.png",
+    title: "Project 7",
+    image: "",  // Add your image: "/images/your-photo-7.jpg" and set visible: true
     position: "Bottom Left Logistics Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-8",
-    title: "Retro 2048 Terminal",
-    image: "assets/images/zbVoYsGmG4nEEedbtgkv5193W6I.png",
+    title: "Project 8",
+    image: "",  // Add your image: "/images/your-photo-8.jpg" and set visible: true
     position: "Bottom Middle Browser Card",
-    visible: true
+    visible: false
   },
   {
     id: "slot-9",
-    title: "Mobile App Screen",
-    image: "assets/images/X8TlTAmfaqh8FaOYxjSjYMniaE.png",
+    title: "Project 9",
+    image: "",  // Add your image: "/images/your-photo-9.jpg" and set visible: true
     position: "Bottom Right Mobile Card",
-    visible: true
+    visible: false
   }
 ];

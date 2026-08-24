@@ -853,6 +853,15 @@ I design tools that help people do their best work.">
 .framer-1a7m7l9, .framer-37599v, .framer-1u737d9 {
   animation: handDrawnChalkJitter 0.5s steps(2, start) infinite !important;
 }
+
+/* ══════════════ CLEANUP: PRESERVE SPOTS FOR USER'S PICTURES ══════════════ */
+img:not([src]),
+img[src=""],
+img[src*="undefined"],
+img.broken-photo {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
 </style>
 
 </head>
@@ -1151,10 +1160,26 @@ I design tools that help people do their best work.">
         </div>
       `;
     }
+    // Cleanly tag broken images so no broken icon is shown
+    document.querySelectorAll('img').forEach(function(img) {
+      if (img.src && img.src.includes('mallikarjun')) return;
+      if (!img.getAttribute('src') || (img.complete && img.naturalWidth === 0)) {
+        img.classList.add('broken-photo');
+      }
+      img.onerror = function() {
+        if (this.src && this.src.includes('mallikarjun')) return;
+        this.classList.add('broken-photo');
+      };
+    });
   }
 
   window.addEventListener('DOMContentLoaded', syncDOM);
   window.addEventListener('load', syncDOM);
+  window.addEventListener('error', function(e) {
+    if (e.target && e.target.tagName === 'IMG' && !e.target.src.includes('mallikarjun')) {
+      e.target.classList.add('broken-photo');
+    }
+  }, true);
   setInterval(syncDOM, 250);
 
   // Global click delegator
