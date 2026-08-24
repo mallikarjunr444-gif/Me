@@ -457,25 +457,6 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ MARQUEE TICKER 3 ══════════════════ */}
-      <div className="overflow-hidden py-4 mt-16 mb-4 border-t border-b border-white/5">
-        <div className="animate-marquee-smooth" style={{ animationDuration: '20s' }}>
-          {[...Array(2)].map((_, i) => (
-            <span key={i} className="inline-flex items-center gap-8 text-xs font-mono text-[#faecd8]/25 tracking-widest uppercase whitespace-nowrap mr-8">
-              <span>♦ Founder</span>
-              <span>♣ Builder</span>
-              <span>♠ Engineer</span>
-              <span>♥ Designer</span>
-              <span>♦ Architect</span>
-              <span>♣ Maker</span>
-              <span>♠ Thinker</span>
-              <span>♥ Creator</span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-
       {/* ══════════════════ 5. RETRO RED CRT MONITOR (DOTSLASH) ══════════════════ */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-10">
 
