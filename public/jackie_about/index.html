@@ -787,6 +787,42 @@ I design tools that help people do their best work.">
 }
 </style>
 
+
+<style>
+/* Authentic Hand-Drawn Line Boil & Wiggle Animation */
+@keyframes handDrawnBoil {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-0.7px, 0.5px) rotate(-0.35deg); }
+  50% { transform: translate(0.6px, -0.6px) rotate(0.3deg); }
+  75% { transform: translate(-0.4px, -0.4px) rotate(-0.2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes handDrawnChalkJitter {
+  0% { transform: scale(1) rotate(0deg); }
+  33% { transform: scale(1.005) rotate(0.4deg) translate(0.6px, -0.4px); }
+  66% { transform: scale(0.996) rotate(-0.35deg) translate(-0.5px, 0.5px); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Apply subtle stop-motion line boil to hand-drawn sketches and SVGs */
+[data-framer-component-type="SVG"],
+.svgContainer svg,
+[data-framer-name*="Doodle"],
+[data-framer-name*="Cat"],
+[data-framer-name*="Juice"],
+[data-framer-name*="Bird"],
+[data-framer-name*="Computer"],
+[data-framer-name*="Botanical"] {
+  animation: handDrawnBoil 0.35s steps(2, start) infinite !important;
+  transform-origin: center center !important;
+}
+
+.framer-1a7m7l9, .framer-37599v, .framer-1u737d9 {
+  animation: handDrawnChalkJitter 0.5s steps(2, start) infinite !important;
+}
+</style>
+
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
