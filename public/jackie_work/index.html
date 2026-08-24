@@ -1308,107 +1308,46 @@ I design tools that help people do their best work.">
   window.addEventListener('load', purgeBashPayAndFeaturedWork);
   setInterval(purgeBashPayAndFeaturedWork, 200);
 
-  function renderHeroDeveloperIdentity() {
-    // Hide laundry icons
-    var icons = document.querySelectorAll('[data-framer-name*="Clothing tag 0"], .framer-f3pk7n, .framer-qifsj7, .framer-n7nxql, .framer-7613vu');
-    icons.forEach(function(el) { el.style.display = 'none'; });
-
-    // String loop
-    var str = document.querySelectorAll('[data-framer-name="Clothing tag string"], .framer-hur2en');
-    str.forEach(function(el) { el.style.display = 'block'; el.style.visibility = 'visible'; });
-
-    // Luggage Tag Content Injection
-    var tagCard = document.querySelector('.framer-1rkvcds');
-    if (tagCard && !tagCard.getAttribute('data-dev-card-injected')) {
-      tagCard.setAttribute('data-dev-card-injected', 'true');
-      tagCard.innerHTML = `
-        <div class="hero-portrait-frame">
-          <img class="hero-portrait-img" src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />
-        </div>
-        <a class="hero-tag-title" href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" rel="noopener noreferrer">
-          Mallikarjun R
-        </a>
-        <p class="hero-tag-desc">
-          Computer Science Engineering student building AI, Cloud & DevOps solutions
-        </p>
-      `;
-    }
-
-    // Barcode Serial Text
-    var barcodeTexts = document.querySelectorAll('.framer-text');
-    barcodeTexts.forEach(function(t) {
-      if (t.textContent.includes('B45H') || t.textContent.includes('2024220268') || t.textContent.includes('MR•CSE')) {
-        t.textContent = 'MR•CSE•AI•2026';
-        t.className = 'hero-barcode-serial';
-      }
-      if (t.textContent.includes("beyond what's expected") || t.textContent.includes('beyond what') || t.textContent.includes('Learn. Build.')) {
-        t.textContent = 'Learn. Build. Deploy. Repeat.';
-        t.style.fontFamily = "'Gochi Hand', cursive";
-        t.style.fontSize = '22px';
-        t.style.color = '#faecd8';
-        t.style.fontWeight = 'bold';
-      }
-    });
-
-    // Right Side: Find Me Online
+  
+  function renderFeaturedWorkLinks() {
     var featuredHeader = document.querySelector('.framer-1biissb p');
     if (featuredHeader) {
-      featuredHeader.textContent = 'Find Me Online';
+      featuredHeader.textContent = 'Featured Work';
       featuredHeader.style.fontFamily = "'Departure Mono Regular', monospace";
-      featuredHeader.style.fontSize = '13px';
+      featuredHeader.style.fontSize = '14px';
       featuredHeader.style.letterSpacing = '0.08em';
       featuredHeader.style.textTransform = 'uppercase';
       featuredHeader.style.color = '#e05638';
+      featuredHeader.style.fontWeight = 'bold';
     }
 
-    // Right Side Links Container
     var linksParent = document.querySelector('.framer-faazwn-container');
-    if (linksParent && !linksParent.getAttribute('data-online-links-rendered')) {
-      linksParent.setAttribute('data-online-links-rendered', 'true');
+    if (linksParent && !linksParent.getAttribute('data-featured-rendered')) {
+      linksParent.setAttribute('data-featured-rendered', 'true');
       var titlesEl = linksParent.querySelector('.framer-z16edh') || linksParent;
       titlesEl.innerHTML = `
-        <div class="find-me-online-list">
+        <div style="display:flex; flex-direction:column; gap:18px; margin-top:14px;">
           <!-- GitHub -->
-          <a class="find-me-online-item" href="https://github.com/mallikarjunr444-gif" target="_blank" rel="noopener noreferrer">
-            <div class="find-me-icon-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <a href="https://github.com/mallikarjunr444-gif" target="_blank" rel="noopener noreferrer" 
+             style="display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; transition:transform 0.2s;">
+            <div style="width:36px; height:36px; border-radius:10px; background:rgba(224, 86, 56, 0.12); border:1px solid rgba(224, 86, 56, 0.4); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:#e05638;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             </div>
             <div>
-              <p class="find-me-text-title">GitHub</p>
-              <p class="find-me-text-sub">Projects & Open Source</p>
+              <p style="font-family:'Gochi Hand', cursive; font-size:24px; line-height:1.1; color:#e05638; margin:0;">GitHub</p>
+              <p style="font-family:'Departure Mono Regular', monospace; font-size:12px; color:#faecd8; opacity:0.75; margin:2px 0 0 0;">github.com/mallikarjunr444-gif</p>
             </div>
           </a>
 
           <!-- LinkedIn -->
-          <a class="find-me-online-item" href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" rel="noopener noreferrer">
-            <div class="find-me-icon-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          <a href="https://www.linkedin.com/in/mallikarjunr-com/" target="_blank" rel="noopener noreferrer" 
+             style="display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; transition:transform 0.2s;">
+            <div style="width:36px; height:36px; border-radius:10px; background:rgba(224, 86, 56, 0.12); border:1px solid rgba(224, 86, 56, 0.4); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:#e05638;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </div>
             <div>
-              <p class="find-me-text-title">LinkedIn</p>
-              <p class="find-me-text-sub">Professional Profile</p>
-            </div>
-          </a>
-
-          <!-- Credly -->
-          <a class="find-me-online-item" href="https://www.credly.com/" target="_blank" rel="noopener noreferrer">
-            <div class="find-me-icon-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
-            </div>
-            <div>
-              <p class="find-me-text-title">Credly</p>
-              <p class="find-me-text-sub">Certifications & Badges</p>
-            </div>
-          </a>
-
-          <!-- Google Skills -->
-          <a class="find-me-online-item" href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer">
-            <div class="find-me-icon-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
-            </div>
-            <div>
-              <p class="find-me-text-title">Google Skills</p>
-              <p class="find-me-text-sub">Cloud & AI Learning</p>
+              <p style="font-family:'Gochi Hand', cursive; font-size:24px; line-height:1.1; color:#e05638; margin:0;">LinkedIn</p>
+              <p style="font-family:'Departure Mono Regular', monospace; font-size:12px; color:#faecd8; opacity:0.75; margin:2px 0 0 0;">linkedin.com/in/mallikarjunr-com</p>
             </div>
           </a>
         </div>
@@ -1416,9 +1355,13 @@ I design tools that help people do their best work.">
     }
   }
 
-  window.addEventListener('DOMContentLoaded', renderHeroDeveloperIdentity);
-  window.addEventListener('load', renderHeroDeveloperIdentity);
-  setInterval(renderHeroDeveloperIdentity, 250);
+  window.addEventListener('DOMContentLoaded', renderFeaturedWorkLinks);
+  window.addEventListener('load', renderFeaturedWorkLinks);
+  setInterval(renderFeaturedWorkLinks, 250);
+
+  function renderHeroDeveloperIdentity() {
+    renderFeaturedWorkLinks();
+  }
 
 
 
