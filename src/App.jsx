@@ -55,31 +55,30 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#181716] text-[#faecd8] relative font-sans selection:bg-[#c93f2c] selection:text-white pb-24 overflow-x-hidden">
       
-      {/* 1. Left Vertical Stamp Ribbon */}
-      <StampRibbon side="left" />
-
-      {/* 2. Right Vertical Stamp Ribbon */}
-      <StampRibbon side="right" />
-
-      {/* Main Content Container */}
-      <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
-        
-        {/* Top Hand-Drawn Avatar & Navigation Links (about, work, connect) */}
-        <HandDrawnAvatar
-          onNavigate={handleNavigate}
-          activeTab={currentPage}
+      {currentPage === 'work' ? (
+        /* Dedicated Fullscreen Work Page */
+        <JackieWorkPage
+          onNavigateHome={() => handleNavigate('about')}
+          onNavigate={(page) => handleNavigate(page)}
+          onOpenConnect={() => setConnectOpen(true)}
+          onSelectProject={(p) => setActiveProject(p)}
         />
+      ) : (
+        <>
+          {/* 1. Left Vertical Stamp Ribbon */}
+          <StampRibbon side="left" />
 
-        {/* ═══════════════ CONDITIONAL PAGE RENDER ═══════════════ */}
-        {currentPage === 'work' ? (
-          /* Dedicated Work Page (Places I've been, things I've learnt) */
-          <JackieWorkPage
-            onNavigateHome={() => handleNavigate('about')}
-            onSelectProject={(p) => setActiveProject(p)}
-          />
-        ) : (
-          /* Home / About Overview Experience */
-          <>
+          {/* 2. Right Vertical Stamp Ribbon */}
+          <StampRibbon side="right" />
+
+          {/* Main Content Container */}
+          <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
+            {/* Top Hand-Drawn Avatar & Navigation Links (about, work, connect) */}
+            <HandDrawnAvatar
+              onNavigate={handleNavigate}
+              activeTab={currentPage}
+            />
+
             {/* 4. Main Hero Cutting Board / Grid Notebook */}
             <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
 
@@ -102,18 +101,17 @@ export default function App() {
               onOpenConnect={() => setConnectOpen(true)}
               personal={data.personal}
             />
-          </>
-        )}
 
-        {/* Bottom Ending Signoff */}
-        <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2">
-          <div className="font-hand text-xl text-[#faecd8]/70">
-            "Mallikarjun.R • Bengaluru, India • Still building :)"
+            {/* Bottom Ending Signoff */}
+            <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2">
+              <div className="font-hand text-xl text-[#faecd8]/70">
+                "Mallikarjun.R • Bengaluru, India • Still building :)"
+              </div>
+              <div>© {new Date().getFullYear()} Mallikarjun.R. All projects & systems verified.</div>
+            </div>
           </div>
-          <div>© {new Date().getFullYear()} Mallikarjun.R. All projects & systems verified.</div>
-        </div>
-
-      </div>
+        </>
+      )}
 
       {/* Modals */}
       {activeProject && (
