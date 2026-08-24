@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (Exact 5 authentic stamps provided by user)
+// Side Stamp Ribbon for Left and Right vertical borders (All 8 authentic user-provided stamp images)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
 
   const stampList = [
-    { id: 'seal', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
+    { id: 'owl', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
+    { id: 'sunflower', img: '/images/stamps/stamp-sunflower.png', label: 'Sunflower & Bee Diamond' },
+    { id: 'axe-vessel', img: '/images/stamps/stamp-axe-vessel.png', label: 'Axe Vessel Triskele' },
+    { id: 'blossom-leaves', img: '/images/stamps/stamp-blossom-leaves.png', label: 'Blossom & Leaves Diamond' },
     { id: 'bowl', img: '/images/stamps/stamp-bowl.png', label: 'Traditional Bowl' },
     { id: 'cursor', img: '/images/stamps/stamp-cursor.png', label: 'Browser Cursor' },
-    { id: 'owl', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
+    { id: 'seal', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
     { id: 'flower', img: '/images/stamps/stamp-flower.png', label: 'Blooming Flower' },
-    { id: 'seal-2', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
-    { id: 'bowl-2', img: '/images/stamps/stamp-bowl.png', label: 'Traditional Bowl' },
-    { id: 'cursor-2', img: '/images/stamps/stamp-cursor.png', label: 'Browser Cursor' },
     { id: 'owl-2', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
-    { id: 'flower-2', img: '/images/stamps/stamp-flower.png', label: 'Blooming Flower' }
+    { id: 'sunflower-2', img: '/images/stamps/stamp-sunflower.png', label: 'Sunflower & Bee Diamond' },
+    { id: 'axe-vessel-2', img: '/images/stamps/stamp-axe-vessel.png', label: 'Axe Vessel Triskele' },
+    { id: 'blossom-leaves-2', img: '/images/stamps/stamp-blossom-leaves.png', label: 'Blossom & Leaves Diamond' }
   ];
 
   const handleStampClick = (e) => {
