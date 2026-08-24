@@ -123,20 +123,32 @@
     while (el && el !== document.body && el !== document.documentElement) {
       var text = (el.textContent || '').trim();
       var name = el.getAttribute ? (el.getAttribute('data-framer-name') || '') : '';
-      var href = el.getAttribute ? (el.getAttribute('href') || '') : '';
+      var href = el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '';
+      var tag = el.tagName ? el.tagName.toLowerCase() : '';
 
-      // Check Connect
+      // 1. External Links (GitHub, LinkedIn, etc.)
+      if (tag === 'a' && href && (href.startsWith('http://') || href.startsWith('https://'))) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.open(href, '_blank', 'noopener,noreferrer');
+        return false;
+      }
+
+      // 2. Connect Drawer
       if (name === 'Connect' || text === 'Connect' || (el.className && typeof el.className === 'string' && el.className.includes('1t6lft1'))) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         window.parent.postMessage({ type: 'OPEN_CONNECT' }, '*');
         return false;
       }
 
-      // Check About or Logo
+      // 3. About or Logo
       if (text === 'about' || text === 'About' || href === './' || href === '/' || name === 'Logo' || (el.className && typeof el.className === 'string' && el.className.includes('3v0uqz'))) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         window.parent.postMessage({ type: 'NAVIGATE', page: 'about' }, '*');
         return false;
       }
