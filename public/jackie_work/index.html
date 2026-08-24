@@ -708,6 +708,46 @@ I design tools that help people do their best work.">
   display: block !important;
 }
 </style>
+<style>
+/* CRT Screen Mallikarjun R & Clean Background Fix */
+.framer-j2vz6z {
+  display: none !important;
+}
+.framer-dkhbbb, a.framer-dkhbbb {
+  width: auto !important;
+  min-width: 145px !important;
+  overflow: visible !important;
+  display: block !important;
+}
+.framer-yz2fbn, div.framer-yz2fbn {
+  position: relative !important;
+  left: 0 !important;
+  top: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+.framer-yz2fbn p, div.framer-yz2fbn p {
+  font-size: 15px !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  display: block !important;
+  margin: 0 !important;
+  color: #faecd8 !important;
+  letter-spacing: -0.02em !important;
+}
+.framer-1lgwc9q {
+  width: auto !important;
+  min-width: 140px !important;
+  max-width: 165px !important;
+  flex: none !important;
+  overflow: visible !important;
+}
+.framer-18nawqk {
+  flex: 1 !important;
+  max-width: 220px !important;
+}
+</style>
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
@@ -758,14 +798,22 @@ I design tools that help people do their best work.">
   
   
   function updateCrtMonitorSection() {
+    var ghost = document.querySelector('.framer-j2vz6z');
+    if (ghost) ghost.style.display = 'none';
+
     var dotslashLinks = document.querySelectorAll('a[href*="dotslash"], .framer-dkhbbb');
     dotslashLinks.forEach(function(l) {
       l.href = 'https://github.com/mallikarjunr444-gif';
+      l.style.width = 'auto';
+      l.style.minWidth = '145px';
+      l.style.overflow = 'visible';
       var p = l.querySelector('p');
       if (p) {
         p.textContent = 'MALLIKARJUN R';
-        p.style.fontSize = '18px';
-        p.style.letterSpacing = '0px';
+        p.style.fontSize = '15px';
+        p.style.whiteSpace = 'nowrap';
+        p.style.overflow = 'visible';
+        p.style.color = '#faecd8';
       }
     });
 
@@ -786,13 +834,15 @@ I design tools that help people do their best work.">
       if (q.textContent.includes('good design, great')) {
         q.textContent = 'I turn ideas into systems, products and experiments.';
       }
+      if (q.textContent.trim() === 'Notable work') {
+        q.textContent = 'Featured Work';
+      }
       if (q.textContent.trim() === 'Dekra') q.textContent = 'Medicus Labs';
       if (q.textContent.trim() === 'Balwin Fibre') q.textContent = 'Vision X';
       if (q.textContent.trim() === 'Junk Mail') q.textContent = 'ORVEX Games';
       if (q.textContent.trim() === '+4 other large projects...') q.textContent = 'Tech News AI';
     });
 
-    // Add '+ other experiments...' if not present
     var crtListContainers = document.querySelectorAll('.framer-1mwnm4p .framer-1a23gvw, .framer-roufdp-container');
     crtListContainers.forEach(function(c) {
       if (c && !c.getAttribute('data-crt-extended')) {
