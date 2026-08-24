@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (Exact 4K intact stamp column from Jackie Zhang with no half-cut icons)
+// Side Stamp Ribbon for Left and Right vertical borders (Exact 4K side banner strip from reference)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
-  // Generate 12 repeating tile steps (472px step height) spanning >5600px full document height
-  const tiles = Array.from({ length: 14 }, (_, i) => i * 472);
 
   return (
     <div
       className={`absolute inset-y-0 ${
         isLeft ? 'left-0' : 'right-0'
-      } w-[58px] z-10 overflow-hidden pointer-events-none select-none`}
+      } w-[48px] sm:w-[58px] z-10 overflow-hidden pointer-events-none select-none`}
     >
-      <div className="relative h-full w-full">
-        {tiles.map((topOffset, idx) => (
-          <img
-            key={idx}
-            src="https://framerusercontent.com/images/f2PEJg4oioBRT5hs3v6NNeskQ.png?width=341&height=488"
-            alt=""
-            style={{ top: `${topOffset}px` }}
-            className={`absolute ${
-              isLeft ? 'left-0' : 'right-0 scale-x-[-1]'
-            } h-[488px] w-[341px] max-w-none object-left-top`}
-          />
-        ))}
+      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
+        <div
+          className="absolute inset-0 w-full h-full opacity-95"
+          style={{
+            backgroundImage: `url('/images/stamps/jackie-side-banner.png')`,
+            backgroundRepeat: 'repeat-y',
+            backgroundSize: '100% auto',
+            backgroundPosition: 'center top'
+          }}
+        />
       </div>
     </div>
   );
