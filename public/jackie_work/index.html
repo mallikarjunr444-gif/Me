@@ -727,5 +727,54 @@ I design tools that help people do their best work.">
     <!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
+<script>
+(function() {
+  function sendHeight() {
+    try {
+      var h = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+      window.parent.postMessage({ type: 'SET_HEIGHT', height: h }, '*');
+    } catch(e){}
+  }
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  setInterval(sendHeight, 500);
+
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    while (el && el !== document.body) {
+      var text = (el.innerText || '').trim().toLowerCase();
+      var href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
+      
+      if (text === 'about' || href.includes('about') || href === '/' || href === '#about') {
+        e.preventDefault();
+        e.stopPropagation();
+        window.parent.postMessage({ type: 'NAVIGATE', page: 'about' }, '*');
+        return;
+      }
+      
+      if (text === 'connect' || href.includes('connect') || href === '#connect') {
+        e.preventDefault();
+        e.stopPropagation();
+        window.parent.postMessage({ type: 'OPEN_CONNECT' }, '*');
+        return;
+      }
+
+      if (el.getAttribute && (el.getAttribute('data-framer-name') === 'Logo' || (el.className && typeof el.className === 'string' && el.className.includes('Logo')))) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.parent.postMessage({ type: 'NAVIGATE', page: 'about' }, '*');
+        return;
+      }
+
+      el = el.parentElement;
+    }
+  }, true);
+})();
+</script>
 </body>
 </html>
