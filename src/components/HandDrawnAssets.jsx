@@ -27,7 +27,7 @@ export function StampRibbon({ side = 'left' }) {
 }
 
 // Hand-Drawn Avatar Face with Socials Branching (Live hair bounce + eye blink + line boil)
-export function HandDrawnAvatar({ onNavigate }) {
+export function HandDrawnAvatar({ onNavigate, activeTab = 'about' }) {
   const [blinking, setBlinking] = useState(false);
 
   const handleFaceClick = () => {
@@ -110,31 +110,32 @@ export function HandDrawnAvatar({ onNavigate }) {
 
       {/* Hand-Drawn Navigation Links with live hover wiggle */}
       <div className="flex items-center gap-6 text-lg font-hand text-[#faecd8] mt-3">
-        <a
-          href="#about"
+        <button
           onClick={() => onNavigate && onNavigate('about')}
-          className="hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:-rotate-3"
+          className={`hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:-rotate-3 cursor-pointer ${
+            activeTab === 'about' ? 'text-[#c93f2c] font-bold underline underline-offset-4 decoration-wavy' : ''
+          }`}
         >
           about
-        </a>
-        <a
-          href="#work"
+        </button>
+        <button
           onClick={() => onNavigate && onNavigate('work')}
-          className="hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:rotate-3"
+          className={`hover:text-[#c93f2c] hover:scale-110 transition-all inline-block hover:rotate-3 cursor-pointer ${
+            activeTab === 'work' ? 'text-[#c93f2c] font-bold underline underline-offset-4 decoration-wavy' : ''
+          }`}
         >
           work
-        </a>
-        <a
-          href="#connect"
+        </button>
+        <button
           onClick={() => onNavigate && onNavigate('connect')}
-          className="relative px-4 py-1 hover:text-[#c93f2c] hover:scale-105 transition-all inline-block group"
+          className="relative px-4 py-1 hover:text-[#c93f2c] hover:scale-105 transition-all inline-block group cursor-pointer"
         >
           <span>Connect</span>
           {/* Hand drawn oval ring around Connect with live line boil */}
           <svg className="absolute inset-0 w-full h-full text-[#faecd8] group-hover:text-[#c93f2c] pointer-events-none animate-line-boil" viewBox="0 0 80 32" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M10 16 C8 6, 72 4, 72 16 C72 26, 6 28, 12 16" />
           </svg>
-        </a>
+        </button>
       </div>
     </div>
   );

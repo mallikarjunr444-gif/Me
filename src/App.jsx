@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { portfolioData } from './data/portfolioData';
 import { StampRibbon, HandDrawnAvatar } from './components/HandDrawnAssets';
 import { JackieHeroBoard, LayeredPaperNotes } from './components/JackieHeroBoard';
@@ -8,22 +8,41 @@ import { JackieWhatILookForSection } from './components/JackieWhatILookForSectio
 import { JackieCaseStudyModal } from './components/JackieCaseStudyModal';
 import { JackieAboutDrawer } from './components/JackieAboutDrawer';
 import { JackieConnectDrawer } from './components/JackieConnectDrawer';
+import { JackieWorkPage } from './components/JackieWorkPage';
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [connectOpen, setConnectOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('about'); // 'about' | 'work'
 
   const data = portfolioData;
 
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'work') {
+        setCurrentPage('work');
+      } else if (hash === 'about' || hash === '') {
+        setCurrentPage('about');
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
   const handleNavigate = (target) => {
     if (target === 'about') {
-      setAboutOpen(true);
+      setCurrentPage('about');
+      window.location.hash = 'about';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (target === 'connect') {
       setConnectOpen(true);
     } else if (target === 'work') {
-      const el = document.getElementById('work');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      setCurrentPage('work');
+      window.location.hash = 'work';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -42,35 +61,49 @@ export default function App() {
       {/* 2. Right Vertical Stamp Ribbon */}
       <StampRibbon side="right" />
 
-      {/* Main Content Container with comfortable clearance from side ribbons */}
+      {/* Main Content Container */}
       <div className="px-12 sm:px-20 lg:px-24 pt-10 sm:pt-14 space-y-16">
         
-        {/* 3. Top Hand-Drawn Avatar & Links */}
-        <HandDrawnAvatar onNavigate={handleNavigate} />
-
-        {/* 4. Main Hero Cutting Board / Grid Notebook */}
-        <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
-
-        {/* 5. Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
-        <LayeredPaperNotes />
-
-        {/* 6. Peeling Project Cards & Background Chalk Doodles */}
-        <JackieProjectPeelSection
-          projects={data.projects}
-          onSelectProject={(p) => setActiveProject(p)}
+        {/* Top Hand-Drawn Avatar & Navigation Links (about, work, connect) */}
+        <HandDrawnAvatar
+          onNavigate={handleNavigate}
+          activeTab={currentPage}
         />
 
-        {/* 7. The Cutting Board / Interactive Workspace ("Everything you do, do it with care.") */}
-        <JackieCuttingBoardSection
-          projects={data.projects}
-          onSelectProject={(p) => setActiveProject(p)}
-        />
+        {/* ═══════════════ CONDITIONAL PAGE RENDER ═══════════════ */}
+        {currentPage === 'work' ? (
+          /* Dedicated Work Page (Places I've been, things I've learnt) */
+          <JackieWorkPage
+            onNavigateHome={() => handleNavigate('about')}
+            onSelectProject={(p) => setActiveProject(p)}
+          />
+        ) : (
+          /* Home / About Overview Experience */
+          <>
+            {/* 4. Main Hero Cutting Board / Grid Notebook */}
+            <JackieHeroBoard onSelectProject={(p) => setActiveProject(p)} />
 
-        {/* 8. "What I Look For" Card + Retro Smiling Computer + Botanicals */}
-        <JackieWhatILookForSection
-          onOpenConnect={() => setConnectOpen(true)}
-          personal={data.personal}
-        />
+            {/* 5. Layered Scrapbook Paper Notes (3 things I strongly believe in) */}
+            <LayeredPaperNotes />
+
+            {/* 6. Peeling Project Cards & Background Chalk Doodles */}
+            <JackieProjectPeelSection
+              projects={data.projects}
+              onSelectProject={(p) => setActiveProject(p)}
+            />
+
+            {/* 7. The Projects Workspace */}
+            <JackieCuttingBoardSection
+              onSelectProject={(p) => setActiveProject(p)}
+            />
+
+            {/* 8. "What I Look For" Card + Retro Smiling Computer + Botanicals */}
+            <JackieWhatILookForSection
+              onOpenConnect={() => setConnectOpen(true)}
+              personal={data.personal}
+            />
+          </>
+        )}
 
         {/* Bottom Ending Signoff */}
         <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2">
