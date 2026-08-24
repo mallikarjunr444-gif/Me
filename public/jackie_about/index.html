@@ -941,6 +941,55 @@ I design tools that help people do their best work.">
   
   
 
+  
+  // Listen for customizable Cutting Board data from React
+  var cachedCuttingBoardData = null;
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'SYNC_CUTTING_BOARD' && Array.isArray(e.data.cards)) {
+      cachedCuttingBoardData = e.data.cards;
+      applyCuttingBoardConfig();
+    }
+  });
+
+  function applyCuttingBoardConfig() {
+    if (!cachedCuttingBoardData) return;
+    
+    // Map slice elements on Cutting Board Mat
+    var sliceSelectors = [
+      '[data-framer-name*="Slice 01"], .framer-12ziibl',
+      '[data-framer-name*="Slice 02"], .framer-o0dvfa',
+      '[data-framer-name*="Slice 03"], .framer-r1x875',
+      '[data-framer-name*="Slice 04"], .framer-1ceza1p',
+      '[data-framer-name*="Slice 05"], .framer-oemwiw',
+      '[data-framer-name*="Slice 06"]',
+      '[data-framer-name*="Slice 07"]',
+      '[data-framer-name*="Slice 08"]',
+      '[data-framer-name*="Slice 09"]'
+    ];
+
+    cachedCuttingBoardData.forEach(function(card, index) {
+      if (index < sliceSelectors.length) {
+        var el = document.querySelector(sliceSelectors[index]);
+        if (el) {
+          if (card.visible === false) {
+            el.style.display = 'none';
+          } else {
+            el.style.display = 'block';
+            var img = el.querySelector('img');
+            if (img && card.image) {
+              img.src = card.image;
+              img.srcset = card.image;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', applyCuttingBoardConfig);
+  window.addEventListener('load', applyCuttingBoardConfig);
+  setInterval(applyCuttingBoardConfig, 400);
+
   function syncAboutHeroAndContent() {
     // ══════════════ WHAT I LOOK FOR FRAME PORTRAIT ══════════════
     var frameCard = document.querySelector('.framer-yv0whz-container, .framer-qjzwsj, [data-framer-name="Frame"]');

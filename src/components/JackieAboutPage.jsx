@@ -1,8 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { cuttingBoardData } from '../data/cuttingBoardData';
 
 export function JackieAboutPage({ onNavigate, onOpenConnect }) {
   const iframeRef = useRef(null);
   const [iframeHeight, setIframeHeight] = useState(3800);
+
+  const sendConfigToIframe = () => {
+    try {
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          {
+            type: 'SYNC_CUTTING_BOARD',
+            cards: cuttingBoardData
+          },
+          '*'
+        );
+      }
+    } catch {
+      // Ignore
+    }
+  };
 
   useEffect(() => {
     const handleMessage = (e) => {
@@ -25,6 +42,8 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
 
   const attachListeners = () => {
     try {
+      sendConfigToIframe();
+
       if (iframeRef.current && iframeRef.current.contentWindow) {
         const doc = iframeRef.current.contentDocument || iframeRef.current.contentWindow.document;
         if (doc && doc.body) {
@@ -97,7 +116,7 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
 
   return (
     <div className="w-full min-h-screen relative select-none bg-[#181716]">
-      {/* 1:1 Pixel-Perfect About Page Replica */}
+      {/* 1:1 Pixel-Perfect About Page Replica with Customizable Cutting Board Data */}
       <iframe
         ref={iframeRef}
         src="/jackie_about/index.html"
