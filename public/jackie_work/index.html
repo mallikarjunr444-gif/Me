@@ -806,99 +806,72 @@ I design tools that help people do their best work.">
       }
     });
 
-    // Update notebook container
+    // Remove all old sample side-quest entries (Drift, TF2048, images, etc.)
+    var oldEntries = document.querySelector('.framer-14gsk9m');
+    if (oldEntries) {
+      oldEntries.innerHTML = '';
+      oldEntries.style.display = 'none';
+    }
+
     var noteWork = document.querySelector('.framer-byn02k');
-    if (noteWork && !noteWork.getAttribute('data-certs-rendered')) {
-      noteWork.setAttribute('data-certs-rendered', 'true');
-      noteWork.innerHTML = `
-        <div style="width:100%; padding: 40px 30px; display:flex; flex-direction:column; gap:40px;">
+    if (noteWork) {
+      // Check if we have any certificates in window.certifications or default to empty
+      var certs = window.certifications || [];
+      
+      if (!noteWork.getAttribute('data-certs-clean')) {
+        noteWork.setAttribute('data-certs-clean', 'true');
+        
+        if (certs.length === 0) {
+          // Clean empty notebook page ready for certificates
+          noteWork.innerHTML = `
+            <div style="width:100%; min-height:380px; padding: 60px 40px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-family:'Gochi Hand', sans-serif;">
+              <div style="font-size:32px; color:#e05638; margin-bottom:8px;">✦</div>
+              <p style="font-size:22px; color:#3a3835; margin:0; line-height:1.4;">
+                Certifications archive ready.
+              </p>
+              <p style="font-size:16px; color:#7a7269; margin:8px 0 0 0;">
+                Add entries anytime in <code style="background:rgba(0,0,0,0.06); padding:2px 6px; border-radius:4px; font-family:monospace;">src/data/certificationsData.js</code>
+              </p>
+            </div>
+          `;
+        } else {
+          var certsHtml = certs.map(function(c) {
+            return `
+              <div style="display:flex; flex-direction:column; gap:8px; border-bottom: 1px dashed rgba(60,50,40,0.25); padding-bottom:30px; margin-bottom:30px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
+                  <h3 style="font-family:'Awesome Serif Semi Bold Extra Tall', serif; font-size:32px; color:#171717; margin:0; font-weight:600;">
+                    ${c.title}
+                  </h3>
+                  <span style="font-family:'Departure Mono Regular', monospace; font-size:14px; color:#e05638; font-weight:bold;">
+                    ${c.year}
+                  </span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638;">
+                  <span>${c.issuer}</span>
+                  <span>•</span>
+                  <span style="color:#3a3835;">${c.category}</span>
+                </div>
+                ${c.description ? `<p style="font-family:'Awesome Serif Tall', serif; font-size:16px; color:#4a4642; margin:4px 0 12px 0; line-height:1.4;">${c.description}</p>` : ''}
+                ${c.url ? `<div>
+                  <a href="${c.url}" target="_blank" rel="noopener noreferrer" 
+                     style="font-family:'Departure Mono Regular', monospace; font-size:13px; font-weight:bold; color:#e05638; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:1px solid #e05638; padding:6px 14px; border-radius:8px; transition:all 0.2s; background:rgba(224,86,56,0.05);">
+                    VIEW CERTIFICATE →
+                  </a>
+                </div>` : ''}
+              </div>
+            `;
+          }).join('');
           
-          <!-- Certificate 1 -->
-          <div style="display:flex; flex-direction:column; gap:8px; border-bottom: 1px dashed rgba(60,50,40,0.25); padding-bottom:30px;">
-            <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
-              <h3 style="font-family:'Awesome Serif Semi Bold Extra Tall', serif; font-size:32px; color:#171717; margin:0; font-weight:600;">
-                Introduction to Cloud 101
-              </h3>
-              <span style="font-family:'Departure Mono Regular', monospace; font-size:14px; color:#e05638; font-weight:bold;">
-                2026
-              </span>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638;">
-              <span>AWS Educate</span>
-              <span>•</span>
-              <span style="color:#3a3835;">Cloud Computing • AWS</span>
-            </div>
-            <p style="font-family:'Awesome Serif Tall', serif; font-size:16px; color:#4a4642; margin:4px 0 12px 0; line-height:1.4;">
-              Foundational training on core AWS cloud architecture, compute, storage, IAM security policies, and cloud cost management.
-            </p>
-            <div>
-              <a href="https://www.credly.com/" target="_blank" rel="noopener noreferrer" 
-                 style="font-family:'Departure Mono Regular', monospace; font-size:13px; font-weight:bold; color:#e05638; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:1px solid #e05638; padding:6px 14px; border-radius:8px; transition:all 0.2s; background:rgba(224,86,56,0.05);">
-                VIEW CERTIFICATE →
-              </a>
-            </div>
-          </div>
-
-          <!-- Certificate 2 -->
-          <div style="display:flex; flex-direction:column; gap:8px; border-bottom: 1px dashed rgba(60,50,40,0.25); padding-bottom:30px;">
-            <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
-              <h3 style="font-family:'Awesome Serif Semi Bold Extra Tall', serif; font-size:32px; color:#171717; margin:0; font-weight:600;">
-                Google Cloud Fundamentals
-              </h3>
-              <span style="font-family:'Departure Mono Regular', monospace; font-size:14px; color:#e05638; font-weight:bold;">
-                2026
-              </span>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638;">
-              <span>Google Cloud Skills Boost</span>
-              <span>•</span>
-              <span style="color:#3a3835;">GCP • Cloud Infrastructure • Kubernetes</span>
-            </div>
-            <p style="font-family:'Awesome Serif Tall', serif; font-size:16px; color:#4a4642; margin:4px 0 12px 0; line-height:1.4;">
-              Hands-on experience deploying containerized microservices on Cloud Run, GKE, Firestore databases, and VPC networks.
-            </p>
-            <div>
-              <a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer" 
-                 style="font-family:'Departure Mono Regular', monospace; font-size:13px; font-weight:bold; color:#e05638; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:1px solid #e05638; padding:6px 14px; border-radius:8px; transition:all 0.2s; background:rgba(224,86,56,0.05);">
-                VIEW CERTIFICATE →
-              </a>
-            </div>
-          </div>
-
-          <!-- Certificate 3 -->
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
-              <h3 style="font-family:'Awesome Serif Semi Bold Extra Tall', serif; font-size:32px; color:#171717; margin:0; font-weight:600;">
-                Deep Learning & Computer Vision
-              </h3>
-              <span style="font-family:'Departure Mono Regular', monospace; font-size:14px; color:#e05638; font-weight:bold;">
-                2025
-              </span>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-family:'Gochi Hand', cursive; font-size:18px; color:#e05638;">
-              <span>DeepLearning.AI</span>
-              <span>•</span>
-              <span style="color:#3a3835;">Computer Vision • PyTorch • YOLO</span>
-            </div>
-            <p style="font-family:'Awesome Serif Tall', serif; font-size:16px; color:#4a4642; margin:4px 0 12px 0; line-height:1.4;">
-              Advanced CNN architectures, object detection with YOLO, image segmentation, and clinical diagnostic AI model fine-tuning.
-            </p>
-            <div>
-              <a href="https://www.deeplearning.ai/" target="_blank" rel="noopener noreferrer" 
-                 style="font-family:'Departure Mono Regular', monospace; font-size:13px; font-weight:bold; color:#e05638; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:1px solid #e05638; padding:6px 14px; border-radius:8px; transition:all 0.2s; background:rgba(224,86,56,0.05);">
-                VIEW CERTIFICATE →
-              </a>
-            </div>
-          </div>
-
-        </div>
-      `;
+          noteWork.innerHTML = '<div style="width:100%; padding: 40px 30px; display:flex; flex-direction:column;">' + certsHtml + '</div>';
+        }
+      }
     }
   }
 
   window.addEventListener('DOMContentLoaded', updateCertificationsSection);
   window.addEventListener('load', updateCertificationsSection);
   setInterval(updateCertificationsSection, 300);
+
 
   function updateCrtMonitorSection() {
     var ghost = document.querySelector('.framer-j2vz6z');
