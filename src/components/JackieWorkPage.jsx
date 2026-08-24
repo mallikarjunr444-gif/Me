@@ -277,16 +277,6 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
       </div>
 
 
-      {/* ══════════════════ DIAGRAM 2 (hand-drawn illustration) ══════════════════ */}
-      <div className="flex justify-center py-10">
-        <img
-          src="/images/work/diagram-2.png"
-          alt="Hand-drawn illustration"
-          className="w-28 h-auto object-contain opacity-50 animate-line-boil-slow"
-        />
-      </div>
-
-
       {/* ══════════════════ 3. PULSE WRISTBAND — CSS-BUILT ══════════════════ */}
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
@@ -399,99 +389,6 @@ export function JackieWorkPage({ onNavigateHome, onSelectProject }) {
         <div className="font-hand text-lg text-[#faecd8]/90 max-w-sm pt-1 pl-4">
           Learnt that design is a team's sports that involves people outside of design
         </div>
-      </div>
-
-
-      {/* ══════════════════ DIAGRAM 6 (hand-drawn illustration) ══════════════════ */}
-      <div className="flex justify-center py-14">
-        <img
-          src="/images/work/diagram-6.png"
-          alt="Hand-drawn illustration"
-          className="w-32 h-auto object-contain opacity-45 animate-line-boil-slow"
-        />
-      </div>
-
-
-      {/* ══════════════════ 4. HEYGO — LINOCUT MOUNTAIN TICKET ══════════════════ */}
-      <div className="space-y-6">
-        <div className="flex justify-center">
-          <div className="w-full max-w-[780px] transform rotate-1 hover:rotate-0 transition-all duration-500 group">
-            {/* Orange-red underlay shadow */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-2 translate-y-3 opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-              <img
-                src="/images/work/ticket-heygo.png"
-                alt="HEYGO Ticket — Admit 1"
-                className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Quote & Notable Work below Heygo Ticket */}
-        <div className="flex flex-col sm:flex-row justify-between items-start max-w-3xl mx-auto px-4 gap-6 font-mono">
-          <div className="font-hand text-lg text-[#faecd8]/90 max-w-xs">
-            Learnt design is a powerful alignment tool
-          </div>
-
-          <div className="space-y-1">
-            <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase mb-1">
-              Notable work
-            </div>
-            <ul className="space-y-1 text-base text-[#e85746] font-hand">
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Streaming UI</li>
-              <li
-                onClick={() => toggleTooltip('stream_creator')}
-                className="tooltip-trigger hover:text-white cursor-pointer transition-colors relative"
-              >
-                Stream Creator
-                {activeTooltip === 'stream_creator' && (
-                  <div className="absolute right-0 top-full mt-1 z-30 bg-[#faecd8] text-slate-900 text-xs font-mono p-3 rounded-xl shadow-xl border border-slate-300 max-w-xs animate-in fade-in zoom-in-95">
-                    Platform to stream on Heygo. Better streaming experience also increased tipping by 8%/stream.
-                  </div>
-                )}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-
-      {/* ══════════════════ 5. RETRO RED CRT MONITOR (DOTSLASH) ══════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-10">
-
-        {/* Beige CRT Computer Frame (Left 7 Cols) */}
-        <div className="md:col-span-7 flex justify-center md:justify-end">
-          <div className="relative max-w-[480px] w-full transform -rotate-1 hover:rotate-0 transition-all duration-500 group">
-            {/* Orange-red underlay shadow */}
-            <div className="absolute inset-0 bg-[#e05638] rounded-2xl translate-x-3 translate-y-3 opacity-55 group-hover:opacity-80 transition-opacity duration-300" />
-            <img
-              src="/images/work/crt-monitor.png"
-              alt="Dotslash CRT Monitor"
-              className="relative w-full h-auto object-contain filter drop-shadow-2xl z-10"
-            />
-          </div>
-        </div>
-
-        {/* Notable Work & Quote (Right 5 Cols) */}
-        <div className="md:col-span-5 space-y-8 pl-0 md:pl-6 font-mono">
-          <div className="font-hand text-xl text-[#faecd8]/90 max-w-xs leading-snug">
-            Learnt how to make a good design, great.
-          </div>
-
-          <div className="space-y-3">
-            <div className="text-xs text-[#e85746] font-bold tracking-wider uppercase">
-              Notable work
-            </div>
-            <ul className="space-y-2 text-xl text-[#e85746] font-hand">
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Internal Packing Tool</li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Kiosk</li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">Point of Sale</li>
-              <li className="tooltip-trigger hover:text-white cursor-pointer transition-colors">+4 other large projects...</li>
-            </ul>
-          </div>
-        </div>
-
       </div>
 
 
