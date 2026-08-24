@@ -21,64 +21,64 @@ export const cuttingBoardData = [
   {
     id: "slot-1",
     title: "Project 1",
-    image: "",  // Add your image: "/images/your-photo-1.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-1.jpg"
     position: "Top Left Phone Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-2",
     title: "Project 2",
-    image: "",  // Add your image: "/images/your-photo-2.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-2.jpg"
     position: "Top Middle Code Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-3",
     title: "Project 3",
-    image: "",  // Add your image: "/images/your-photo-3.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-3.jpg"
     position: "Top Right Stream Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-4",
     title: "Project 4",
-    image: "",  // Add your image: "/images/your-photo-4.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-4.jpg"
     position: "Middle Left Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-5",
     title: "Project 5",
-    image: "",  // Add your image: "/images/your-photo-5.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-5.jpg"
     position: "Center Grid Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-6",
     title: "Project 6",
-    image: "",  // Add your image: "/images/your-photo-6.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-6.jpg"
     position: "Middle Right Timeline Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-7",
     title: "Project 7",
-    image: "",  // Add your image: "/images/your-photo-7.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-7.jpg"
     position: "Bottom Left Logistics Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-8",
     title: "Project 8",
-    image: "",  // Add your image: "/images/your-photo-8.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-8.jpg"
     position: "Bottom Middle Browser Card",
-    visible: false
+    visible: true
   },
   {
     id: "slot-9",
     title: "Project 9",
-    image: "",  // Add your image: "/images/your-photo-9.jpg" and set visible: true
+    image: "",  // Add your image: "/images/your-photo-9.jpg"
     position: "Bottom Right Mobile Card",
-    visible: false
+    visible: true
   }
 ];

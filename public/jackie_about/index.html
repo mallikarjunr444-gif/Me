@@ -972,49 +972,72 @@ img.broken-photo {
   });
 
   function applyCuttingBoardConfig() {
-    // Map slice elements on Cutting Board Mat
-    var sliceSelectors = [
-      '[data-framer-name*="Slice 01"], .framer-12ziibl',
-      '[data-framer-name*="Slice 02"], .framer-o0dvfa',
-      '[data-framer-name*="Slice 03"], .framer-r1x875',
-      '[data-framer-name*="Slice 04"], .framer-1ceza1p',
-      '[data-framer-name*="Slice 05"], .framer-oemwiw',
-      '[data-framer-name*="Slice 06"]',
-      '[data-framer-name*="Slice 07"]',
-      '[data-framer-name*="Slice 08"]',
-      '[data-framer-name*="Slice 09"]'
+    // Exact 9 cutting board card containers on the Mat
+    var cuttingBoardSlots = [
+      '.framer-6ctr7e-container',   // Slot 1: Top Left
+      '.framer-11nqq4i-container',  // Slot 2: Top Middle
+      '.framer-5zt1ho-container',   // Slot 3: Top Right
+      '.framer-1fickan-container',  // Slot 4: Middle Left
+      '.framer-gnejcv-container',   // Slot 5: Center
+      '.framer-mqlzz-container',    // Slot 6: Middle Right
+      '.framer-1xalfcs-container',  // Slot 7: Bottom Left
+      '.framer-1ggxag2-container',  // Slot 8: Bottom Middle
+      '.framer-f5j56f-container'    // Slot 9: Bottom Right
     ];
 
-    if (cachedCuttingBoardData && cachedCuttingBoardData.length) {
-      cachedCuttingBoardData.forEach(function(card, index) {
-        if (index < sliceSelectors.length) {
-          var el = document.querySelector(sliceSelectors[index]);
-          if (el) {
-            if (card.visible === false || !card.image || card.image === '') {
-              el.style.display = 'none';
-            } else {
-              el.style.display = 'block';
-              var img = el.querySelector('img');
-              if (img && card.image) {
-                img.src = card.image;
-                img.srcset = card.image;
-              }
-            }
-          }
+    cuttingBoardSlots.forEach(function(sel, index) {
+      var container = document.querySelector(sel);
+      if (!container) return;
+
+      var cardData = (cachedCuttingBoardData && cachedCuttingBoardData[index]) || null;
+      var cardLink = container.querySelector('a') || container;
+      var img = container.querySelector('img');
+
+      if (cardData && cardData.visible === false) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'block';
+
+      // Keep white card frame styled cleanly in the exact spot
+      cardLink.style.display = 'flex';
+      cardLink.style.alignItems = 'center';
+      cardLink.style.justifyContent = 'center';
+      cardLink.style.backgroundColor = '#fcf8f2';
+      cardLink.style.borderRadius = '20px';
+      cardLink.style.border = '9px solid #ffffff';
+      cardLink.style.boxShadow = '0 12px 28px rgba(0,0,0,0.22)';
+      cardLink.style.overflow = 'hidden';
+      cardLink.style.textDecoration = 'none';
+      cardLink.style.position = 'relative';
+
+      if (cardData && cardData.image && cardData.image.trim() !== '') {
+        // User has provided an image
+        if (img) {
+          img.src = cardData.image;
+          img.srcset = cardData.image;
+          img.style.display = 'block';
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = 'cover';
         }
-      });
-    } else {
-      // If no data supplied, hide empty slice placeholders
-      sliceSelectors.forEach(function(sel) {
-        var el = document.querySelector(sel);
-        if (el) {
-          var img = el.querySelector('img');
-          if (!img || !img.src || (img.complete && img.naturalWidth === 0)) {
-            el.style.display = 'none';
-          }
+        var oldBadge = cardLink.querySelector('.slot-placeholder-badge');
+        if (oldBadge) oldBadge.remove();
+      } else {
+        // Empty / waiting for picture: preserve slot cleanly
+        if (img) {
+          img.style.display = 'none';
         }
-      });
-    }
+        if (!cardLink.querySelector('.slot-placeholder-badge')) {
+          var placeholder = document.createElement('div');
+          placeholder.className = 'slot-placeholder-badge';
+          placeholder.style.cssText = 'width:100%; height:100%; min-height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#c93f2c; font-family:"Gochi Hand", cursive; text-align:center; padding:16px; border:2px dashed rgba(201,63,44,0.3); border-radius:14px; background:rgba(255,255,255,0.85); box-sizing:border-box;';
+          placeholder.innerHTML = '<span style="font-size:26px; line-height:1; color:#c93f2c;">✦</span><span style="font-size:18px; font-weight:bold; color:#222;">' + (cardData ? cardData.title : ('Project ' + (index + 1))) + '</span><span style="font-family:\'Departure Mono Regular\', monospace; font-size:11px; color:#777; letter-spacing:0.04em;">+ Drop Image Here</span>';
+          cardLink.appendChild(placeholder);
+        }
+      }
+    });
   }
 
   // ══════════════ AUTO REMOVE ALL BROKEN / EMPTY PHOTO BOXES ══════════════
