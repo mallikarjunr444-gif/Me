@@ -165,34 +165,40 @@ export function JackieWorkPage({ onNavigateHome }) {
       </div>
 
 
-      {/* ══════════════════ 5. "SIDE QUESTS" SPIRAL NOTEBOOK ══════════════════ */}
-      <div className="pt-16 space-y-12">
+      {/* ══════════════════ 5. "SIDE QUESTS" SECTION WITH AUTHENTIC MOUSE HERO ARTWORK ══════════════════ */}
+      <div className="pt-20 space-y-12">
         
-        <div className="text-center space-y-3 relative">
-          {/* Top Doodles */}
-          <div className="flex justify-between items-center max-w-md mx-auto px-8 pointer-events-none opacity-40">
-            <span className="text-2xl font-hand">🐁</span>
-            <span className="text-2xl font-hand">🌸</span>
+        {/* Mouse Hero & Garden Linocut Illustration */}
+        <div className="flex justify-center -mb-8">
+          <div className="w-full max-w-lg transform hover:scale-103 transition-transform duration-300">
+            <img
+              src="/images/work/diagram-3.png"
+              alt="Side Quests Mouse Hero Illustration"
+              className="w-full h-auto object-contain filter drop-shadow-md"
+            />
           </div>
+        </div>
 
-          <h2 className="font-serif text-5xl sm:text-7xl text-[#faecd8]">
+        {/* Section Heading */}
+        <div className="text-center space-y-2">
+          <h2 className="font-serif text-5xl sm:text-7xl text-[#faecd8] tracking-tight">
             Side Quests
           </h2>
         </div>
 
         {/* Top-Bound Spiral Notebook Container */}
-        <div className="relative max-w-3xl mx-auto bg-[#faecd8] text-slate-900 rounded-[2.5rem] p-8 sm:p-12 shadow-2xl border border-[#e5d5c0] space-y-12">
+        <div className="relative max-w-4xl mx-auto bg-[#faecd8] text-slate-900 rounded-[2.5rem] p-8 sm:p-12 shadow-2xl border border-[#e5d5c0] space-y-12">
           
           {/* Metal Spiral Wire Loops at Top */}
           <div className="absolute -top-4 left-8 right-8 flex justify-between pointer-events-none">
-            {Array.from({ length: 20 }).map((_, i) => (
+            {Array.from({ length: 22 }).map((_, i) => (
               <div key={i} className="w-2.5 h-8 rounded-full bg-[#3d3a36] border border-[#605d59] shadow-md" />
             ))}
           </div>
 
           {/* Quest Item 1: Drift */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center pt-4 border-b border-slate-300/80 pb-10">
-            <div className="space-y-3 font-mono">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-4 border-b border-slate-300/80 pb-12">
+            <div className="md:col-span-5 space-y-3 font-mono">
               <div className="font-serif text-3xl font-bold text-slate-950">
                 Drift
               </div>
@@ -204,22 +210,22 @@ export function JackieWorkPage({ onNavigateHome }) {
               </p>
             </div>
 
-            <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-300">
+            <div className="md:col-span-7 rounded-2xl overflow-hidden shadow-xl border border-slate-300 bg-black">
               <img
-                src="/images/work/sidequest-drift.png"
-                alt="Drift"
-                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
+                src="/images/work/diagram-4.png"
+                alt="Drift Project"
+                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
               />
             </div>
           </div>
 
           {/* Quest Item 2: TF2048 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
-            <div className="space-y-3 font-mono">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-5 space-y-3 font-mono">
               <div className="font-serif text-3xl font-bold text-slate-950">
                 TF2048
               </div>
-              <div className="text-xs text-[#e85746] font-bold uppercase tracking-wider">
+              <div className="text-xs text-[#e85746] font-bold uppercase tracking-wider leading-relaxed">
                 creator // Bot design & Site design & Concept art & 3D Modelling and texturing
               </div>
               <div className="text-xs text-slate-500 font-mono">
@@ -230,11 +236,11 @@ export function JackieWorkPage({ onNavigateHome }) {
               </p>
             </div>
 
-            <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-300">
+            <div className="md:col-span-7 rounded-2xl overflow-hidden shadow-xl border border-slate-300 bg-[#2d5248]">
               <img
-                src="/images/work/sidequest-tf2048.png"
-                alt="TF2048"
-                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
+                src="/images/work/diagram-5.png"
+                alt="TF2048 Project"
+                className="w-full h-auto object-cover hover:scale-102 transition-transform duration-300"
               />
             </div>
           </div>
