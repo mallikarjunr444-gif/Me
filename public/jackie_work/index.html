@@ -811,6 +811,134 @@ I design tools that help people do their best work.">
 </style>
 
 
+
+<style id="custom-hero-identity-style">
+/* 1. Purge all laundry icons */
+[data-framer-name="Clothing tag 01"],
+[data-framer-name="Clothing tag 02"],
+[data-framer-name="Clothing tag 03"],
+[data-framer-name="Clothing tag 04"],
+[data-framer-name="Clothing tag 05"],
+.framer-f3pk7n, .framer-qifsj7, .framer-n7nxql, .framer-7613vu, .framer-1a7m7l9, .framer-37599v, .framer-1u737d9 {
+  display: none !important;
+}
+
+/* 2. String loop and eyelet hole visibility */
+[data-framer-name="Clothing tag string"], .framer-hur2en {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 25 !important;
+  pointer-events: none;
+}
+
+/* 3. Circular portrait photo frame inside the cream luggage tag */
+.hero-portrait-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 36px auto 14px auto;
+  position: relative;
+  z-index: 20;
+}
+
+.hero-portrait-img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3.5px solid #1a1a1a;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  background: #faecd8;
+  display: block;
+}
+
+/* 4. Name & Description */
+.hero-tag-title {
+  font-family: 'Departure Mono Regular', monospace !important;
+  font-size: 22px !important;
+  font-weight: bold !important;
+  color: #171717 !important;
+  text-align: center !important;
+  margin: 0 0 6px 0 !important;
+  letter-spacing: -0.02em !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  display: block !important;
+}
+
+.hero-tag-desc {
+  font-family: 'Departure Mono Regular', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+  color: #2b2824 !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+  max-width: 240px !important;
+}
+
+/* 5. Barcode Serial Text */
+.hero-barcode-serial {
+  font-family: 'Departure Mono Regular', monospace !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: #171717 !important;
+  letter-spacing: 0.12em !important;
+  text-align: center !important;
+  margin-top: 4px !important;
+}
+
+/* 6. Find Me Online List on Right */
+.find-me-online-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.find-me-online-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.find-me-online-item:hover {
+  transform: translateX(4px);
+}
+
+.find-me-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(224, 86, 56, 0.12);
+  border: 1px solid rgba(224, 86, 56, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #e05638;
+}
+
+.find-me-text-title {
+  font-family: 'Gochi Hand', cursive;
+  font-size: 20px;
+  line-height: 1.1;
+  color: #e05638;
+  margin: 0;
+}
+
+.find-me-text-sub {
+  font-family: 'Departure Mono Regular', monospace;
+  font-size: 12px;
+  color: #faecd8;
+  opacity: 0.75;
+  margin: 2px 0 0 0;
+}
+</style>
+
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
@@ -1161,89 +1289,119 @@ I design tools that help people do their best work.">
   setInterval(updateWristbandSection, 300);
 
   
-  function updatePersonalIdentityTag() {
-    // Hide ONLY laundry icons
-    var icons = document.querySelectorAll('[data-framer-name="Clothing tag 01"], [data-framer-name="Clothing tag 02"], [data-framer-name="Clothing tag 03"], [data-framer-name="Clothing tag 04"], [data-framer-name="Clothing tag 05"], .framer-f3pk7n, .framer-qifsj7, .framer-n7nxql, .framer-7613vu');
+  
+  function renderHeroDeveloperIdentity() {
+    // Hide laundry icons
+    var icons = document.querySelectorAll('[data-framer-name*="Clothing tag 0"], .framer-f3pk7n, .framer-qifsj7, .framer-n7nxql, .framer-7613vu');
     icons.forEach(function(el) { el.style.display = 'none'; });
 
-    // Ensure String is visible
-    var stringEl = document.querySelectorAll('[data-framer-name="Clothing tag string"], .framer-hur2en');
-    stringEl.forEach(function(el) {
-      el.style.display = 'block';
-      el.style.visibility = 'visible';
-    });
+    // String loop
+    var str = document.querySelectorAll('[data-framer-name="Clothing tag string"], .framer-hur2en');
+    str.forEach(function(el) { el.style.display = 'block'; el.style.visibility = 'visible'; });
 
-    // Inject portrait photo into tag
+    // Luggage Tag Content Injection
     var tagCard = document.querySelector('.framer-1rkvcds');
-    if (tagCard && !tagCard.querySelector('.mallikarjun-tag-portrait-wrap')) {
-      var pWrap = document.createElement('div');
-      pWrap.className = 'mallikarjun-tag-portrait-wrap';
-      pWrap.innerHTML = '<img src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />';
-      tagCard.insertBefore(pWrap, tagCard.firstChild);
+    if (tagCard && !tagCard.getAttribute('data-dev-card-injected')) {
+      tagCard.setAttribute('data-dev-card-injected', 'true');
+      tagCard.innerHTML = `
+        <div class="hero-portrait-frame">
+          <img class="hero-portrait-img" src="assets/images/mallikarjun-portrait.jpg" alt="Mallikarjun R" />
+        </div>
+        <a class="hero-tag-title" href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" rel="noopener noreferrer">
+          Mallikarjun R
+        </a>
+        <p class="hero-tag-desc">
+          Computer Science Engineering student building AI, Cloud & DevOps solutions
+        </p>
+      `;
     }
 
-    // Name & Subtitle
-    var tagLink = document.querySelector('a[href*="linkedin.com/in/mallikarjunr"], a[href*="bash.com"], .framer-9lyop8');
-    if (tagLink) {
-      tagLink.href = 'https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge';
-      var textEl = tagLink.querySelector('p');
-      if (textEl) {
-        textEl.textContent = 'Mallikarjun R';
-        textEl.style.fontSize = '21px';
-        textEl.style.fontWeight = 'bold';
-        textEl.style.whiteSpace = 'nowrap';
-      }
-    }
-
-    var parent = document.querySelector('.framer-1rkvcds');
-    if (parent) {
-      var subText = parent.querySelector('.framer-htzbp2 p');
-      if (subText) {
-        subText.textContent = 'Computer Science Engineering student building AI, Cloud & DevOps solutions';
-        subText.style.fontSize = '13px';
-        subText.style.lineHeight = '1.35';
-      }
-    }
-
-    // Barcode Serial Text & Quote
+    // Barcode Serial Text
     var barcodeTexts = document.querySelectorAll('.framer-text');
     barcodeTexts.forEach(function(t) {
-      if (t.textContent.includes('B45H') || t.textContent.includes('2024220268')) {
+      if (t.textContent.includes('B45H') || t.textContent.includes('2024220268') || t.textContent.includes('MR•CSE')) {
         t.textContent = 'MR•CSE•AI•2026';
+        t.className = 'hero-barcode-serial';
       }
-      if (t.textContent.includes("beyond what's expected") || t.textContent.includes('beyond what')) {
+      if (t.textContent.includes("beyond what's expected") || t.textContent.includes('beyond what') || t.textContent.includes('Learn. Build.')) {
         t.textContent = 'Learn. Build. Deploy. Repeat.';
+        t.style.fontFamily = "'Gochi Hand', cursive";
+        t.style.fontSize = '22px';
+        t.style.color = '#faecd8';
         t.style.fontWeight = 'bold';
       }
     });
 
     // Right Side: Find Me Online
     var featuredHeader = document.querySelector('.framer-1biissb p');
-    if (featuredHeader && featuredHeader.textContent !== 'Find Me Online') {
+    if (featuredHeader) {
       featuredHeader.textContent = 'Find Me Online';
+      featuredHeader.style.fontFamily = "'Departure Mono Regular', monospace";
+      featuredHeader.style.fontSize = '13px';
+      featuredHeader.style.letterSpacing = '0.08em';
+      featuredHeader.style.textTransform = 'uppercase';
+      featuredHeader.style.color = '#e05638';
     }
 
-    var linkTitles = document.querySelectorAll('.framer-888d9o p, .framer-1a23gvw p, .framer-il8yuu p');
-    linkTitles.forEach(function(p) {
-      var txt = p.textContent.trim();
-      if (txt === 'BashPay') {
-        p.innerHTML = '<a href="https://github.com/mallikarjunr444-gif" target="_blank" style="color:inherit; text-decoration:none;">GitHub <span style="font-size:13px; opacity:0.7; display:block;">Projects & Open Source</span></a>';
-      }
-      if (txt === 'Internal Packing Tool') {
-        p.innerHTML = '<a href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" style="color:inherit; text-decoration:none;">LinkedIn <span style="font-size:13px; opacity:0.7; display:block;">Professional Profile</span></a>';
-      }
-      if (txt === 'Kiosk') {
-        p.innerHTML = '<a href="https://www.credly.com/" target="_blank" style="color:inherit; text-decoration:none;">Credly <span style="font-size:13px; opacity:0.7; display:block;">Certifications & Badges</span></a>';
-      }
-      if (txt === 'Point of Sale') {
-        p.innerHTML = '<a href="https://www.cloudskillsboost.google/" target="_blank" style="color:inherit; text-decoration:none;">Google Skills <span style="font-size:13px; opacity:0.7; display:block;">Cloud & AI Learning</span></a>';
-      }
-    });
+    // Right Side Links Container
+    var linksParent = document.querySelector('.framer-faazwn-container');
+    if (linksParent && !linksParent.getAttribute('data-online-links-rendered')) {
+      linksParent.setAttribute('data-online-links-rendered', 'true');
+      var titlesEl = linksParent.querySelector('.framer-z16edh') || linksParent;
+      titlesEl.innerHTML = `
+        <div class="find-me-online-list">
+          <!-- GitHub -->
+          <a class="find-me-online-item" href="https://github.com/mallikarjunr444-gif" target="_blank" rel="noopener noreferrer">
+            <div class="find-me-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </div>
+            <div>
+              <p class="find-me-text-title">GitHub</p>
+              <p class="find-me-text-sub">Projects & Open Source</p>
+            </div>
+          </a>
+
+          <!-- LinkedIn -->
+          <a class="find-me-online-item" href="https://in.linkedin.com/in/mallikarjunr-com?trk=profile-badge" target="_blank" rel="noopener noreferrer">
+            <div class="find-me-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </div>
+            <div>
+              <p class="find-me-text-title">LinkedIn</p>
+              <p class="find-me-text-sub">Professional Profile</p>
+            </div>
+          </a>
+
+          <!-- Credly -->
+          <a class="find-me-online-item" href="https://www.credly.com/" target="_blank" rel="noopener noreferrer">
+            <div class="find-me-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+            </div>
+            <div>
+              <p class="find-me-text-title">Credly</p>
+              <p class="find-me-text-sub">Certifications & Badges</p>
+            </div>
+          </a>
+
+          <!-- Google Skills -->
+          <a class="find-me-online-item" href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer">
+            <div class="find-me-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+            </div>
+            <div>
+              <p class="find-me-text-title">Google Skills</p>
+              <p class="find-me-text-sub">Cloud & AI Learning</p>
+            </div>
+          </a>
+        </div>
+      `;
+    }
   }
 
-  window.addEventListener('DOMContentLoaded', updatePersonalIdentityTag);
-  window.addEventListener('load', updatePersonalIdentityTag);
-  setInterval(updatePersonalIdentityTag, 300);
+  window.addEventListener('DOMContentLoaded', renderHeroDeveloperIdentity);
+  window.addEventListener('load', renderHeroDeveloperIdentity);
+  setInterval(renderHeroDeveloperIdentity, 250);
+
 
 
   function updateTag() {
