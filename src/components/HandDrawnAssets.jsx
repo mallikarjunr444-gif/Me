@@ -1,60 +1,28 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (All 8 authentic user-provided stamp images)
+// Side Stamp Ribbon for Left and Right vertical borders (Exact seamless joint strip uploaded by user)
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
-
-  const stampList = [
-    { id: 'owl', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
-    { id: 'sunflower', img: '/images/stamps/stamp-sunflower.png', label: 'Sunflower & Bee Diamond' },
-    { id: 'axe-vessel', img: '/images/stamps/stamp-axe-vessel.png', label: 'Axe Vessel Triskele' },
-    { id: 'blossom-leaves', img: '/images/stamps/stamp-blossom-leaves.png', label: 'Blossom & Leaves Diamond' },
-    { id: 'bowl', img: '/images/stamps/stamp-bowl.png', label: 'Traditional Bowl' },
-    { id: 'cursor', img: '/images/stamps/stamp-cursor.png', label: 'Browser Cursor' },
-    { id: 'seal', img: '/images/stamps/stamp-seal.png', label: 'Calligraphy Seal' },
-    { id: 'flower', img: '/images/stamps/stamp-flower.png', label: 'Blooming Flower' },
-    { id: 'owl-2', img: '/images/stamps/stamp-owl.png', label: 'Perched Owl' },
-    { id: 'sunflower-2', img: '/images/stamps/stamp-sunflower.png', label: 'Sunflower & Bee Diamond' },
-    { id: 'axe-vessel-2', img: '/images/stamps/stamp-axe-vessel.png', label: 'Axe Vessel Triskele' },
-    { id: 'blossom-leaves-2', img: '/images/stamps/stamp-blossom-leaves.png', label: 'Blossom & Leaves Diamond' }
-  ];
-
-  const handleStampClick = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    confetti({
-      particleCount: 16,
-      spread: 35,
-      origin: {
-        x: (rect.left + rect.width / 2) / window.innerWidth,
-        y: (rect.top + rect.height / 2) / window.innerHeight
-      },
-      colors: ['#c93f2c', '#faecd8', '#38bdf8', '#f59e0b']
-    });
-  };
 
   return (
     <div
       className={`fixed top-0 bottom-0 ${
         isLeft ? 'left-0' : 'right-0'
-      } w-10 sm:w-12 z-40 flex flex-col justify-around items-center select-none bg-[#141211]/90 border-${
-        isLeft ? 'r' : 'l'
-      } border-[#c93f2c]/20 overflow-hidden py-2 backdrop-blur-xs`}
+      } w-[48px] sm:w-[64px] z-40 overflow-hidden pointer-events-none select-none`}
     >
-      {stampList.map((stamp, idx) => (
+      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
+        {/* Continuous seamlessly joint stamp ribbon strip */}
         <div
-          key={idx}
-          onClick={handleStampClick}
-          className="w-8 h-8 sm:w-9 sm:h-9 rounded-md overflow-hidden flex items-center justify-center cursor-pointer transform hover:scale-125 active:scale-90 transition-all duration-200 animate-line-boil-slow my-0.5 group shadow-md"
-          title={stamp.label}
-        >
-          <img
-            src={stamp.img}
-            alt={stamp.label}
-            className="w-full h-full object-cover rounded-md group-hover:rotate-3 transition-transform"
-          />
-        </div>
-      ))}
+          className="absolute inset-0 w-full h-full animate-line-boil-slow opacity-95"
+          style={{
+            backgroundImage: `url('/images/stamps/stamp-ribbon-joint.png')`,
+            backgroundRepeat: 'repeat-y',
+            backgroundSize: '100% auto',
+            backgroundPosition: isLeft ? 'left top' : 'right top'
+          }}
+        />
+      </div>
     </div>
   );
 }
