@@ -1,17 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 
-const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
+const BLOCKED_URL = '#';
 
 function cleanHtmlFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
 
   // 1. Hard string replace of all legacy URLs & Twitter status links
-  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, LINKEDIN_URL);
-  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, LINKEDIN_URL);
-  content = content.replaceAll(/https?:\/\/(www\.)?twitter\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, LINKEDIN_URL);
-  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, LINKEDIN_URL);
-  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, BLOCKED_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, BLOCKED_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?twitter\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, BLOCKED_URL);
+  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, BLOCKED_URL);
+  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, BLOCKED_URL);
   content = content.replaceAll(/mailto:lapsun\.j\.zhang@gmail\.com/gi, 'mailto:mallikarjunr444@gmail.com');
 
   // 2. Remove all legacy names
@@ -22,17 +22,21 @@ function cleanHtmlFile(filePath) {
   const headShield = `
 <script>
 (function() {
-  var LK = "${LINKEDIN_URL}";
-  
-  // Overwrite window.open
+  var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
+
+  function isBlocked(u) {
+    if (!u || typeof u !== 'string') return false;
+    var lo = u.toLowerCase();
+    for (var i = 0; i < BLOCKED.length; i++) {
+      if (lo.indexOf(BLOCKED[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  // 1. Block window.open
   var realOpen = window.open;
   window.open = function(u, t, f) {
-    if (typeof u === 'string') {
-      var s = u.toLowerCase();
-      if (s.includes('x.com') || s.includes('twitter.com') || s.includes('jackie') || s.includes('1953203804113125820') || s.includes('whosspeaking') || s.includes('tf2048') || s.includes('framer.website')) {
-        return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
-      }
-    }
+    if (isBlocked(u)) return null;
     return realOpen.call(window, u, t, f);
   };
 
@@ -72,10 +76,11 @@ function cleanHtmlFile(filePath) {
     // Global check on any <a> with legacy URLs
     document.querySelectorAll('a').forEach(function(a) {
       var h = (a.getAttribute('href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        a.setAttribute('href', LK);
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener noreferrer');
+      if (isBlocked(h)) {
+        a.removeAttribute('href');
+        a.removeAttribute('target');
+        a.style.cursor = 'default';
+        a.style.pointerEvents = 'none';
       }
     });
   }
@@ -96,11 +101,10 @@ function cleanHtmlFile(filePath) {
           return false;
         }
         var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-        if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        if (isBlocked(h)) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
-          window.open(LK, '_blank', 'noopener,noreferrer');
           return false;
         }
         el = el.parentElement;

@@ -1,7 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { portfolioData } from '../data/portfolioData';
 import { JackieProjectPeelSection } from './JackieProjectPeelSection';
 import { JackieCuttingBoardSection } from './JackieCuttingBoardSection';
+
+const BLOCKED_PATTERNS = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
+
+function isBlocked(url) {
+  if (!url || typeof url !== 'string') return false;
+  const u = url.toLowerCase();
+  return BLOCKED_PATTERNS.some(p => u.includes(p));
+}
 
 export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   const iframeRef = useRef(null);
@@ -18,20 +26,11 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
         } else if (e.data.type === 'OPEN_URL' && e.data.url) {
-          const u = e.data.url.toLowerCase();
-          if (
-            u.includes('x.com') ||
-            u.includes('twitter.com') ||
-            u.includes('jackie') ||
-            u.includes('1953203804113125820') ||
-            u.includes('whosspeaking') ||
-            u.includes('tf2048') ||
-            u.includes('framer')
-          ) {
-            window.open('https://www.linkedin.com/in/mallikarjunr-com/', '_blank', 'noopener,noreferrer');
-          } else {
-            window.open(e.data.url, '_blank', 'noopener,noreferrer');
+          if (isBlocked(e.data.url)) {
+            // Silently drop - do nothing
+            return;
           }
+          window.open(e.data.url, '_blank', 'noopener,noreferrer');
         } else if (e.data.type === 'SELECT_PROJECT') {
           const matched = portfolioData.projects.find(
             (p) => p.id === e.data.projectId || p.title.toLowerCase().includes((e.data.title || '').toLowerCase())
@@ -44,15 +43,48 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
     return () => window.removeEventListener('message', handleMessage);
   }, [onNavigate, onOpenConnect, onSelectProject]);
 
-  const attachListeners = () => {
+  const scrubIframeLinks = useCallback(() => {
     try {
+      const doc = iframeRef.current?.contentDocument || iframeRef.current?.contentWindow?.document;
+      if (!doc?.body) return;
+
+      // Override window.open inside the iframe
+      try {
+        const iframeWin = iframeRef.current.contentWindow;
+        if (iframeWin && !iframeWin.__linksScrubbed) {
+          const origOpen = iframeWin.open.bind(iframeWin);
+          iframeWin.open = function(url, target, features) {
+            if (isBlocked(url)) return null;
+            return origOpen(url, target, features);
+          };
+          iframeWin.__linksScrubbed = true;
+        }
+      } catch { /* cross-origin */ }
+
+      // Remove hrefs from ALL <a> tags pointing to blocked URLs
+      doc.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        if (isBlocked(href)) {
+          a.removeAttribute('href');
+          a.removeAttribute('target');
+          a.style.cursor = 'default';
+          a.style.pointerEvents = 'none';
+          a.onclick = e => { e.preventDefault(); e.stopImmediatePropagation(); return false; };
+        }
+      });
+
+      const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+      if (h > 800) setIframeHeight(h + 40);
+    } catch { /* ignore */ }
+  }, []);
+
+  const attachListeners = useCallback(() => {
+    try {
+      scrubIframeLinks();
       if (iframeRef.current && iframeRef.current.contentWindow) {
         const doc = iframeRef.current.contentDocument || iframeRef.current.contentWindow.document;
-        if (doc && doc.body) {
-          const calculatedHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
-          if (calculatedHeight > 800) {
-            setIframeHeight(calculatedHeight + 40);
-          }
+        if (doc && doc.body && !doc.__workClickGuardAttached) {
+          doc.__workClickGuardAttached = true;
 
           // Capture-phase click interceptor on iframe document
           doc.addEventListener(
@@ -62,22 +94,14 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
               while (el && el !== doc.body) {
                 const text = (el.innerText || '').trim().toLowerCase();
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
-                const hrefLower = href.toLowerCase();
                 const tag = el.tagName ? el.tagName.toLowerCase() : '';
 
-                // Block any legacy links
-                if (
-                  hrefLower.includes('x.com') ||
-                  hrefLower.includes('twitter') ||
-                  hrefLower.includes('jackie') ||
-                  hrefLower.includes('1953203804113125820') ||
-                  hrefLower.includes('whosspeaking') ||
-                  hrefLower.includes('tf2048') ||
-                  hrefLower.includes('framer')
-                ) {
+                // Block any legacy links completely
+                if (isBlocked(href) || isBlocked(text)) {
                   e.preventDefault();
                   e.stopPropagation();
-                  return;
+                  e.stopImmediatePropagation();
+                  return false;
                 }
 
                 // 1. External Links (GitHub, LinkedIn, Credly, Kaggle)
@@ -98,6 +122,7 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                   e.preventDefault();
                   e.stopPropagation();
                   window.open('https://github.com/mallikarjunr444-gif', '_blank', 'noopener,noreferrer');
+
                   return;
                 }
 
@@ -197,12 +222,12 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
     } catch {
       // Ignore cross-origin issues
     }
-  };
+  }, [scrubIframeLinks, onNavigate, onOpenConnect, onSelectProject]);
 
   useEffect(() => {
-    const interval = setInterval(attachListeners, 500);
+    const interval = setInterval(attachListeners, 300);
     return () => clearInterval(interval);
-  }, [onNavigate, onOpenConnect, onSelectProject]);
+  }, [attachListeners]);
 
   return (
     <div className="w-full min-h-screen relative select-none bg-[#181716] space-y-16 pb-20">

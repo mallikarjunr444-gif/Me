@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
       (function() {
-        var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+        var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
         var realOpen = window.open;
         window.open = function(url, target, features) {
           if (typeof url === 'string') {
             var u = url.toLowerCase();
-            if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
-              return realOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
+            for (var i = 0; i < BLOCKED.length; i++) {
+              if (u.indexOf(BLOCKED[i]) !== -1) {
+                return null;
+              }
             }
           }
           return realOpen.call(window, url, target, features);

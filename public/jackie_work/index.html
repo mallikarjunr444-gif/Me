@@ -6,17 +6,21 @@
 
 <script>
 (function() {
-  var LK = "https://www.linkedin.com/in/mallikarjunr-com/";
-  
-  // Overwrite window.open
+  var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
+
+  function isBlocked(u) {
+    if (!u || typeof u !== 'string') return false;
+    var lo = u.toLowerCase();
+    for (var i = 0; i < BLOCKED.length; i++) {
+      if (lo.indexOf(BLOCKED[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  // 1. Block window.open
   var realOpen = window.open;
   window.open = function(u, t, f) {
-    if (typeof u === 'string') {
-      var s = u.toLowerCase();
-      if (s.includes('x.com') || s.includes('twitter.com') || s.includes('jackie') || s.includes('1953203804113125820') || s.includes('whosspeaking') || s.includes('tf2048') || s.includes('framer.website')) {
-        return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
-      }
-    }
+    if (isBlocked(u)) return null;
     return realOpen.call(window, u, t, f);
   };
 
@@ -56,10 +60,11 @@
     // Global check on any <a> with legacy URLs
     document.querySelectorAll('a').forEach(function(a) {
       var h = (a.getAttribute('href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        a.setAttribute('href', LK);
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener noreferrer');
+      if (isBlocked(h)) {
+        a.removeAttribute('href');
+        a.removeAttribute('target');
+        a.style.cursor = 'default';
+        a.style.pointerEvents = 'none';
       }
     });
   }
@@ -80,11 +85,10 @@
           return false;
         }
         var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-        if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        if (isBlocked(h)) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
-          window.open(LK, '_blank', 'noopener,noreferrer');
           return false;
         }
         el = el.parentElement;
@@ -94,129 +98,73 @@
 })();
 </script>
 
-
-
-
-
 <script>
 (function() {
-  var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+  // ===== DEFINITIVE LINK BLOCKER =====
+  var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
 
-  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
-  var origOpen = window.open;
-  window.open = function(url, target, features) {
-    if (typeof url === 'string') {
-      var u = url.toLowerCase();
-      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
-        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
-      }
+  function isBlocked(u) {
+    if (!u || typeof u !== 'string') return false;
+    var lo = u.toLowerCase();
+    for (var i = 0; i < BLOCKED.length; i++) {
+      if (lo.indexOf(BLOCKED[i]) !== -1) return true;
     }
-    return origOpen.call(window, url, target, features);
-  };
-
-  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
-  function scrubLinks() {
-    var allA = document.querySelectorAll('a, [href], [data-href]');
-    allA.forEach(function(el) {
-      var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        el.setAttribute('href', LINKEDIN);
-        el.setAttribute('target', '_blank');
-        el.setAttribute('rel', 'noopener noreferrer');
-        el.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
-          return false;
-        };
-      }
-    });
+    return false;
   }
 
-  window.addEventListener('DOMContentLoaded', scrubLinks);
-  window.addEventListener('load', scrubLinks);
-  setInterval(scrubLinks, 100);
+  // 1. Block window.open (silently drop — no redirect)
+  var _realOpen = window.open;
+  window.open = function(url, target, features) {
+    if (isBlocked(url)) { return null; }
+    return _realOpen.call(window, url, target, features);
+  };
 
-  // Capture phase click interceptor on document
-  document.addEventListener('click', function(e) {
+  // 2. Block window.location navigation
+  try {
+    var _location = window.location;
+    Object.defineProperty(window, 'location', {
+      get: function() { return _location; },
+      set: function(val) {
+        if (isBlocked(String(val))) { return; }
+        _location.href = val;
+      },
+      configurable: true
+    });
+  } catch(e) {}
+
+  // 3. Intercept history API
+  try {
+    var _push = history.pushState.bind(history);
+    var _replace = history.replaceState.bind(history);
+    history.pushState = function(s, t, url) { if (isBlocked(String(url || ''))) return; return _push(s, t, url); };
+    history.replaceState = function(s, t, url) { if (isBlocked(String(url || ''))) return; return _replace(s, t, url); };
+  } catch(e) {}
+
+  // 4. Block clicks on bad hrefs (capture phase, before Framer handlers)
+  function blockBadClicks(e) {
     var el = e.target;
-    while (el && el !== document.body && el !== document.documentElement) {
-      var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
+    while (el && el !== document.body) {
+      var h = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to') || '')) || '';
+      if (isBlocked(h)) {
+        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
         return false;
       }
       el = el.parentElement;
     }
-  }, true);
-})();
-</script>
-
-
-<script>
-(function() {
-  var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
-
-  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
-  var origOpen = window.open;
-  window.open = function(url, target, features) {
-    if (typeof url === 'string') {
-      var u = url.toLowerCase();
-      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
-        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
-      }
-    }
-    return origOpen.call(window, url, target, features);
-  };
-
-  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
-  function scrubLinks() {
-    var allA = document.querySelectorAll('a, [href], [data-href]');
-    allA.forEach(function(el) {
-      var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        el.setAttribute('href', LINKEDIN);
-        el.setAttribute('target', '_blank');
-        el.setAttribute('rel', 'noopener noreferrer');
-        el.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
-          return false;
-        };
-      }
-    });
   }
+  ['click', 'pointerup', 'mouseup'].forEach(function(evt) {
+    document.addEventListener(evt, blockBadClicks, true);
+    window.addEventListener(evt, blockBadClicks, true);
+  });
 
-  window.addEventListener('DOMContentLoaded', scrubLinks);
-  window.addEventListener('load', scrubLinks);
-  setInterval(scrubLinks, 100);
-
-  // Capture phase click interceptor on document
-  document.addEventListener('click', function(e) {
-    var el = e.target;
-    while (el && el !== document.body && el !== document.documentElement) {
-      var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
-        return false;
-      }
-      el = el.parentElement;
-    }
-  }, true);
-})();
-</script>
-
-
-
-
-    <meta charset="utf-8">
+  // 5. Scrub DOM links continuously
+  function scrubLinks() {
+    document.querySelectorAll('a[href], [to]').forEach(function(a) {
+      var h = a.getAttribute('href') || a.getAttribute('to') || '';
+      if (isBlocked(h)) {
+        a.removeAttribute('href'); a.removeAttribute('to');
+        a.removeAttribute('target');
+        a.style.cursor = 'default';
     
     
     <script>try{if(localStorage.get("__framer_force_showing_editorbar_since")){const n=document.createElement("link");n.rel = "modulepreload";n.href="https://framer.com/edit/init.mjs";document.head.appendChild(n)}}catch(e){}</script>
@@ -1560,11 +1508,23 @@ img.broken-photo {
 
       // External link
       if (tag === 'a' && href && (href.startsWith('http://') || href.startsWith('https://'))) {
+        var hLow = href.toLowerCase();
+        if (hLow.includes('x.com') || hLow.includes('twitter') || hLow.includes('jackie') || hLow.includes('1953203804113125820') || hLow.includes('whosspeaking') || hLow.includes('tf2048') || hLow.includes('framer') || hLow.includes('jackiezhang')) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        }
+        if (hLow.includes('github.com') || hLow.includes('linkedin.com') || hLow.includes('kaggle.com') || hLow.includes('credly.com') || hLow.includes('google.com')) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          window.open(href, '_blank', 'noopener,noreferrer');
+          return false;
+        }
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        window.open(href, '_blank', 'noopener,noreferrer');
-        window.parent.postMessage({ type: 'OPEN_URL', url: href }, '*');
         return false;
       }
 
