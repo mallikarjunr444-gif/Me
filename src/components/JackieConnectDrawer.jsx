@@ -140,7 +140,7 @@ export function JackieConnectDrawer({ isOpen, onClose, personal, socials }) {
               Kaggle
             </a>
             <span>•</span>
-            <a href={socials.credly || "https://www.credly.com/earner/dashboard"} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
+            <a href={socials.credly || "https://www.credly.com/users/mallikarjun-r.2d337356/badges"} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
               Credly
             </a>
             <span>•</span>

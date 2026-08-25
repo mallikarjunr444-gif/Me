@@ -77,7 +77,7 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                 if (text.includes('credly') || href.includes('credly')) {
                   e.preventDefault();
                   e.stopPropagation();
-                  window.open('https://www.credly.com/earner/dashboard', '_blank', 'noopener,noreferrer');
+                  window.open('https://www.credly.com/users/mallikarjun-r.2d337356/badges', '_blank', 'noopener,noreferrer');
                   return;
                 }
 

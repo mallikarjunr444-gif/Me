@@ -868,6 +868,79 @@ img.broken-photo {
 }
 </style>
 
+
+<style id="interactive-hand-drawings-css">
+  @keyframes handDrawnFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(1.5deg); }
+  }
+  @keyframes handDrawnSway {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(-3deg) scale(1.03); }
+  }
+  @keyframes handDrawnBounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-8px) rotate(-4deg); }
+    60% { transform: translateY(2px) rotate(2deg); }
+  }
+  @keyframes checkmarkPop {
+    0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+    70% { transform: scale(1.25) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  @keyframes stampGlow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+    50% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 6px 12px rgba(227,83,66,0.25)); }
+  }
+
+  /* Authentic Hand-Drawn Element Animations */
+  .framer-12ziibl {
+    animation: handDrawnSway 6s ease-in-out infinite !important;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .framer-12ziibl:hover {
+    transform: scale(1.1) rotate(4deg) !important;
+  }
+
+  .framer-oemwiw {
+    animation: handDrawnFloat 4.5s ease-in-out infinite !important;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .framer-oemwiw:hover {
+    animation: handDrawnBounce 0.6s ease-in-out !important;
+    transform: scale(1.15) !important;
+  }
+
+  .framer-an557o, .framer-1ceza1p {
+    animation: handDrawnFloat 5s ease-in-out infinite alternate !important;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .framer-an557o:hover, .framer-1ceza1p:hover {
+    transform: scale(1.12) rotate(-5deg) !important;
+  }
+
+  .framer-o0dvfa, .framer-r1x875 {
+    animation: handDrawnSway 7s ease-in-out infinite !important;
+    cursor: pointer;
+  }
+
+  /* Interactive What I look for Options */
+  .framer-zf20hp, .framer-sahc99, .framer-1w957kp {
+    cursor: pointer !important;
+    user-select: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .framer-zf20hp:hover, .framer-sahc99:hover, .framer-1w957kp:hover {
+    background-color: rgba(227, 83, 66, 0.08) !important;
+    border-radius: 8px;
+  }
+  .interactive-check-icon {
+    animation: checkmarkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+</style>
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
@@ -1271,7 +1344,37 @@ img.broken-photo {
     });
   }
 
-  window.addEventListener('DOMContentLoaded', syncAboutHeroAndContent);
+  
+    // ══════════════ INTERACTIVE HAND-DRAWN CHECKBOXES & DOODLES ══════════════
+    var checkBoxes = document.querySelectorAll('.framer-zf20hp, .framer-sahc99, .framer-1w957kp');
+    checkBoxes.forEach(function(item, idx) {
+      if (item.getAttribute('data-checkbox-bound')) return;
+      item.setAttribute('data-checkbox-bound', 'true');
+      
+      // Default first 2 options checked
+      var isChecked = idx < 2;
+      
+      function renderCheckState() {
+        var svgBox = item.querySelector('.svgContainer, .framer-reu4tx');
+        if (svgBox) {
+          if (isChecked) {
+            svgBox.innerHTML = '<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#e35342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="interactive-check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+          } else {
+            svgBox.innerHTML = '<div style="width:100%; height:100%; border:2px dashed #e35342; border-radius:4px;"></div>';
+          }
+        }
+      }
+      renderCheckState();
+
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isChecked = !isChecked;
+        renderCheckState();
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', syncAboutHeroAndContent);
   window.addEventListener('load', syncAboutHeroAndContent);
   setInterval(syncAboutHeroAndContent, 200);
 
