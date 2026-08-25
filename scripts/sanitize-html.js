@@ -1,17 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 
-const BLOCKED_URL = '#';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
 
 function cleanHtmlFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
 
-  // 1. Hard string replace of all legacy URLs & Twitter status links
-  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, BLOCKED_URL);
-  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, BLOCKED_URL);
-  content = content.replaceAll(/https?:\/\/(www\.)?twitter\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, BLOCKED_URL);
-  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, BLOCKED_URL);
-  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, BLOCKED_URL);
+  // 1. Hard string replace of all legacy URLs & Twitter status links to LinkedIn
+  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?twitter\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, LINKEDIN_URL);
   content = content.replaceAll(/mailto:lapsun\.j\.zhang@gmail\.com/gi, 'mailto:mallikarjunr444@gmail.com');
 
   // 2. Remove all legacy names
@@ -22,9 +22,10 @@ function cleanHtmlFile(filePath) {
   const headShield = `
 <script>
 (function() {
+  var LK = "${LINKEDIN_URL}";
   var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
 
-  function isBlocked(u) {
+  function isLegacy(u) {
     if (!u || typeof u !== 'string') return false;
     var lo = u.toLowerCase();
     for (var i = 0; i < BLOCKED.length; i++) {
@@ -33,10 +34,10 @@ function cleanHtmlFile(filePath) {
     return false;
   }
 
-  // 1. Block window.open
+  // 1. Overwrite window.open to redirect legacy links to LinkedIn
   var realOpen = window.open;
   window.open = function(u, t, f) {
-    if (isBlocked(u)) return null;
+    if (isLegacy(u)) return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
     return realOpen.call(window, u, t, f);
   };
 
@@ -73,14 +74,15 @@ function cleanHtmlFile(filePath) {
       });
     });
 
-    // Global check on any <a> with legacy URLs
+    // Global check on any <a> with legacy URLs - rewrite to LinkedIn
     document.querySelectorAll('a').forEach(function(a) {
       var h = (a.getAttribute('href') || '').toLowerCase();
-      if (isBlocked(h)) {
-        a.removeAttribute('href');
-        a.removeAttribute('target');
-        a.style.cursor = 'default';
-        a.style.pointerEvents = 'none';
+      if (isLegacy(h)) {
+        a.setAttribute('href', LK);
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.style.cursor = 'pointer';
+        a.style.pointerEvents = 'auto';
       }
     });
   }
@@ -89,22 +91,17 @@ function cleanHtmlFile(filePath) {
   window.addEventListener('load', disableCardLinks);
   setInterval(disableCardLinks, 50);
 
-  // Capture phase blocker on cutting board clicks
-  ['click', 'pointerdown', 'mousedown', 'mouseup'].forEach(function(evtName) {
+  // Capture phase blocker on legacy URLs -> open LinkedIn smoothly
+  ['click'].forEach(function(evtName) {
     window.addEventListener(evtName, function(e) {
       var el = e.target;
       while (el && el !== document.body && el !== document.documentElement) {
-        if (el.matches && el.matches('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container, .framer-6ctr7e-container *, .framer-11nqq4i-container *, .framer-5zt1ho-container *, .framer-1fickan-container *, .framer-gnejcv-container *, .framer-mqlzz-container *, .framer-1xalfcs-container *, .framer-1ggxag2-container *, .framer-f5j56f-container *')) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        }
         var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-        if (isBlocked(h)) {
+        if (isLegacy(h)) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
+          window.open(LK, '_blank', 'noopener,noreferrer');
           return false;
         }
         el = el.parentElement;

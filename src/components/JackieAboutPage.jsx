@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { cuttingBoardData } from '../data/cuttingBoardData';
 
-const BLOCKED_PATTERNS = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website'];
+const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
+const BLOCKED_PATTERNS = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
 
-function isBlocked(url) {
+function isLegacy(url) {
   if (!url) return false;
   const u = url.toLowerCase();
   return BLOCKED_PATTERNS.some(p => u.includes(p));
@@ -34,8 +35,9 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
       } else if (type === 'OPEN_CONNECT') {
         if (onOpenConnect) onOpenConnect();
       } else if (type === 'OPEN_URL' && url) {
-        // Silently block legacy links — do nothing
-        if (!isBlocked(url)) {
+        if (isLegacy(url)) {
+          window.open(LINKEDIN_URL, '_blank', 'noopener,noreferrer');
+        } else {
           window.open(url, '_blank', 'noopener,noreferrer');
         }
       }
@@ -55,21 +57,21 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
         if (iframeWin && !iframeWin.__linksScrubbed) {
           const origOpen = iframeWin.open.bind(iframeWin);
           iframeWin.open = function(url, target, features) {
-            if (isBlocked(url)) return null;
+            if (isLegacy(url)) return origOpen(LINKEDIN_URL, target || '_blank', features || 'noopener,noreferrer');
             return origOpen(url, target, features);
           };
           iframeWin.__linksScrubbed = true;
         }
       } catch { /* cross-origin */ }
 
-      // Remove hrefs from ALL <a> tags pointing to blocked URLs
+      // Rewrite legacy URLs to LinkedIn on all <a> tags
       doc.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href') || '';
-        if (isBlocked(href)) {
-          a.removeAttribute('href');
-          a.removeAttribute('target');
-          a.style.cursor = 'default';
-          a.onclick = e => { e.preventDefault(); e.stopImmediatePropagation(); return false; };
+        if (isLegacy(href)) {
+          a.setAttribute('href', LINKEDIN_URL);
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+          a.style.cursor = 'pointer';
         }
       });
 
@@ -111,7 +113,10 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
-            // Only open if explicitly allowed
+            if (isLegacy(href)) {
+              window.open(LINKEDIN_URL, '_blank', 'noopener,noreferrer');
+              return false;
+            }
             const allowed = ['github.com/mallikarjunr', 'linkedin.com/in/mallikarjunr', 'kaggle.com/mallikarjunr', 'credly.com/users/mallikarjun'];
             if (allowed.some(a => href.includes(a))) {
               window.open(el.getAttribute('href'), '_blank', 'noopener,noreferrer');

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
       (function() {
+        var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
         var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
         var realOpen = window.open;
         window.open = function(url, target, features) {
@@ -13,7 +14,7 @@
             var u = url.toLowerCase();
             for (var i = 0; i < BLOCKED.length; i++) {
               if (u.indexOf(BLOCKED[i]) !== -1) {
-                return null;
+                return realOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
               }
             }
           }

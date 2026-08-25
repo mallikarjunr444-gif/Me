@@ -3,9 +3,10 @@ import { portfolioData } from '../data/portfolioData';
 import { JackieProjectPeelSection } from './JackieProjectPeelSection';
 import { JackieCuttingBoardSection } from './JackieCuttingBoardSection';
 
+const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
 const BLOCKED_PATTERNS = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
 
-function isBlocked(url) {
+function isLegacy(url) {
   if (!url || typeof url !== 'string') return false;
   const u = url.toLowerCase();
   return BLOCKED_PATTERNS.some(p => u.includes(p));
@@ -26,8 +27,8 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
         } else if (e.data.type === 'OPEN_URL' && e.data.url) {
-          if (isBlocked(e.data.url)) {
-            // Silently drop - do nothing
+          if (isLegacy(e.data.url)) {
+            window.open(LINKEDIN_URL, '_blank', 'noopener,noreferrer');
             return;
           }
           window.open(e.data.url, '_blank', 'noopener,noreferrer');
@@ -54,22 +55,21 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         if (iframeWin && !iframeWin.__linksScrubbed) {
           const origOpen = iframeWin.open.bind(iframeWin);
           iframeWin.open = function(url, target, features) {
-            if (isBlocked(url)) return null;
+            if (isLegacy(url)) return origOpen(LINKEDIN_URL, target || '_blank', features || 'noopener,noreferrer');
             return origOpen(url, target, features);
           };
           iframeWin.__linksScrubbed = true;
         }
       } catch { /* cross-origin */ }
 
-      // Remove hrefs from ALL <a> tags pointing to blocked URLs
+      // Rewrite legacy URLs to LinkedIn on all <a> tags
       doc.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href') || '';
-        if (isBlocked(href)) {
-          a.removeAttribute('href');
-          a.removeAttribute('target');
-          a.style.cursor = 'default';
-          a.style.pointerEvents = 'none';
-          a.onclick = e => { e.preventDefault(); e.stopImmediatePropagation(); return false; };
+        if (isLegacy(href)) {
+          a.setAttribute('href', LINKEDIN_URL);
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+          a.style.cursor = 'pointer';
         }
       });
 
@@ -96,11 +96,12 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
                 const tag = el.tagName ? el.tagName.toLowerCase() : '';
 
-                // Block any legacy links completely
-                if (isBlocked(href) || isBlocked(text)) {
+                // Replace legacy links with LinkedIn smoothly
+                if (isLegacy(href) || isLegacy(text)) {
                   e.preventDefault();
                   e.stopPropagation();
                   e.stopImmediatePropagation();
+                  window.open(LINKEDIN_URL, '_blank', 'noopener,noreferrer');
                   return false;
                 }
 
