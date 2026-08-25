@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+        var realOpen = window.open;
+        window.open = function(url, target, features) {
+          if (typeof url === 'string') {
+            var u = url.toLowerCase();
+            if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
+              return realOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
+            }
+          }
+          return realOpen.call(window, url, target, features);
+        };
+      })();
+    </script>
     <title>Mallikarjun R | AI Engineer, Cloud Builder & Founder</title>
     <meta name="description" content="Engineering ideas into intelligent systems. Personal portfolio of Mallikarjun R — Founder of Medicus Labs, Vision X, ORVEX Games. Specializing in AI, Cloud, DevOps, Full-Stack & Game Development." />
     <meta name="keywords" content="Mallikarjun R, Medicus Labs, Vision X, ORVEX Games, Tech Discover, AI Engineer, Cloud DevOps, Game Developer, DSATM, Bengaluru" />

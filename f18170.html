@@ -5,6 +5,8 @@
 <script>
 (function() {
   var LK = "https://www.linkedin.com/in/mallikarjunr-com/";
+  
+  // Overwrite window.open
   var realOpen = window.open;
   window.open = function(u, t, f) {
     if (typeof u === 'string') {
@@ -15,8 +17,83 @@
     }
     return realOpen.call(window, u, t, f);
   };
+
+  // Continuous DOM link unhooker
+  function disableCardLinks() {
+    // 9 Cutting board slots
+    var cuttingBoardSlots = [
+      '.framer-6ctr7e-container',
+      '.framer-11nqq4i-container',
+      '.framer-5zt1ho-container',
+      '.framer-1fickan-container',
+      '.framer-gnejcv-container',
+      '.framer-mqlzz-container',
+      '.framer-1xalfcs-container',
+      '.framer-1ggxag2-container',
+      '.framer-f5j56f-container'
+    ];
+
+    cuttingBoardSlots.forEach(function(sel) {
+      var container = document.querySelector(sel);
+      if (!container) return;
+      var links = container.querySelectorAll('a, [href]');
+      links.forEach(function(a) {
+        a.removeAttribute('href');
+        a.removeAttribute('target');
+        a.removeAttribute('to');
+        a.style.cursor = 'default';
+        a.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        };
+      });
+    });
+
+    // Global check on any <a> with legacy URLs
+    document.querySelectorAll('a').forEach(function(a) {
+      var h = (a.getAttribute('href') || '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        a.setAttribute('href', LK);
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', disableCardLinks);
+  window.addEventListener('load', disableCardLinks);
+  setInterval(disableCardLinks, 50);
+
+  // Capture phase blocker on cutting board clicks
+  ['click', 'pointerdown', 'mousedown', 'mouseup'].forEach(function(evtName) {
+    window.addEventListener(evtName, function(e) {
+      var el = e.target;
+      while (el && el !== document.body && el !== document.documentElement) {
+        if (el.matches && el.matches('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container, .framer-6ctr7e-container *, .framer-11nqq4i-container *, .framer-5zt1ho-container *, .framer-1fickan-container *, .framer-gnejcv-container *, .framer-mqlzz-container *, .framer-1xalfcs-container *, .framer-1ggxag2-container *, .framer-f5j56f-container *')) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        }
+        var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
+        if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          window.open(LK, '_blank', 'noopener,noreferrer');
+          return false;
+        }
+        el = el.parentElement;
+      }
+    }, true);
+  });
 })();
 </script>
+
+
+
 
 
 <script>
