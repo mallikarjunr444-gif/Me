@@ -20,22 +20,22 @@
 export const cuttingBoardData = [
   {
     id: "slot-1",
-    title: "Project 1",
-    image: "",  // Add your image: "/images/your-photo-1.jpg"
+    title: "Hackathon Award & Team",
+    image: "/images/mallikarjun-award-team.jpg",
     position: "Top Left Phone Card",
     visible: true
   },
   {
     id: "slot-2",
-    title: "Project 2",
-    image: "",  // Add your image: "/images/your-photo-2.jpg"
+    title: "Project Exhibition - DSATM",
+    image: "/images/mallikarjun-certificate-dsatm.jpg",
     position: "Top Middle Code Card",
     visible: true
   },
   {
     id: "slot-3",
-    title: "Project 3",
-    image: "",  // Add your image: "/images/your-photo-3.jpg"
+    title: "ISRO Hackathon 2026",
+    image: "/images/mallikarjun-certificate-isro.png",
     position: "Top Right Stream Card",
     visible: true
   },
