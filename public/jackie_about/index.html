@@ -1007,6 +1007,129 @@ img.broken-photo {
     transform: scale(1.04) rotate(1deg);
   }
 </style>
+
+<style id="mobile-friendly-responsive-css">
+  /* ========================================================================== */
+  /* MOBILE RESPONSIVE OPTIMIZATIONS (Smartphones & Tablets)                    */
+  /* ========================================================================== */
+
+  @media (max-width: 768px) {
+    /* 1. Global Viewport & Container */
+    body, html {
+      overflow-x: hidden !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+    }
+    
+    #main, [data-framer-root] {
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+    }
+
+    /* 2. Side Stamp Banners on Mobile */
+    .framer-1a48c4w, .framer-128u9s1, [data-framer-name="ribbon Left"], [data-framer-name="Ribbon right"], .framer-1m6w9q4, .framer-p32p2r {
+      width: 18px !important;
+      opacity: 0.8 !important;
+    }
+
+    /* 3. Hero Identity Card on Mobile */
+    .hero-dev-card {
+      width: 92vw !important;
+      max-width: 92vw !important;
+      padding: 20px 14px !important;
+      margin: 12px auto !important;
+      box-sizing: border-box !important;
+    }
+    .hero-name-sig {
+      font-size: 28px !important;
+    }
+    .hero-role-title {
+      font-size: 13px !important;
+      letter-spacing: 0.05em !important;
+    }
+    .hero-main-heading {
+      font-size: 19px !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+    }
+    .hero-career-badge {
+      font-size: 10px !important;
+      padding: 6px 10px !important;
+      white-space: normal !important;
+      text-align: center !important;
+    }
+
+    /* 4. Top Navigation Bar on Mobile */
+    .framer-1vjfrm7 {
+      padding: 10px 16px !important;
+    }
+    .framer-xzu56v {
+      gap: 18px !important;
+    }
+
+    /* 5. Cutting Board Mat: Mobile Touch Horizontal Scroll Container */
+    .framer-9vsaio, .framer-1wzg5c4, [data-framer-name="🏞️ Cut mat screenies"], [data-framer-name="Cut mat"] {
+      max-width: 100vw !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      display: flex !important;
+      justify-content: flex-start !important;
+      padding-bottom: 20px !important;
+    }
+
+    /* 6. What I Look For Card on Mobile */
+    .framer-1ixi539, .framer-12kefb9-container, [data-framer-name="What"] {
+      width: 94vw !important;
+      max-width: 94vw !important;
+      box-sizing: border-box !important;
+      padding: 22px 16px !important;
+      margin: 0 auto !important;
+    }
+
+    .framer-zf20hp, .framer-sahc99, .framer-1w957kp {
+      min-height: 48px !important;
+      padding: 10px 8px !important;
+      touch-action: manipulation !important;
+    }
+
+    .lets-chat-interactive-btn, .framer-11hwspj a {
+      width: 100% !important;
+      max-width: 220px !important;
+      min-height: 48px !important;
+      margin: 16px auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* 7. CRT Terminal Screen on Mobile */
+    .crt-screen-monitor {
+      width: 94vw !important;
+      max-width: 94vw !important;
+      padding: 18px 14px !important;
+      margin: 16px auto !important;
+      box-sizing: border-box !important;
+    }
+    .crt-online-item {
+      padding: 12px 10px !important;
+      min-height: 44px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .framer-1a48c4w, .framer-128u9s1, [data-framer-name="ribbon Left"], [data-framer-name="Ribbon right"], .framer-1m6w9q4, .framer-p32p2r {
+      display: none !important;
+    }
+    .hero-dev-card {
+      width: 95vw !important;
+      padding: 16px 12px !important;
+    }
+    .hero-portrait-avatar {
+      width: 78px !important;
+      height: 78px !important;
+    }
+  }
+</style>
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
