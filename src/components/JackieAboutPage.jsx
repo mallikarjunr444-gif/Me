@@ -61,11 +61,11 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
                 const name = el.getAttribute ? (el.getAttribute('data-framer-name') || '') : '';
 
-                // Let's chat / Mailto handler
-                if (text.includes("let's chat") || href.startsWith('mailto:')) {
+                // Let's chat / Connect Drawer handler
+                if (text.includes("let's chat") || href.includes('connect') || href.startsWith('mailto:')) {
                   e.preventDefault();
                   e.stopPropagation();
-                  window.location.href = 'mailto:mallikarjunr444@gmail.com';
+                  if (onOpenConnect) onOpenConnect();
                   return;
                 }
 
