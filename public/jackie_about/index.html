@@ -869,78 +869,121 @@ img.broken-photo {
 </style>
 
 
+
 <style id="interactive-hand-drawings-css">
-  @keyframes handDrawnFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(1.5deg); }
-  }
-  @keyframes handDrawnSway {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(-3deg) scale(1.03); }
-  }
-  @keyframes handDrawnBounce {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-8px) rotate(-4deg); }
-    60% { transform: translateY(2px) rotate(2deg); }
-  }
-  @keyframes checkmarkPop {
-    0% { transform: scale(0) rotate(-15deg); opacity: 0; }
-    70% { transform: scale(1.25) rotate(5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  }
-  @keyframes stampGlow {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-    50% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 6px 12px rgba(227,83,66,0.25)); }
+  /* Authentic Stop-Motion / Line-Boil Shaking Keyframes */
+  @keyframes handDrawnShakeSlow {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    15% { transform: translate(-1.5px, 1.2px) rotate(-1.2deg); }
+    30% { transform: translate(1.8px, -1px) rotate(1deg); }
+    45% { transform: translate(-1.2px, -1.8px) rotate(-0.8deg); }
+    60% { transform: translate(1.5px, 1.5px) rotate(1.4deg); }
+    75% { transform: translate(-1.8px, 0.8px) rotate(-1deg); }
+    90% { transform: translate(1px, -1.2px) rotate(0.5deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
   }
 
-  /* Authentic Hand-Drawn Element Animations */
+  @keyframes handDrawnShakeMed {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    20% { transform: translate(-2px, 1.5px) rotate(-1.8deg); }
+    40% { transform: translate(2.2px, -1.8px) rotate(1.5deg); }
+    60% { transform: translate(-1.8px, -1.2px) rotate(-1.5deg); }
+    80% { transform: translate(1.5px, 2px) rotate(1.2deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+  }
+
+  @keyframes handDrawnShakeFast {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-3px, 2px) rotate(-2.5deg); }
+    25% { transform: translate(3px, -2px) rotate(2.5deg); }
+    40% { transform: translate(-2.5px, -3px) rotate(-2deg); }
+    55% { transform: translate(3px, 2.5px) rotate(2deg); }
+    70% { transform: translate(-2px, 1.5px) rotate(-1.5deg); }
+    85% { transform: translate(2px, -1.5px) rotate(1.5deg); }
+  }
+
+  @keyframes handDrawnFloatShake {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    20% { transform: translateY(-5px) translateX(-2px) rotate(-1.8deg); }
+    40% { transform: translateY(-8px) translateX(2px) rotate(1.5deg); }
+    60% { transform: translateY(-4px) translateX(-1.5px) rotate(-1deg); }
+    80% { transform: translateY(2px) translateX(1.5px) rotate(1.8deg); }
+  }
+
+  /* 1. Flower Bouquet - Gentle Living Shake */
   .framer-12ziibl {
-    animation: handDrawnSway 6s ease-in-out infinite !important;
+    animation: handDrawnShakeSlow 2.2s steps(8) infinite !important;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom center;
+    transition: filter 0.2s ease;
   }
   .framer-12ziibl:hover {
-    transform: scale(1.1) rotate(4deg) !important;
+    animation: handDrawnShakeFast 0.4s steps(6) infinite !important;
+    filter: drop-shadow(0 4px 12px rgba(227,83,66,0.3));
   }
 
+  /* 2. Retro Computer - Floating & Jittery Shake */
   .framer-oemwiw {
-    animation: handDrawnFloat 4.5s ease-in-out infinite !important;
+    animation: handDrawnFloatShake 3s steps(10) infinite !important;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center center;
+    transition: filter 0.2s ease;
   }
   .framer-oemwiw:hover {
-    animation: handDrawnBounce 0.6s ease-in-out !important;
-    transform: scale(1.15) !important;
+    animation: handDrawnShakeFast 0.35s steps(6) infinite !important;
+    filter: drop-shadow(0 6px 16px rgba(227,83,66,0.4));
   }
 
-  .framer-an557o, .framer-1ceza1p {
-    animation: handDrawnFloat 5s ease-in-out infinite alternate !important;
+  /* 3. Birds - Chirpy Stop-Motion Shake */
+  .framer-an557o, .framer-1ceza1p, .framer-w39k9m {
+    animation: handDrawnShakeMed 1.8s steps(6) infinite !important;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center bottom;
+    transition: filter 0.2s ease;
   }
-  .framer-an557o:hover, .framer-1ceza1p:hover {
-    transform: scale(1.12) rotate(-5deg) !important;
+  .framer-an557o:hover, .framer-1ceza1p:hover, .framer-w39k9m:hover {
+    animation: handDrawnShakeFast 0.35s steps(6) infinite !important;
   }
 
+  /* 4. Fish & Side Doodles */
   .framer-o0dvfa, .framer-r1x875 {
-    animation: handDrawnSway 7s ease-in-out infinite !important;
+    animation: handDrawnShakeSlow 2.6s steps(8) infinite !important;
     cursor: pointer;
   }
+  .framer-o0dvfa:hover, .framer-r1x875:hover {
+    animation: handDrawnShakeFast 0.4s steps(6) infinite !important;
+  }
 
-  /* Interactive What I look for Options */
+  /* 5. Let's Chat Button - Playful Hand-Drawn Wiggle */
+  .lets-chat-interactive-btn, .framer-11hwspj a {
+    animation: handDrawnShakeSlow 3s steps(6) infinite !important;
+    cursor: pointer !important;
+  }
+  .lets-chat-interactive-btn:hover, .framer-11hwspj a:hover {
+    animation: handDrawnShakeFast 0.35s steps(6) infinite !important;
+    filter: drop-shadow(0 6px 14px rgba(227,83,66,0.35));
+  }
+
+  /* 6. Checkboxes on What I Look For */
   .framer-zf20hp, .framer-sahc99, .framer-1w957kp {
     cursor: pointer !important;
     user-select: none;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
   }
   .framer-zf20hp:hover, .framer-sahc99:hover, .framer-1w957kp:hover {
+    transform: translateX(4px) scale(1.02);
     background-color: rgba(227, 83, 66, 0.08) !important;
     border-radius: 8px;
   }
+  .framer-zf20hp:active, .framer-sahc99:active, .framer-1w957kp:active {
+    animation: handDrawnShakeFast 0.3s steps(4) 1 !important;
+  }
+
   .interactive-check-icon {
-    animation: checkmarkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: handDrawnShakeMed 1.5s steps(6) infinite !important;
   }
 </style>
+
 
 <style id="interactive-chat-card-css">
   .framer-11hwspj a, .lets-chat-interactive-btn {

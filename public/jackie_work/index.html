@@ -864,6 +864,37 @@ img.broken-photo {
 }
 </style>
 
+
+<style id="interactive-hand-drawings-work-css">
+  @keyframes handDrawnShakeSlow {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    15% { transform: translate(-1.5px, 1.2px) rotate(-1.2deg); }
+    30% { transform: translate(1.8px, -1px) rotate(1deg); }
+    45% { transform: translate(-1.2px, -1.8px) rotate(-0.8deg); }
+    60% { transform: translate(1.5px, 1.5px) rotate(1.4deg); }
+    75% { transform: translate(-1.8px, 0.8px) rotate(-1deg); }
+    90% { transform: translate(1px, -1.2px) rotate(0.5deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+  }
+
+  @keyframes handDrawnShakeFast {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-3px, 2px) rotate(-2.5deg); }
+    25% { transform: translate(3px, -2px) rotate(2.5deg); }
+    40% { transform: translate(-2.5px, -3px) rotate(-2deg); }
+    55% { transform: translate(3px, 2.5px) rotate(2deg); }
+    70% { transform: translate(-2px, 1.5px) rotate(-1.5deg); }
+    85% { transform: translate(2px, -1.5px) rotate(1.5deg); }
+  }
+
+  .framer-12ziibl, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-o0dvfa, .framer-r1x875 {
+    animation: handDrawnShakeSlow 2.4s steps(8) infinite !important;
+    cursor: pointer;
+  }
+  .framer-12ziibl:hover, .framer-oemwiw:hover, .framer-an557o:hover, .framer-1ceza1p:hover {
+    animation: handDrawnShakeFast 0.35s steps(6) infinite !important;
+  }
+</style>
 </head>
 <body>
     <script async src="assets/js/script.js" data-fid="198abe2b57321d50c5a32211820d17917c1df98345bbadc9dec647a6ccccfb18" data-no-nt></script>
