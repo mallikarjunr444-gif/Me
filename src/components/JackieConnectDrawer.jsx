@@ -127,13 +127,21 @@ export function JackieConnectDrawer({ isOpen, onClose, personal, socials }) {
           )}
 
           {/* Social icons bottom */}
-          <div className="flex items-center justify-center gap-6 pt-2 border-t border-slate-300 text-xs font-mono text-slate-700">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-2 border-t border-slate-300 text-xs font-mono text-slate-700">
             <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
               LinkedIn
             </a>
             <span>•</span>
             <a href={socials.github} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
               GitHub
+            </a>
+            <span>•</span>
+            <a href={socials.kaggle || "https://www.kaggle.com/mallikarjunr1"} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
+              Kaggle
+            </a>
+            <span>•</span>
+            <a href={socials.credly || "https://www.credly.com/earner/dashboard"} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">
+              Credly
             </a>
             <span>•</span>
             <a href={socials.medium} target="_blank" rel="noopener noreferrer" className="hover:text-[#c93f2c] font-bold">

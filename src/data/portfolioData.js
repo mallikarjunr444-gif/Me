@@ -14,6 +14,8 @@ export const portfolioData = {
   socials: {
     linkedin: "https://www.linkedin.com/in/mallikarjunr-com/",
     github: "https://github.com/mallikarjunr444-gif",
+    kaggle: "https://www.kaggle.com/mallikarjunr1",
+    credly: "https://www.credly.com/earner/dashboard",
     medium: "https://medium.com/@mallikarjunr444",
     website: "https://medicuslabs.app"
   },

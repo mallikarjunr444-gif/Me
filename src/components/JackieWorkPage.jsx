@@ -74,6 +74,20 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
                   return;
                 }
 
+                if (text.includes('credly') || href.includes('credly')) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open('https://www.credly.com/earner/dashboard', '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                if (text.includes('kaggle') || href.includes('kaggle')) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open('https://www.kaggle.com/mallikarjunr1', '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
                 // 3. Navigation
                 if (text === 'about' || href.includes('about') || href === '/' || href === '#about') {
                   e.preventDefault();
