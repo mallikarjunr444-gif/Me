@@ -41,8 +41,8 @@ export const cuttingBoardData = [
   },
   {
     id: "slot-4",
-    title: "Project 4",
-    image: "",  // Add your image: "/images/your-photo-4.jpg"
+    title: "Kaggle | Google AI Agents Course",
+    image: "/images/mallikarjun-certificate-kaggle-ai-agents.png",
     position: "Middle Left Card",
     visible: true
   },
