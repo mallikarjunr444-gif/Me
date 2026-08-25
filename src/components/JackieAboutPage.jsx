@@ -32,7 +32,18 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
         } else if (e.data.type === 'OPEN_URL' && e.data.url) {
-          window.open(e.data.url, '_blank', 'noopener,noreferrer');
+          const u = e.data.url.toLowerCase();
+          if (
+            !u.includes('x.com') &&
+            !u.includes('twitter.com') &&
+            !u.includes('jackie') &&
+            !u.includes('1953203804113125820') &&
+            !u.includes('whosspeaking') &&
+            !u.includes('tf2048') &&
+            !u.includes('framer')
+          ) {
+            window.open(e.data.url, '_blank', 'noopener,noreferrer');
+          }
         }
       }
     };
@@ -59,7 +70,24 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
               while (el && el !== doc.body) {
                 const text = (el.innerText || '').trim().toLowerCase();
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
+                const hrefLower = href.toLowerCase();
                 const name = el.getAttribute ? (el.getAttribute('data-framer-name') || '') : '';
+
+                // Block any legacy links or cutting board card clicks
+                if (
+                  hrefLower.includes('x.com') ||
+                  hrefLower.includes('twitter') ||
+                  hrefLower.includes('jackie') ||
+                  hrefLower.includes('1953203804113125820') ||
+                  hrefLower.includes('whosspeaking') ||
+                  hrefLower.includes('tf2048') ||
+                  hrefLower.includes('framer') ||
+                  (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container'))
+                ) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return;
+                }
 
                 // Let's chat / Connect Drawer handler
                 if (text.includes("let's chat") || href.includes('connect') || href.startsWith('mailto:')) {
@@ -69,14 +97,17 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
                   return;
                 }
 
-                // External Links
+                // Legitimate External Links (GitHub, LinkedIn, Kaggle, Credly)
                 if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-                  if (!href.includes('localhost') && !href.includes('jackiezhang')) {
+                  if (href.includes('github.com') || href.includes('linkedin.com') || href.includes('kaggle.com') || href.includes('credly.com') || href.includes('google.com')) {
                     e.preventDefault();
                     e.stopPropagation();
                     window.open(href, '_blank', 'noopener,noreferrer');
                     return;
                   }
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return;
                 }
 
                 // Work Navigation

@@ -18,7 +18,18 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         } else if (e.data.type === 'OPEN_CONNECT') {
           if (onOpenConnect) onOpenConnect();
         } else if (e.data.type === 'OPEN_URL' && e.data.url) {
-          window.open(e.data.url, '_blank', 'noopener,noreferrer');
+          const u = e.data.url.toLowerCase();
+          if (
+            !u.includes('x.com') &&
+            !u.includes('twitter.com') &&
+            !u.includes('jackie') &&
+            !u.includes('1953203804113125820') &&
+            !u.includes('whosspeaking') &&
+            !u.includes('tf2048') &&
+            !u.includes('framer')
+          ) {
+            window.open(e.data.url, '_blank', 'noopener,noreferrer');
+          }
         } else if (e.data.type === 'SELECT_PROJECT') {
           const matched = portfolioData.projects.find(
             (p) => p.id === e.data.projectId || p.title.toLowerCase().includes((e.data.title || '').toLowerCase())
@@ -49,13 +60,34 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
               while (el && el !== doc.body) {
                 const text = (el.innerText || '').trim().toLowerCase();
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
+                const hrefLower = href.toLowerCase();
                 const tag = el.tagName ? el.tagName.toLowerCase() : '';
 
-                // 1. External Links (GitHub, LinkedIn, Credly, Google Skills, etc.)
-                if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                // Block any legacy links
+                if (
+                  hrefLower.includes('x.com') ||
+                  hrefLower.includes('twitter') ||
+                  hrefLower.includes('jackie') ||
+                  hrefLower.includes('1953203804113125820') ||
+                  hrefLower.includes('whosspeaking') ||
+                  hrefLower.includes('tf2048') ||
+                  hrefLower.includes('framer')
+                ) {
                   e.preventDefault();
                   e.stopPropagation();
-                  window.open(href, '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                // 1. External Links (GitHub, LinkedIn, Credly, Kaggle)
+                if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                  if (href.includes('github.com') || href.includes('linkedin.com') || href.includes('kaggle.com') || href.includes('credly.com') || href.includes('google.com')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(href, '_blank', 'noopener,noreferrer');
+                    return;
+                  }
+                  e.preventDefault();
+                  e.stopPropagation();
                   return;
                 }
 

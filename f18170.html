@@ -1,6 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+<script>
+(function() {
+  // Overwrite window.open to block any unwanted links
+  var origOpen = window.open;
+  window.open = function(url, target, features) {
+    if (typeof url === 'string') {
+      var u = url.toLowerCase();
+      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer')) {
+        console.warn('Blocked opening legacy link:', url);
+        return null;
+      }
+    }
+    return origOpen.call(window, url, target, features);
+  };
+
+  // Continuous DOM scrubber
+  function scrubLinks() {
+    var allA = document.querySelectorAll('a, [href], [data-href]');
+    allA.forEach(function(el) {
+      var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
+        el.removeAttribute('href');
+        el.removeAttribute('target');
+        el.removeAttribute('to');
+        el.setAttribute('role', 'presentation');
+        el.style.cursor = 'default';
+        el.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        };
+      }
+
+      // Neutralize cutting board mat cards specifically
+      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
+        el.removeAttribute('href');
+        el.removeAttribute('target');
+        el.removeAttribute('to');
+        el.setAttribute('role', 'presentation');
+        el.style.cursor = 'default';
+        el.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        };
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', scrubLinks);
+  window.addEventListener('load', scrubLinks);
+  setInterval(scrubLinks, 100);
+
+  // Capture phase click interceptor on document
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    while (el && el !== document.body && el !== document.documentElement) {
+      var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+      el = el.parentElement;
+    }
+  }, true);
+})();
+</script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Screen</title>
@@ -337,7 +416,7 @@
       <a class="absolute right-[135px] top-[-26px] h-[291px] w-[287px] rotate-[6deg] overflow-hidden rounded-[23px] border-[10px] border-primary-foreground bg-card shadow-lg">
         <img src="https://framerusercontent.com/images/cmpsfHDSBvMIVkOtMJffhTk8HA.png?scale-down-to=1024&amp;width=1360&amp;height=1394" alt="" class="h-full w-full object-cover">
       </a>
-      <a href="https://whosspeaking.framer.website" target="_blank" class="absolute left-[72px] top-[285px] h-[207px] w-[361px] -rotate-[4deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+      <a href="#" target="_blank" class="absolute left-[72px] top-[285px] h-[207px] w-[361px] -rotate-[4deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
         <img src="https://framerusercontent.com/images/OqvkDghj18vNLRheWfCb9I9ZC5M.png?scale-down-to=512&amp;width=2688&amp;height=1534" alt="" class="h-full w-full object-cover">
       </a>
       <a class="absolute left-[459px] top-[276px] h-[247px] w-[319px] -rotate-[6deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
@@ -349,7 +428,7 @@
       <a class="absolute left-[80px] top-[494px] h-[288px] w-[353px] rotate-[3deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
         <img src="https://framerusercontent.com/images/Wiw196PFt5v5LcQxgcrCUB3F0.png?width=1774&amp;height=1560" alt="" class="h-full w-full object-cover">
       </a>
-      <a href="https://tf2048.io" target="_blank" class="absolute left-[470px] top-[519px] h-[271px] w-[367px] rotate-[2deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
+      <a href="#" target="_blank" class="absolute left-[470px] top-[519px] h-[271px] w-[367px] rotate-[2deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
         <img src="https://framerusercontent.com/images/Isusj1Nh2i04aFkiuiBVhYCfec.png?scale-down-to=512&amp;width=1984&amp;height=1400" alt="" class="h-full w-full object-cover">
       </a>
       <a class="absolute right-[133px] top-[555px] h-[201px] w-[237px] -rotate-[5deg] overflow-hidden rounded-[20px] border-[9px] border-primary-foreground bg-card shadow-lg">
@@ -401,7 +480,7 @@
             </div>
           </div>
 
-          <a href="mailto:lapsun.j.zhang@gmail.com" target="_blank" class="ml-[120px] mt-[20px] flex h-[50px] w-[153px] -rotate-1 items-center justify-center border-[3px] border-primary text-[18px] font-medium text-card-foreground">
+          <a href="mailto:mallikarjunr444@gmail.com" target="_blank" class="ml-[120px] mt-[20px] flex h-[50px] w-[153px] -rotate-1 items-center justify-center border-[3px] border-primary text-[18px] font-medium text-card-foreground">
             let's chat!
           </a>
         </div>
