@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-// Side Stamp Ribbon for Left and Right vertical borders (Exact 4K side banner strip from reference)
+// 8 Authentic Jackie Zhang Stamps in perfect sequence
+const STAMP_LIST = [
+  { name: 'seal', src: '/images/stamps/stamp-seal.png' },
+  { name: 'bowl', src: '/images/stamps/stamp-bowl.png' },
+  { name: 'cursor', src: '/images/stamps/stamp-cursor.png' },
+  { name: 'flower', src: '/images/stamps/stamp-flower.png' },
+  { name: 'owl', src: '/images/stamps/stamp-owl.png' },
+  { name: 'sunflower', src: '/images/stamps/stamp-sunflower.png' },
+  { name: 'blossom', src: '/images/stamps/stamp-blossom-leaves.png' },
+  { name: 'axe', src: '/images/stamps/stamp-axe-vessel.png' }
+];
+
+// Repeat 24 times to seamlessly cover even very tall scrolling pages (192 stamps)
+const REPEATED_STAMPS = Array.from({ length: 24 }).flatMap(() => STAMP_LIST);
+
+// Side Stamp Ribbon for Left and Right vertical borders
 export function StampRibbon({ side = 'left' }) {
   const isLeft = side === 'left';
 
@@ -10,17 +25,19 @@ export function StampRibbon({ side = 'left' }) {
       className={`absolute inset-y-0 ${
         isLeft ? 'left-0' : 'right-0'
       } w-[48px] sm:w-[58px] z-10 overflow-hidden pointer-events-none select-none`}
+      aria-hidden="true"
     >
-      <div className={`relative h-full w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
-        <div
-          className="absolute inset-0 w-full h-full opacity-95"
-          style={{
-            backgroundImage: `url('/images/stamps/jackie-side-banner.png')`,
-            backgroundRepeat: 'repeat-y',
-            backgroundSize: '100% auto',
-            backgroundPosition: 'center top'
-          }}
-        />
+      <div className={`flex flex-col items-center gap-1.5 py-1 w-full ${!isLeft ? 'scale-x-[-1]' : ''}`}>
+        {REPEATED_STAMPS.map((stamp, idx) => (
+          <img
+            key={idx}
+            src={stamp.src}
+            alt=""
+            loading="eager"
+            decoding="async"
+            className="w-[44px] h-[44px] sm:w-[50px] sm:h-[50px] object-contain flex-shrink-0 opacity-95"
+          />
+        ))}
       </div>
     </div>
   );
