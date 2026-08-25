@@ -62,6 +62,64 @@
 </script>
 
 
+<script>
+(function() {
+  var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+
+  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
+  var origOpen = window.open;
+  window.open = function(url, target, features) {
+    if (typeof url === 'string') {
+      var u = url.toLowerCase();
+      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
+        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
+      }
+    }
+    return origOpen.call(window, url, target, features);
+  };
+
+  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
+  function scrubLinks() {
+    var allA = document.querySelectorAll('a, [href], [data-href]');
+    allA.forEach(function(el) {
+      var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        el.setAttribute('href', LINKEDIN);
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener noreferrer');
+        el.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
+          return false;
+        };
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', scrubLinks);
+  window.addEventListener('load', scrubLinks);
+  setInterval(scrubLinks, 100);
+
+  // Capture phase click interceptor on document
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    while (el && el !== document.body && el !== document.documentElement) {
+      var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
+        return false;
+      }
+      el = el.parentElement;
+    }
+  }, true);
+})();
+</script>
+
+
 
 
     <meta charset="utf-8">

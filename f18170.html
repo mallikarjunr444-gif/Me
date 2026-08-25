@@ -60,6 +60,64 @@
 </script>
 
 
+<script>
+(function() {
+  var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+
+  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
+  var origOpen = window.open;
+  window.open = function(url, target, features) {
+    if (typeof url === 'string') {
+      var u = url.toLowerCase();
+      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
+        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
+      }
+    }
+    return origOpen.call(window, url, target, features);
+  };
+
+  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
+  function scrubLinks() {
+    var allA = document.querySelectorAll('a, [href], [data-href]');
+    allA.forEach(function(el) {
+      var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        el.setAttribute('href', LINKEDIN);
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener noreferrer');
+        el.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
+          return false;
+        };
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', scrubLinks);
+  window.addEventListener('load', scrubLinks);
+  setInterval(scrubLinks, 100);
+
+  // Capture phase click interceptor on document
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    while (el && el !== document.body && el !== document.documentElement) {
+      var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
+        return false;
+      }
+      el = el.parentElement;
+    }
+  }, true);
+})();
+</script>
+
+
 
 
     <meta charset="UTF-8" />
@@ -218,13 +276,13 @@
       <img src="https://framerusercontent.com/images/fiStjr6PCyart5FAr44gZdenfA.png?width=202&amp;height=202" alt="" class="absolute inset-0 h-full w-full object-cover opacity-35">
       <img src="https://framerusercontent.com/images/FqqwJe3cXajmh3c17ziisS6QOJU.jpg?width=3367&amp;height=2246" alt="" class="absolute inset-0 h-full w-full object-cover opacity-10 mix-blend-multiply">
       <div class="absolute left-[10%] top-[20%] z-10 text-primary">
-        <div class="mb-1 text-4xl font-medium italic leading-none text-card-foreground">Jackie</div>
-        <div class="mb-2 text-[26px] font-semibold tracking-wide text-card-foreground">Product Designer</div>
+        <div class="mb-1 text-4xl font-medium italic leading-none text-card-foreground">Mallikarjun</div>
+        <div class="mb-2 text-[26px] font-semibold tracking-wide text-card-foreground">AI Engineer &amp; Cloud Builder</div>
         <div class="text-[44px] font-medium leading-[1.18] tracking-tight">
           <div class="text-card-foreground">Software should</div>
           <div class="text-card-foreground">feel <span class="font-bold italic">natural</span></div>
         </div>
-        <h3 class="mt-5 text-[18px] font-medium text-card-foreground">Cape Town • GMT +2:00</h3>
+        <h3 class="mt-5 text-[18px] font-medium text-card-foreground">Bengaluru, India • GMT +5:30</h3>
       </div>
       <img src="https://framerusercontent.com/images/zreYWHKtYVvdYwuZm8gBYAa3IiA.png?scale-down-to=1024&amp;width=1687&amp;height=1394" alt="" class="absolute bottom-[-3%] right-[-2%] z-[1] h-[86%] w-[64%] object-contain object-bottom">
       <img src="https://framerusercontent.com/images/a5uPbmT6PvUwjD3MFRKJ8andRk.png?width=444&amp;height=437" alt="" class="absolute bottom-[-12%] left-[-4%] z-[2] h-[29%] w-[23%] object-contain object-bottom">
