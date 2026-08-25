@@ -6,6 +6,23 @@
 
 <script>
 (function() {
+  var LK = "https://www.linkedin.com/in/mallikarjunr-com/";
+  var realOpen = window.open;
+  window.open = function(u, t, f) {
+    if (typeof u === 'string') {
+      var s = u.toLowerCase();
+      if (s.includes('x.com') || s.includes('twitter.com') || s.includes('jackie') || s.includes('1953203804113125820') || s.includes('whosspeaking') || s.includes('tf2048') || s.includes('framer.website')) {
+        return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
+      }
+    }
+    return realOpen.call(window, u, t, f);
+  };
+})();
+</script>
+
+
+<script>
+(function() {
   var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
 
   // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn

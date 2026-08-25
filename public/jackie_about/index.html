@@ -6,6 +6,23 @@
 
 <script>
 (function() {
+  var LK = "https://www.linkedin.com/in/mallikarjunr-com/";
+  var realOpen = window.open;
+  window.open = function(u, t, f) {
+    if (typeof u === 'string') {
+      var s = u.toLowerCase();
+      if (s.includes('x.com') || s.includes('twitter.com') || s.includes('jackie') || s.includes('1953203804113125820') || s.includes('whosspeaking') || s.includes('tf2048') || s.includes('framer.website')) {
+        return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
+      }
+    }
+    return realOpen.call(window, u, t, f);
+  };
+})();
+</script>
+
+
+<script>
+(function() {
   var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
 
   // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
@@ -1326,8 +1343,8 @@ img.broken-photo {
     allTexts.forEach(function(t) {
       if (t.childNodes.length === 1 && t.childNodes[0].nodeType === 3) {
         var str = t.textContent;
-        if (str.includes('Jackie Zhang') || str.includes('Jackie')) {
-          t.textContent = str.replaceAll('Jackie Zhang', 'Mallikarjun.R').replaceAll('Jackie', 'Mallikarjun.R');
+        if (str.includes('Mallikarjun R') || str.includes('Jackie')) {
+          t.textContent = str.replaceAll('Mallikarjun R', 'Mallikarjun.R').replaceAll('Jackie', 'Mallikarjun.R');
         }
       }
     });
@@ -1695,17 +1712,30 @@ img.broken-photo {
       var href = el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '';
       var tag = el.tagName ? el.tagName.toLowerCase() : '';
 
-      // 1. External Links
+      
+      // 1. External Links: strictly route to Mallikarjun socials or LinkedIn
       if (tag === 'a' && href && (href.startsWith('http://') || href.startsWith('https://'))) {
-        if (!href.includes('localhost') && !href.includes('jackiezhang')) {
+        var hLow = href.toLowerCase();
+        if (hLow.includes('x.com') || hLow.includes('twitter') || hLow.includes('jackie') || hLow.includes('1953203804113125820') || hLow.includes('whosspeaking') || hLow.includes('tf2048') || hLow.includes('framer')) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          window.open('https://www.linkedin.com/in/mallikarjunr-com/', '_blank', 'noopener,noreferrer');
+          return false;
+        }
+        if (hLow.includes('github.com') || hLow.includes('linkedin.com') || hLow.includes('kaggle.com') || hLow.includes('credly.com') || hLow.includes('google.com')) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
           window.open(href, '_blank', 'noopener,noreferrer');
-          window.parent.postMessage({ type: 'OPEN_URL', url: href }, '*');
           return false;
         }
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
       }
+  
 
       // 2. Work Navigation
       if (text === 'work' || href.includes('work') || name === 'Work') {
