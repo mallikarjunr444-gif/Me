@@ -962,8 +962,21 @@ img.broken-photo {
   
 
   
+  // Default Cutting Board cards fallback
+  var defaultCuttingBoardData = [
+    { id: "slot-1", title: "Hackathon Award & Team", image: "/images/mallikarjun-award-team.jpg", visible: true },
+    { id: "slot-2", title: "Project Exhibition - DSATM", image: "/images/mallikarjun-certificate-dsatm.jpg", visible: true },
+    { id: "slot-3", title: "ISRO Hackathon 2026", image: "/images/mallikarjun-certificate-isro.png", visible: true },
+    { id: "slot-4", title: "Kaggle | Google AI Agents Course", image: "/images/mallikarjun-certificate-kaggle-ai-agents.png", visible: true },
+    { id: "slot-5", title: "Project 5", image: "", visible: true },
+    { id: "slot-6", title: "Project 6", image: "", visible: true },
+    { id: "slot-7", title: "Project 7", image: "", visible: true },
+    { id: "slot-8", title: "Project 8", image: "", visible: true },
+    { id: "slot-9", title: "Project 9", image: "", visible: true }
+  ];
+  var cachedCuttingBoardData = defaultCuttingBoardData;
+
   // Listen for customizable Cutting Board data from React
-  var cachedCuttingBoardData = null;
   window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'SYNC_CUTTING_BOARD' && Array.isArray(e.data.cards)) {
       cachedCuttingBoardData = e.data.cards;
@@ -1004,7 +1017,7 @@ img.broken-photo {
       cardLink.style.display = 'flex';
       cardLink.style.alignItems = 'center';
       cardLink.style.justifyContent = 'center';
-      cardLink.style.backgroundColor = '#fcf8f2';
+      cardLink.style.backgroundColor = '#ffffff';
       cardLink.style.borderRadius = '20px';
       cardLink.style.border = '9px solid #ffffff';
       cardLink.style.boxShadow = '0 12px 28px rgba(0,0,0,0.22)';
@@ -1018,9 +1031,21 @@ img.broken-photo {
           img.src = cardData.image;
           img.srcset = cardData.image;
           img.style.display = 'block';
+          img.style.visibility = 'visible';
+          img.style.opacity = '1';
           img.style.width = '100%';
           img.style.height = '100%';
-          img.style.objectFit = 'cover';
+          img.style.objectFit = 'contain';
+          img.style.objectPosition = 'center';
+          img.style.backgroundColor = '#ffffff';
+          img.style.borderRadius = '12px';
+        }
+        var bgWrap = cardLink.querySelector('[data-framer-background-image-wrapper]');
+        if (bgWrap) {
+          bgWrap.style.display = 'flex';
+          bgWrap.style.alignItems = 'center';
+          bgWrap.style.justifyContent = 'center';
+          bgWrap.style.backgroundColor = '#ffffff';
         }
         var oldBadge = cardLink.querySelector('.slot-placeholder-badge');
         if (oldBadge) oldBadge.remove();
@@ -1032,7 +1057,7 @@ img.broken-photo {
         if (!cardLink.querySelector('.slot-placeholder-badge')) {
           var placeholder = document.createElement('div');
           placeholder.className = 'slot-placeholder-badge';
-          placeholder.style.cssText = 'width:100%; height:100%; min-height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#c93f2c; font-family:"Gochi Hand", cursive; text-align:center; padding:16px; border:2px dashed rgba(201,63,44,0.3); border-radius:14px; background:rgba(255,255,255,0.85); box-sizing:border-box;';
+          placeholder.style.cssText = 'width:100%; height:100%; min-height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#c93f2c; font-family:"Gochi Hand", cursive; text-align:center; padding:16px; border:2px dashed rgba(201,63,44,0.35); border-radius:14px; background:rgba(253,248,240,0.95); box-sizing:border-box;';
           placeholder.innerHTML = '<span style="font-size:26px; line-height:1; color:#c93f2c;">✦</span><span style="font-size:18px; font-weight:bold; color:#222;">' + (cardData ? cardData.title : ('Project ' + (index + 1))) + '</span><span style="font-family:\'Departure Mono Regular\', monospace; font-size:11px; color:#777; letter-spacing:0.04em;">+ Drop Image Here</span>';
           cardLink.appendChild(placeholder);
         }
@@ -1044,8 +1069,9 @@ img.broken-photo {
   function removeBrokenImageBoxes() {
     var imgs = document.querySelectorAll('img');
     imgs.forEach(function(img) {
-      // Preserve user's portrait
-      if (img.src && img.src.includes('mallikarjun')) return;
+      // Preserve user photos and cutting board mat images
+      if (img.src && (img.src.includes('mallikarjun') || img.src.includes('stamp') || img.src.includes('award') || img.src.includes('certificate'))) return;
+      if (img.closest('.framer-9vsaio') || img.closest('[class*="framer-6ctr7e"]') || img.closest('[class*="framer-11nqq4i"]') || img.closest('[class*="framer-5zt1ho"]') || img.closest('[class*="framer-1fickan"]') || img.closest('[class*="framer-gnejcv"]') || img.closest('[class*="framer-mqlzz"]') || img.closest('[class*="framer-1xalfcs"]') || img.closest('[class*="framer-1ggxag2"]') || img.closest('[class*="framer-f5j56f"]')) return;
 
       var isBroken = false;
       var src = img.getAttribute('src') || '';
@@ -1061,29 +1087,18 @@ img.broken-photo {
         img.style.display = 'none';
 
         // Find enclosing card / frame box / polaroid
-        var card = img.closest('[data-framer-name*="Slice"], [data-framer-name*="Variant"], .framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, [data-border="true"], a');
-        if (card && !card.closest('.what-i-look-for-portrait-wrap') && !card.closest('.hero-dev-card') && !card.closest('.framer-1n1sql7')) {
+        var card = img.closest('[data-framer-name*="Slice"], [data-framer-name*="Variant"], .framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, [data-border="true"]');
+        if (card && !card.closest('.what-i-look-for-portrait-wrap') && !card.closest('.hero-dev-card') && !card.closest('.framer-1n1sql7') && !card.closest('.framer-9vsaio') && !card.closest('[class*="framer-6ctr7e"]') && !card.closest('[class*="framer-11nqq4i"]') && !card.closest('[class*="framer-5zt1ho"]') && !card.closest('[class*="framer-1fickan"]') && !card.closest('[class*="framer-gnejcv"]') && !card.closest('[class*="framer-mqlzz"]') && !card.closest('[class*="framer-1xalfcs"]') && !card.closest('[class*="framer-1ggxag2"]') && !card.closest('[class*="framer-f5j56f"]')) {
           card.classList.add('broken-photo-card');
           card.style.display = 'none';
         }
       }
-
-      img.onerror = function() {
-        if (this.src && this.src.includes('mallikarjun')) return;
-        this.classList.add('broken-photo');
-        this.style.display = 'none';
-        var card = this.closest('[data-framer-name*="Slice"], [data-framer-name*="Variant"], .framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, [data-border="true"], a');
-        if (card && !card.closest('.what-i-look-for-portrait-wrap') && !card.closest('.hero-dev-card') && !card.closest('.framer-1n1sql7')) {
-          card.classList.add('broken-photo-card');
-          card.style.display = 'none';
-        }
-      };
     });
 
     // Also hide any floating empty photo frames around "What I look for" and background
     var decoBoxes = document.querySelectorAll('.framer-n9orh3, .framer-oemwiw, .framer-an557o, .framer-1ceza1p, .framer-12ziibl, .framer-o0dvfa, .framer-r1x875, .framer-1ixi539, .framer-1bwkuht');
     decoBoxes.forEach(function(box) {
-      if (box.closest('.hero-dev-card') || box.closest('.what-i-look-for-portrait-wrap') || box.closest('.framer-1n1sql7')) return;
+      if (box.closest('.hero-dev-card') || box.closest('.what-i-look-for-portrait-wrap') || box.closest('.framer-1n1sql7') || box.closest('.framer-9vsaio') || box.closest('[class*="framer-6ctr7e"]') || box.closest('[class*="framer-11nqq4i"]') || box.closest('[class*="framer-5zt1ho"]')) return;
       var innerImg = box.querySelector('img');
       if (!innerImg || !innerImg.src || innerImg.classList.contains('broken-photo') || (innerImg.complete && innerImg.naturalWidth === 0)) {
         box.classList.add('empty-box-hidden');
