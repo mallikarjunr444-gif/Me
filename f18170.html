@@ -4,49 +4,33 @@
 
 <script>
 (function() {
-  // Overwrite window.open to block any unwanted links
+  var LINKEDIN = "https://www.linkedin.com/in/mallikarjunr-com/";
+
+  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
   var origOpen = window.open;
   window.open = function(url, target, features) {
     if (typeof url === 'string') {
       var u = url.toLowerCase();
-      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer')) {
-        console.warn('Blocked opening legacy link:', url);
-        return null;
+      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
+        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
       }
     }
     return origOpen.call(window, url, target, features);
   };
 
-  // Continuous DOM scrubber
+  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
   function scrubLinks() {
     var allA = document.querySelectorAll('a, [href], [data-href]');
     allA.forEach(function(el) {
       var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
-        el.removeAttribute('href');
-        el.removeAttribute('target');
-        el.removeAttribute('to');
-        el.setAttribute('role', 'presentation');
-        el.style.cursor = 'default';
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        el.setAttribute('href', LINKEDIN);
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener noreferrer');
         el.onclick = function(e) {
           e.preventDefault();
           e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        };
-      }
-
-      // Neutralize cutting board mat cards specifically
-      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
-        el.removeAttribute('href');
-        el.removeAttribute('target');
-        el.removeAttribute('to');
-        el.setAttribute('role', 'presentation');
-        el.style.cursor = 'default';
-        el.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
+          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
           return false;
         };
       }
@@ -62,16 +46,11 @@
     var el = e.target;
     while (el && el !== document.body && el !== document.documentElement) {
       var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        return false;
-      }
-      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
         return false;
       }
       el = el.parentElement;
@@ -79,6 +58,9 @@
   }, true);
 })();
 </script>
+
+
+
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

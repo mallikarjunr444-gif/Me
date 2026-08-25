@@ -1,63 +1,49 @@
 import fs from 'fs';
 import path from 'path';
 
+const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
+
 function sanitizeFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
 
-  // Replace any instance of twitter/x status link or jackie zhang links
-  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, '#');
-  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, '#');
-  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, '#');
-  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, '#');
+  // Replace any instance of twitter/x status link or jackie zhang links with LinkedIn
+  content = content.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>]*1953203804113125820[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/whosspeaking\.framer\.website[^\s"'>]*/gi, LINKEDIN_URL);
+  content = content.replaceAll(/https?:\/\/tf2048\.io[^\s"'>]*/gi, LINKEDIN_URL);
   content = content.replaceAll(/mailto:lapsun\.j\.zhang@gmail\.com/gi, 'mailto:mallikarjunr444@gmail.com');
 
-  // Inject a top-level inline script in head to neutralize any anchor creation or navigation
+  // Inject a top-level inline script in head to redirect any legacy link directly to LinkedIn
   const sanitizerSnippet = `
 <script>
 (function() {
-  // Overwrite window.open to block any unwanted links
+  var LINKEDIN = "${LINKEDIN_URL}";
+
+  // Overwrite window.open: if any attempt is made to open twitter/jackie links, redirect to LinkedIn
   var origOpen = window.open;
   window.open = function(url, target, features) {
     if (typeof url === 'string') {
       var u = url.toLowerCase();
-      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer')) {
-        console.warn('Blocked opening legacy link:', url);
-        return null;
+      if (u.includes('x.com') || u.includes('twitter.com') || u.includes('jackie') || u.includes('1953203804113125820') || u.includes('whosspeaking') || u.includes('tf2048') || u.includes('framer.website')) {
+        return origOpen.call(window, LINKEDIN, target || '_blank', features || 'noopener,noreferrer');
       }
     }
     return origOpen.call(window, url, target, features);
   };
 
-  // Continuous DOM scrubber
+  // Continuous DOM scrubber: rewrite legacy URLs to LinkedIn
   function scrubLinks() {
     var allA = document.querySelectorAll('a, [href], [data-href]');
     allA.forEach(function(el) {
       var h = (el.getAttribute('href') || el.getAttribute('data-href') || '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
-        el.removeAttribute('href');
-        el.removeAttribute('target');
-        el.removeAttribute('to');
-        el.setAttribute('role', 'presentation');
-        el.style.cursor = 'default';
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
+        el.setAttribute('href', LINKEDIN);
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener noreferrer');
         el.onclick = function(e) {
           e.preventDefault();
           e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        };
-      }
-
-      // Neutralize cutting board mat cards specifically
-      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
-        el.removeAttribute('href');
-        el.removeAttribute('target');
-        el.removeAttribute('to');
-        el.setAttribute('role', 'presentation');
-        el.style.cursor = 'default';
-        el.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
+          window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
           return false;
         };
       }
@@ -73,16 +59,11 @@ function sanitizeFile(filePath) {
     var el = e.target;
     while (el && el !== document.body && el !== document.documentElement) {
       var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website') || h.includes('framer.com')) {
+      if (h.includes('x.com') || h.includes('twitter') || h.includes('jackie') || h.includes('1953203804113125820') || h.includes('whosspeaking') || h.includes('tf2048') || h.includes('framer.website')) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        return false;
-      }
-      if (el.closest && el.closest('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container')) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+        window.open(LINKEDIN, '_blank', 'noopener,noreferrer');
         return false;
       }
       el = el.parentElement;
@@ -92,12 +73,12 @@ function sanitizeFile(filePath) {
 </script>
 `;
 
-  if (!content.includes('// Overwrite window.open to block any unwanted links')) {
-    content = content.replace('<head>', '<head>\n' + sanitizerSnippet);
-  }
+  // Remove old sanitizer snippet if present
+  content = content.replace(/<script>\s*\(function\(\)\s*\{\s*\/\/\s*Overwrite window\.open[\s\S]*?<\/script>/gi, '');
+  content = content.replace('<head>', '<head>\n' + sanitizerSnippet);
 
   fs.writeFileSync(filePath, content, 'utf8');
-  console.log('Sanitized:', filePath);
+  console.log('Sanitized & redirected to LinkedIn:', filePath);
 }
 
 const aboutPath = path.resolve('public/jackie_about/index.html');
@@ -112,8 +93,8 @@ if (fs.existsSync(f18Path)) sanitizeFile(f18Path);
 const scratchPath = path.resolve('scratch/uxmagic_screen.json');
 if (fs.existsSync(scratchPath)) {
   let s = fs.readFileSync(scratchPath, 'utf8');
-  s = s.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>\\]*/gi, '#');
-  s = s.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>\\]*1953203804113125820[^\s"'>\\]*/gi, '#');
+  s = s.replaceAll(/https?:\/\/(www\.)?(x|twitter)\.com\/jackie_zhang_ls[^\s"'>\\]*/gi, LINKEDIN_URL);
+  s = s.replaceAll(/https?:\/\/(www\.)?x\.com\/[^\s"'>\\]*1953203804113125820[^\s"'>\\]*/gi, LINKEDIN_URL);
   fs.writeFileSync(scratchPath, s, 'utf8');
-  console.log('Sanitized scratch/uxmagic_screen.json');
+  console.log('Sanitized scratch/uxmagic_screen.json to LinkedIn');
 }

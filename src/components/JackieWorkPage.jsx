@@ -20,14 +20,16 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         } else if (e.data.type === 'OPEN_URL' && e.data.url) {
           const u = e.data.url.toLowerCase();
           if (
-            !u.includes('x.com') &&
-            !u.includes('twitter.com') &&
-            !u.includes('jackie') &&
-            !u.includes('1953203804113125820') &&
-            !u.includes('whosspeaking') &&
-            !u.includes('tf2048') &&
-            !u.includes('framer')
+            u.includes('x.com') ||
+            u.includes('twitter.com') ||
+            u.includes('jackie') ||
+            u.includes('1953203804113125820') ||
+            u.includes('whosspeaking') ||
+            u.includes('tf2048') ||
+            u.includes('framer')
           ) {
+            window.open('https://www.linkedin.com/in/mallikarjunr-com/', '_blank', 'noopener,noreferrer');
+          } else {
             window.open(e.data.url, '_blank', 'noopener,noreferrer');
           }
         } else if (e.data.type === 'SELECT_PROJECT') {
