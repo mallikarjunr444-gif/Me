@@ -335,3 +335,27 @@ body {
   white-space: nowrap;
   animation: marqueeScroll 25s linear infinite;
 }
+
+/* 13. Disable pointer events & hover link preview on Cutting Board Cards */
+.framer-6ctr7e-container,
+.framer-11nqq4i-container,
+.framer-5zt1ho-container,
+.framer-1fickan-container,
+.framer-gnejcv-container,
+.framer-mqlzz-container,
+.framer-1xalfcs-container,
+.framer-1ggxag2-container,
+.framer-f5j56f-container,
+.framer-6ctr7e-container *,
+.framer-11nqq4i-container *,
+.framer-5zt1ho-container *,
+.framer-1fickan-container *,
+.framer-gnejcv-container *,
+.framer-mqlzz-container *,
+.framer-1xalfcs-container *,
+.framer-1ggxag2-container *,
+.framer-f5j56f-container * {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+

@@ -2,7 +2,30 @@
 <!-- Made in Framer · framer.com ✨ -->
 <!-- Published Dec 17, 2025, 8:34 AM UTC -->
 <html lang="en-ZA">
-<head>
+<head><style>
+  /* 1. COMPLETELY DISABLE POINTER EVENTS & HOVER URL PREVIEW ON ALL 9 CUTTING BOARD CARDS */
+  .framer-6ctr7e-container,
+  .framer-11nqq4i-container,
+  .framer-5zt1ho-container,
+  .framer-1fickan-container,
+  .framer-gnejcv-container,
+  .framer-mqlzz-container,
+  .framer-1xalfcs-container,
+  .framer-1ggxag2-container,
+  .framer-f5j56f-container,
+  .framer-6ctr7e-container *,
+  .framer-11nqq4i-container *,
+  .framer-5zt1ho-container *,
+  .framer-1fickan-container *,
+  .framer-gnejcv-container *,
+  .framer-mqlzz-container *,
+  .framer-1xalfcs-container *,
+  .framer-1ggxag2-container *,
+  .framer-f5j56f-container * {
+    pointer-events: none !important;
+    cursor: default !important;
+  }
+</style>
 
 <script>
 (function() {
@@ -18,279 +41,39 @@
     return false;
   }
 
-  // 1. Overwrite window.open to redirect legacy links to LinkedIn
+  // 1. Overwrite window.open
   var realOpen = window.open;
   window.open = function(u, t, f) {
     if (isLegacy(u)) return realOpen.call(window, LK, '_blank', 'noopener,noreferrer');
     return realOpen.call(window, u, t, f);
   };
 
-  // Continuous DOM link unhooker
-  function disableCardLinks() {
-    // 9 Cutting board slots
-    var cuttingBoardSlots = [
-      '.framer-6ctr7e-container',
-      '.framer-11nqq4i-container',
-      '.framer-5zt1ho-container',
-      '.framer-1fickan-container',
-      '.framer-gnejcv-container',
-      '.framer-mqlzz-container',
-      '.framer-1xalfcs-container',
-      '.framer-1ggxag2-container',
-      '.framer-f5j56f-container'
-    ];
+  // 2. Synchronous continuous link scrubber & observer
+  var cardSelectors = [
+    '.framer-6ctr7e-container', '.framer-11nqq4i-container', '.framer-5zt1ho-container',
+    '.framer-1fickan-container', '.framer-gnejcv-container', '.framer-mqlzz-container',
+    '.framer-1xalfcs-container', '.framer-1ggxag2-container', '.framer-f5j56f-container'
+  ];
 
-    cuttingBoardSlots.forEach(function(sel) {
-      var container = document.querySelector(sel);
-      if (!container) return;
-      var links = container.querySelectorAll('a, [href]');
-      links.forEach(function(a) {
-        a.removeAttribute('href');
-        a.removeAttribute('target');
-        a.removeAttribute('to');
-        a.style.cursor = 'default';
-        a.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        };
+  function scrubAll() {
+    // Strip hrefs from all 9 card slots
+    cardSelectors.forEach(function(sel) {
+      document.querySelectorAll(sel + ' a, ' + sel + ' [href]').forEach(function(el) {
+        el.removeAttribute('href');
+        el.removeAttribute('target');
+        el.removeAttribute('to');
+        el.style.pointerEvents = 'none';
+        el.style.cursor = 'default';
       });
     });
 
-    // Global check on any <a> with legacy URLs - rewrite to LinkedIn
-    document.querySelectorAll('a').forEach(function(a) {
+    // Strip/redirect any legacy link anywhere in the document
+    document.querySelectorAll('a[href]').forEach(function(a) {
       var h = (a.getAttribute('href') || '').toLowerCase();
       if (isLegacy(h)) {
-        a.setAttribute('href', LK);
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener noreferrer');
-        a.style.cursor = 'pointer';
-        a.style.pointerEvents = 'auto';
-      }
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', disableCardLinks);
-  window.addEventListener('load', disableCardLinks);
-  setInterval(disableCardLinks, 50);
-
-  // Capture phase blocker on legacy URLs -> open LinkedIn smoothly
-  ['click'].forEach(function(evtName) {
-    window.addEventListener(evtName, function(e) {
-      var el = e.target;
-      while (el && el !== document.body && el !== document.documentElement) {
-        var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-        if (isLegacy(h)) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          window.open(LK, '_blank', 'noopener,noreferrer');
-          return false;
-        }
-        el = el.parentElement;
-      }
-    }, true);
-  });
-})();
-</script>
-
-
-<script>
-(function() {
-  var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
-
-  function isBlocked(u) {
-    if (!u || typeof u !== 'string') return false;
-    var lo = u.toLowerCase();
-    for (var i = 0; i < BLOCKED.length; i++) {
-      if (lo.indexOf(BLOCKED[i]) !== -1) return true;
-    }
-    return false;
-  }
-
-  // 1. Block window.open
-  var realOpen = window.open;
-  window.open = function(u, t, f) {
-    if (isBlocked(u)) return null;
-    return realOpen.call(window, u, t, f);
-  };
-
-  // Continuous DOM link unhooker
-  function disableCardLinks() {
-    // 9 Cutting board slots
-    var cuttingBoardSlots = [
-      '.framer-6ctr7e-container',
-      '.framer-11nqq4i-container',
-      '.framer-5zt1ho-container',
-      '.framer-1fickan-container',
-      '.framer-gnejcv-container',
-      '.framer-mqlzz-container',
-      '.framer-1xalfcs-container',
-      '.framer-1ggxag2-container',
-      '.framer-f5j56f-container'
-    ];
-
-    cuttingBoardSlots.forEach(function(sel) {
-      var container = document.querySelector(sel);
-      if (!container) return;
-      var links = container.querySelectorAll('a, [href]');
-      links.forEach(function(a) {
         a.removeAttribute('href');
         a.removeAttribute('target');
-        a.removeAttribute('to');
-        a.style.cursor = 'default';
-        a.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        };
-      });
-    });
-
-    // Global check on any <a> with legacy URLs
-    document.querySelectorAll('a').forEach(function(a) {
-      var h = (a.getAttribute('href') || '').toLowerCase();
-      if (isBlocked(h)) {
-        a.removeAttribute('href');
-        a.removeAttribute('target');
-        a.style.cursor = 'default';
         a.style.pointerEvents = 'none';
-      }
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', disableCardLinks);
-  window.addEventListener('load', disableCardLinks);
-  setInterval(disableCardLinks, 50);
-
-  // Capture phase blocker on cutting board clicks
-  ['click', 'pointerdown', 'mousedown', 'mouseup'].forEach(function(evtName) {
-    window.addEventListener(evtName, function(e) {
-      var el = e.target;
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.matches && el.matches('.framer-6ctr7e-container, .framer-11nqq4i-container, .framer-5zt1ho-container, .framer-1fickan-container, .framer-gnejcv-container, .framer-mqlzz-container, .framer-1xalfcs-container, .framer-1ggxag2-container, .framer-f5j56f-container, .framer-6ctr7e-container *, .framer-11nqq4i-container *, .framer-5zt1ho-container *, .framer-1fickan-container *, .framer-gnejcv-container *, .framer-mqlzz-container *, .framer-1xalfcs-container *, .framer-1ggxag2-container *, .framer-f5j56f-container *')) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        }
-        var h = (el.getAttribute ? (el.getAttribute('href') || el.getAttribute('to') || '') : '').toLowerCase();
-        if (isBlocked(h)) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        }
-        el = el.parentElement;
-      }
-    }, true);
-  });
-})();
-</script>
-
-<script>
-(function() {
-  // ===== DEFINITIVE LINK BLOCKER =====
-  var BLOCKED = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
-
-  function isBlocked(u) {
-    if (!u || typeof u !== 'string') return false;
-    var lo = u.toLowerCase();
-    for (var i = 0; i < BLOCKED.length; i++) {
-      if (lo.indexOf(BLOCKED[i]) !== -1) return true;
-    }
-    return false;
-  }
-
-  // 1. Block window.open (silently drop — no redirect)
-  var _realOpen = window.open;
-  window.open = function(url, target, features) {
-    if (isBlocked(url)) { return null; }
-    return _realOpen.call(window, url, target, features);
-  };
-
-  // 2. Block window.location navigation
-  try {
-    var _location = window.location;
-    Object.defineProperty(window, 'location', {
-      get: function() { return _location; },
-      set: function(val) {
-        if (isBlocked(String(val))) { return; }
-        _location.href = val;
-      },
-      configurable: true
-    });
-  } catch(e) {}
-
-  // 3. Intercept history API
-  try {
-    var _push = history.pushState.bind(history);
-    var _replace = history.replaceState.bind(history);
-    history.pushState = function(s, t, url) { if (isBlocked(String(url || ''))) return; return _push(s, t, url); };
-    history.replaceState = function(s, t, url) { if (isBlocked(String(url || ''))) return; return _replace(s, t, url); };
-  } catch(e) {}
-
-  // 4. Block clicks on bad hrefs (capture phase, before Framer handlers)
-  function blockBadClicks(e) {
-    var el = e.target;
-    while (el && el !== document.body) {
-      var h = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to') || '')) || '';
-      if (isBlocked(h)) {
-        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-        return false;
-      }
-      el = el.parentElement;
-    }
-  }
-  ['click', 'pointerup', 'mouseup'].forEach(function(evt) {
-    document.addEventListener(evt, blockBadClicks, true);
-    window.addEventListener(evt, blockBadClicks, true);
-  });
-
-  // 5. Scrub DOM links continuously
-  function scrubLinks() {
-    document.querySelectorAll('a[href], [to]').forEach(function(a) {
-      var h = a.getAttribute('href') || a.getAttribute('to') || '';
-      if (isBlocked(h)) {
-        a.removeAttribute('href'); a.removeAttribute('to');
-        a.removeAttribute('target');
-        a.style.cursor = 'default';
-    
-    
-    <script>try{if(localStorage.get("__framer_force_showing_editorbar_since")){const n=document.createElement("link");n.rel = "modulepreload";n.href="https://framer.com/edit/init.mjs";document.head.appendChild(n)}}catch(e){}</script>
-    <!-- Start of headStart -->
-    
-    <!-- End of headStart -->
-    <meta name="viewport" content="width=device-width">
-    <meta name="generator" content="Framer beb597f">
-    <title>Mallikarjun.R — Computer Science Engineering Student | AI × Cloud × DevOps</title>
-    <meta name="description" content="Hey there, I'm Mallikarjun.R, a product designer based in beautiful Cape Town, South Africa. ☀️. 
-I design tools that help people do their best work.">
-    <meta name="framer-search-index" content="https://framerusercontent.com/sites/684hnbMBXBVbej1PQ2QXEz/searchIndex-VqehH3b90bwe.json">
-    <meta name="framer-search-index-fallback" content="https://framerusercontent.com/sites/684hnbMBXBVbej1PQ2QXEz/searchIndex-6o2xAzaAOGXT.json">
-    <meta name="framer-html-plugin" content="disable">
-    <link href="https://framerusercontent.com/images/potqc1e78ykFKgIWmc4xIvb50.png" rel="icon" media="(prefers-color-scheme: light)">
-    <link href="https://framerusercontent.com/images/potqc1e78ykFKgIWmc4xIvb50.png" rel="icon" media="(prefers-color-scheme: dark)">
-    <link rel="apple-touch-icon" href="assets/images/UZhoLURolS4AalF82G4s0VaxCIc.png">
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Mallikarjun.R">
-    <meta property="og:description" content="Hey there, I'm Mallikarjun.R, a product designer based in beautiful Cape Town, South Africa. ☀️. 
-I design tools that help people do their best work.">
-    <meta property="og:image" content="https://mallikarjunr-me.web.app/images/og-preview.jpg" />
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mallikarjun.R">
-    <meta name="twitter:description" content="Hey there, I'm Mallikarjun.R, a product designer based in beautiful Cape Town, South Africa. ☀️. 
-I design tools that help people do their best work.">
-    <meta name="twitter:image" content="https://mallikarjunr-me.web.app/images/og-preview.jpg" />
-    
-    <style data-framer-font-css>/* latin-ext */
-@font-face {
-  font-family: 'DM Sans';
-  font-style: italic;
   font-weight: 400;
   font-display: swap;
   src: url(assets/fonts/rP2Wp2ywxg089UriCZaSExd86J3t9jz86MvyyKK58VXh.woff2) format('woff2');
