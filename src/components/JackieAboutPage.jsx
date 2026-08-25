@@ -61,6 +61,14 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
                 const href = (el.getAttribute && (el.getAttribute('href') || el.getAttribute('to'))) || '';
                 const name = el.getAttribute ? (el.getAttribute('data-framer-name') || '') : '';
 
+                // Let's chat / Mailto handler
+                if (text.includes("let's chat") || href.startsWith('mailto:')) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = 'mailto:mallikarjunr444@gmail.com';
+                  return;
+                }
+
                 // External Links
                 if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
                   if (!href.includes('localhost') && !href.includes('jackiezhang')) {
