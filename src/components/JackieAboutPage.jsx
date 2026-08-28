@@ -92,9 +92,14 @@ export function JackieAboutPage({ onNavigate, onOpenConnect }) {
         });
       });
 
-      // Set height
-      const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
-      if (h > 800) setIframeHeight(h + 40);
+      // Set height safely
+      const root = doc.querySelector('.framer-Zfc2C') || doc.querySelector('#main') || doc.body;
+      if (root) {
+        const measured = Math.ceil(root.getBoundingClientRect?.().height || root.offsetHeight || 3800);
+        if (measured > 800 && measured < 10000) {
+          setIframeHeight(measured + 20);
+        }
+      }
     } catch { /* ignore */ }
   }, []);
 

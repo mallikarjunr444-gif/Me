@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { portfolioData } from '../data/portfolioData';
-import { JackieProjectPeelSection } from './JackieProjectPeelSection';
-import { JackieCuttingBoardSection } from './JackieCuttingBoardSection';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/mallikarjunr-com/';
 const BLOCKED_PATTERNS = ['x.com', 'twitter.com', 'jackie', '1953203804113125820', 'whosspeaking', 'tf2048', 'framer.website', 'jackiezhang'];
@@ -14,13 +12,14 @@ function isLegacy(url) {
 
 export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   const iframeRef = useRef(null);
-  const [iframeHeight, setIframeHeight] = useState(4200);
+  const [iframeHeight, setIframeHeight] = useState(2600);
 
   useEffect(() => {
     const handleMessage = (e) => {
       if (e.data) {
         if (e.data.type === 'SET_HEIGHT' && typeof e.data.height === 'number') {
-          setIframeHeight(Math.max(e.data.height + 40, 2400));
+          const clamped = Math.min(Math.max(e.data.height + 20, 1800), 8000);
+          setIframeHeight(clamped);
         } else if (e.data.type === 'NAVIGATE') {
           window.location.hash = e.data.page || 'about';
           if (onNavigate) onNavigate(e.data.page || 'about');
@@ -73,8 +72,14 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         }
       });
 
-      const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
-      if (h > 800) setIframeHeight(h + 40);
+      // Safely measure root element without recursive expansion
+      const root = doc.querySelector('.framer-Zfc2C') || doc.querySelector('#main') || doc.body;
+      if (root) {
+        const measured = Math.ceil(root.getBoundingClientRect?.().height || root.offsetHeight || 2600);
+        if (measured > 800 && measured < 10000) {
+          setIframeHeight(measured + 20);
+        }
+      }
     } catch { /* ignore */ }
   }, []);
 
@@ -231,8 +236,8 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
   }, [attachListeners]);
 
   return (
-    <div className="w-full min-h-screen relative select-none bg-[#181716] space-y-16 pb-20">
-      {/* 1. Cloned Work Page View with Customized Artifacts (Luggage Tag, Vision X, BUILD Ticket, CRT Monitor, Certifications) */}
+    <div className="w-full min-h-screen relative select-none bg-[#181716] overflow-x-hidden">
+      {/* 1:1 Cloned Work Page View with Personalized Artifacts (Luggage Tag, Vision X, CRT Monitor, Verified Links) */}
       <iframe
         ref={iframeRef}
         src="/jackie_work/index.html"
@@ -242,7 +247,7 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         style={{
           width: '100%',
           height: `${iframeHeight}px`,
-          minHeight: '2600px',
+          minHeight: '100vh',
           border: 'none',
           overflow: 'hidden',
           display: 'block'
@@ -250,31 +255,8 @@ export function JackieWorkPage({ onNavigate, onOpenConnect, onSelectProject }) {
         scrolling="no"
       />
 
-      {/* 2. Interactive Peeling Project Cards Section (Transferred to Work) */}
-      <div className="px-4 sm:px-8 max-w-7xl mx-auto">
-        <div className="text-center py-6">
-          <h2 className="font-serif text-4xl sm:text-5xl text-[#faecd8] tracking-tight">
-            Case Studies & Deep Dives
-          </h2>
-          <p className="font-mono text-xs text-[#faecd8]/60 uppercase tracking-widest mt-2">
-            Click any card to explore full architectural breakdown
-          </p>
-        </div>
-        <JackieProjectPeelSection
-          projects={portfolioData.projects}
-          onSelectProject={(p) => onSelectProject && onSelectProject(p)}
-        />
-      </div>
-
-      {/* 3. The Projects Cutting Board Workspace (Transferred to Work) */}
-      <div className="px-4 sm:px-8 max-w-7xl mx-auto">
-        <JackieCuttingBoardSection
-          onSelectProject={(p) => onSelectProject && onSelectProject(p)}
-        />
-      </div>
-
-      {/* Bottom Ending Signoff on Work */}
-      <div className="text-center pt-16 pb-8 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2 max-w-4xl mx-auto">
+      {/* Clean Bottom Ending Signoff */}
+      <div className="text-center pt-8 pb-12 border-t border-white/10 text-xs font-mono text-[#faecd8]/40 space-y-2 max-w-4xl mx-auto px-4">
         <div className="font-hand text-xl text-[#faecd8]/70">
           "Mallikarjun.R • Bengaluru, India • Still building :)"
         </div>
